@@ -1,14 +1,7 @@
 @import "tailwindcss";
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  font-family: "Times New Roman"
-  /* ✅ Enable scroll if needed */
+body {
+  @apply font-sans;
 }
 
 @theme {

@@ -11,6 +11,8 @@ import { actions as commonActions } from 'pages/common/slice';
 import { _ } from 'utils/lodash';
 import { setDataToStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
+import { t } from 'pages/common/components';
+import { routeRedirect } from 'utils/common';
 
 export function* fetchCountry() {
   yield put(sliceActions.setCountry());
@@ -34,7 +36,7 @@ export function* saveOrganizationDetails({ payload = {} }) {
       yield put(sliceActions.setOrganizationRegisterDetails(responsePayLoad));
       yield put(commonActions.navigateTo({
         to: `/ui/join-meds/register/profile`,
-        isSameModule: false
+        isSameModule: true
       }));
     }
   } else {
@@ -47,25 +49,35 @@ export function* saveOrganizationDetails({ payload = {} }) {
 }
 
 export function* updateOrganizationDetails({ payload = {} }) {
-  console.log(payload, '1111111111111payload')
   yield fork(handleAPIRequest, api.updateOrganizationDetailsApi, payload);
-  const { payload: responsePayLoad = {}, type } = yield take([
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
     ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS,
     ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_FAILURE]);
   if (type === ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS) {
-    // const { data: { id } = {} } = responsePayLoad;
-    yield put(commonActions.setAlertToast({
+    yield put(commonActions.setAlertAction({
       open: true,
       variant: 'success',
       message: 'Organization Details saved successfully',
+      title: t('milkAttendance'),
+      forwardActionText: t('ok'),
+      forwardAction: () => { routeRedirect(`/`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
       yield put(sliceActions.setUpdateOrganizationRegisterDetails(responsePayLoad));
+      yield put(commonActions.navigateTo({
+        to: `/`,
+        isSameModule: true
+      }));
     }
-    // if (id) {       
-    //     yield put(commonActions.navigateTo({ to: `${BASE}/${NEW_COMPLAINT.EDIT.replace(':id', id)}` }));
-
-    // }
+  } else {
+     yield put(commonActions.setAlertAction({
+      open: true,
+      variant: 'error',
+      message: 'Organization Details saved failed.Please try again',
+      title: t('Organization Details'),
+      forwardActionText: t('ok'),
+      forwardAction: () => { routeRedirect(``); },
+    }));
   }
 }
 

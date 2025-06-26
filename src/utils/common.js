@@ -1,16 +1,15 @@
 import { createSelector } from 'reselect';
 import i18next from 'i18next';
 import {
-  BASE_PATH, MODULE_PATHS, STORAGE_KEYS, YES_NO
-} from 'common/constants';
+  BASE_PATH, MODULE_PATHS,
+  STORAGE_KEYS
+} from 'pages/common/constants';
 import { _ } from 'utils/lodash';
-import { APPLICATION_STATUS, ROLE, USER_TYPE } from 'pages/common/constants';
 import { getDataFromStorage } from './encryption';
-import { hasPermission } from './user';
 
 export const flattenObject = (obj, { parentKey = '', parentMapping = true } = {}) => {
   const result = {};
-  // eslint-disable-next-line no-restricted-syntax
+   
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const newKey = parentKey ? `${parentKey}.${key}` : key;
@@ -99,8 +98,6 @@ export const getProjectPaths = () => {
   return projectPaths;
 };
 
-export const boolToString = (data) => (data ? YES_NO.YES : YES_NO.NO);
-
 function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
   const byteCharacters = atob(b64Data);
   const byteArrays = [];
@@ -138,31 +135,6 @@ export const getDashboardRoute = () => {
   const { HOME } = getProjectPaths();
   return `${HOME}/${_.toLower(userType)}/dashboard`;
 };
-export const getServicesPageRoute = () => {
-  const { userType } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true);
-  const { HOME } = getProjectPaths();
-  if (userType === 'CITIZEN') {
-    return `${HOME}/${_.toLower(userType)}/new-services`;
-  } if (userType === 'EMPLOYEE') {
-    return `${HOME}/${_.toLower(userType)}/services`;
-  } if (userType === 'ORGANIZATION') {
-    return `${HOME}/${_.toLower(userType)}/services`;
-  } return null;
-};
-export const getSubjectTypePageRoute = () => {
-  const { userType } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true);
-  const { PGR } = getProjectPaths();
-  if (userType === 'ORGANIZATION') {
-    return `${PGR}/citizen/subject-type`;
-  }
-  return `${PGR}/${_.toLower(userType)}/subject-type`;
-};
-
-export const getViolationTypePageRoute = () => {
-  const { userType } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true);
-  const { PGR } = getProjectPaths();
-  return `${PGR}/${_.toLower(userType)}/violation-type`;
-};
 
 export const routeRedirect = (url) => {
   window.location.href = `${window.location.origin}/${url}`;
@@ -176,47 +148,6 @@ export const sortDropdownNames = (options, optionkey, locilizationkey) => {
   );
 };
 
-export const showSubmit = (status, code) => {
-  const { userType } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || {};
-  if (userType === USER_TYPE.CITIZEN) {
-    return (status === APPLICATION_STATUS.INITIATE
-      || status === APPLICATION_STATUS.SEND_BACK_TO_CITIZEN);
-  }
-  if (userType === USER_TYPE.ORGANIZATION) {
-    if (hasPermission(ROLE.HK_OPERATOR, code) || hasPermission(ROLE.INSTITUTION_OPERATOR, code)) {
-      return (status === APPLICATION_STATUS.ORG_INITIATE);
-    }
-    if (hasPermission(ROLE.HK_VERIFIER, code) || (hasPermission(ROLE.INSTITUTION_VERIFIER, code))) {
-      return (status === APPLICATION_STATUS.ORG_APPLIED);
-    }
-    if (hasPermission(ROLE.UNIT_ADMIN, code)) {
-      // TODO: SEND_BACK_TO_CITIZEN need to remove after creating citizen account auto creation
-      return (status === APPLICATION_STATUS.CSC_APPLY
-        || status === APPLICATION_STATUS.SEND_BACK_TO_CITIZEN
-      || status === APPLICATION_STATUS.UNDEFINED);
-    }
-  }
-  if (userType === USER_TYPE.EMPLOYEE) {
-    if (hasPermission(ROLE.OPERATOR, code)) {
-      return (status === APPLICATION_STATUS.APPLIED
-        || status === APPLICATION_STATUS.INITIATED
-        || status === APPLICATION_STATUS.RETURNED);
-    }
-    if (hasPermission(ROLE.VERIFIER, code)) {
-      return (status === APPLICATION_STATUS.INITIATED
-        || status === APPLICATION_STATUS.APPLIED || status === APPLICATION_STATUS.RETURNED);
-    }
-
-    if (hasPermission(ROLE.APPROVER, code)) {
-      return (status === APPLICATION_STATUS.VERIFIED);
-    }
-    if (hasPermission(ROLE.ENQUIRY_OFFICER, code)) {
-      return (status === APPLICATION_STATUS.RECOMMENDED_FOR_ENQUIRY);
-    }
-    // TODO : Municipal Secretary , JD  need to add condition
-  }
-  return false;
-};
 
 export const nullCheck = (data, defaultValue) => {
   if (!_.isEmpty(data)) {
@@ -225,34 +156,9 @@ export const nullCheck = (data, defaultValue) => {
   return defaultValue;
 };
 
-export const getAuthorizedRoutes = (userType, routes = []) => {
-  const authAt = localStorage.getItem(STORAGE_KEYS.AUTH_AT);
-  const userDetails = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || [];
-  if (!authAt) return [];
-  return userType === userDetails?.userType ? routes : [];
-};
 
-export const getAuthAndCurrentDates = () => {
-  const authAt = localStorage.getItem(STORAGE_KEYS.AUTH_AT);
-  if (!authAt) return { authDate: null, currentDateOnly: null };
 
-  const authenticationDate = new Date(authAt);
-  const currentDate = new Date();
 
-  const authDate = new Date(
-    authenticationDate.getFullYear(),
-    authenticationDate.getMonth(),
-    authenticationDate.getDate()
-  );
-
-  const currentDateOnly = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate()
-  );
-
-  return { authDate, currentDateOnly };
-};
 
 export const scrollToDiv = (id) => {
   const element = document.getElementById(id);

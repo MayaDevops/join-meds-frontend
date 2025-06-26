@@ -52,7 +52,8 @@ export const REQUEST_STATUS = {
   FAILED: 'FAILED'
 };
 
-
+export const BASE_PATH = 'ui';
+export const MODULE_PATHS = 'joint-meds';
 
 export const WHITE_LIST_URL = [
   API_URL.JOINT_MEDS.ORGANIZATION.CREATE_ORG,

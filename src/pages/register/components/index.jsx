@@ -31,7 +31,7 @@ function OrganisationRegister() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen pt-24 pb-10 px-4 bg-white">
+    <div className="flex flex-col items-center justify-start  pt-24 pb-10 px-4 bg-white">
       {/* Banner */}
       <div className="w-full max-w-full rounded-t-xl overflow-hidden">
         <div className="bg-gradient-to-b from-[#D1EEFC] to-white px-6 pt-8 pb-4">

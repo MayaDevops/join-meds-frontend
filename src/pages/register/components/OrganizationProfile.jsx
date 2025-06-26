@@ -3,9 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { updateOrganizationDetails } from '../actions';
-import { actions as commonActions } from 'pages/common/slice';
-import { OrganizationRegisterDetailsSchema, OrganizationUpdateDetailsSchema } from '../validate';
-import { Button } from 'antd';
+import { OrganizationUpdateDetailsSchema } from '../validate';
 import { useNavigate } from 'react-router-dom';
 import { getDataFromStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
@@ -23,13 +21,12 @@ function OrganizationProfile() {
         resolver: yupResolver(OrganizationUpdateDetailsSchema)
     });
     const { userId = '' } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || {};
-    console.log(userId, '111111111111111111111userID')
+
     const onSubmit = (data) => {
         const finalParams = {
             ...data,
             userId
         };
-        console.log(finalParams, '111111111111111111111')
         dispatch(updateOrganizationDetails(finalParams));
     };
 

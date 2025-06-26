@@ -11,6 +11,7 @@ import './i18n';
 import App from 'App';
 import { ChakraProvider } from '@chakra-ui/react';
 import CustomToast from 'pages/common/components/CutomToast';
+import CustomAlert from 'pages/common/components/CustomAlert';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -36,6 +37,7 @@ root.render(
     <ChakraProvider resetCSS={false}>
       <App />
       <CustomToast />
+      <CustomAlert />
     </ChakraProvider>
   </Provider>
 );

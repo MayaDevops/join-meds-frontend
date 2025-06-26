@@ -43,7 +43,7 @@ const CustomToast = () => {
   useEffect(() => {
     if (open) {
       toast({
-        duration: 2000,
+        duration: 3000,
         isClosable: true,
         position: 'top-right',
         render: () => (

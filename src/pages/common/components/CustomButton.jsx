@@ -4,7 +4,7 @@ import { Button } from '@chakra-ui/react';
 // import { ArrowRightIcon, SaveIcon } from 'assets';
 
 const CustomButton = ({
-  buttonColor = '#FFC537',
+  buttonColor = '#00A4E1',
   hoverColor = '#e6b800',
   colorScheme = 'teal',
   variant = 'solid',

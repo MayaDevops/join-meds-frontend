@@ -25,7 +25,7 @@ const initialState = {
       correction: false
     }
   },
-   alertAction: {},
+  alertAction: {},
 };
 
 const slice = createSlice({
