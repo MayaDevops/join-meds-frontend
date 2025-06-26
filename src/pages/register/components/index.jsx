@@ -1,0 +1,141 @@
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { createOrganizationDetails } from '../actions';
+import { actions as commonActions } from 'pages/common/slice';
+import { OrganizationRegisterDetailsSchema } from '../validate';
+
+function OrganisationRegister() {
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'all',
+    resolver: yupResolver(OrganizationRegisterDetailsSchema)
+  });
+
+  const onSubmit = (data) => {
+    dispatch(createOrganizationDetails(data));
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-start min-h-screen pt-24 pb-10 px-4 bg-white">
+      {/* Banner */}
+      <div className="w-full max-w-full rounded-t-xl overflow-hidden">
+        <div className="bg-gradient-to-b from-[#D1EEFC] to-white px-6 pt-8 pb-4">
+          <h2 className="text-xl font-semibold text-center">
+            Welcome to <span className="font-bold text-[#2E97F0]">Join</span>
+            <span className="font-bold text-[#00B5D8]">Meds</span>
+          </h2>
+          <p className="text-sm text-center text-gray-700">
+            Create an Organisation Account
+          </p>
+        </div>
+      </div>
+
+      {/* Form */}
+      <form
+        className="w-full max-w-[80%] bg-white px-6 py-6 space-y-6 shadow-md rounded-b-xl"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">
+              Name of business/organisation
+            </label>
+            <input
+              type="text"
+              {...register('orgName')}
+              placeholder="Enter your Name of business/organisation"
+              className="w-full border border-gray-400 rounded-md px-4 py-2"
+              autoComplete='off'
+            />
+            {errors.orgName && <p className="text-red-500 text-sm">{errors.orgName.message}</p>}
+          </div>
+
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">Official Email id</label>
+            <input
+              type="email"
+              {...register('officialEmail')}
+              placeholder="Enter your Official Email id"
+              className="w-full border border-gray-400 rounded-md px-4 py-2"
+              autoComplete='off'
+            />
+            {errors.officialEmail && <p className="text-red-500 text-sm">{errors.officialEmail.message}</p>}
+          </div>
+
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">Incorporation No.</label>
+            <input
+              type="text"
+              {...register('incorporationNo')}
+              placeholder="Enter your incorporation no."
+              className="w-full border border-gray-400 rounded-md px-4 py-2"
+              autoComplete='off'
+            />
+            {errors.incorporationNo && <p className="text-red-500 text-sm">{errors.incorporationNo.message}</p>}
+          </div>
+
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">Mobile Number</label>
+            <input
+              type="tel"
+              {...register('emailMobile')}
+              placeholder="Enter your mobile number"
+              className="w-full border border-gray-400 rounded-md px-4 py-2"
+              autoComplete='off'
+            />
+            {errors.emailMobile && <p className="text-red-500 text-sm">{errors.emailMobile.message}</p>}
+          </div>
+
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">Password</label>
+            <input
+              type="password"
+              {...register('password')}
+              placeholder="Enter your password"
+              className="w-full border border-gray-400 rounded-md px-4 py-2"
+              autoComplete='off'
+            />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+          </div>
+
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">Confirm Password</label>
+            <input
+              type="password"
+              {...register('confirmPassword')}
+              placeholder="Confirm your password"
+              className="w-full border border-gray-400 rounded-md px-4 py-2"
+              autoComplete='off'
+            />
+            {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
+          </div>
+        </div>
+
+        <div className="flex gap-4 mt-6">
+          <button
+            type="button"
+            className="w-full bg-gray-300 text-black font-semibold py-2 rounded-md hover:bg-gray-400"
+          >
+            Home
+          </button>
+          <button
+            type="submit"
+            className="w-full bg-[#00A4E1] text-white font-semibold py-2 rounded-md hover:bg-[#008FCC]"
+          >
+            Continue
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default OrganisationRegister;

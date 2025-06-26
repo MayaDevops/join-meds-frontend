@@ -1,0 +1,15 @@
+.label-with-line {
+  display: flex;
+  align-items: center;
+}
+
+.label-text {
+  margin-right: 10px; /* space between the label and the line */
+  /* font-weight: bold; */
+}
+
+.horizontal-line {
+  flex-grow: 1; /* makes the line stretch */
+  height: 0.1px;
+  background-color: #255C57; /* color of the line */
+}

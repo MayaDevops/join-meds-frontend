@@ -1,0 +1,284 @@
+/* Reset margin, padding, and ensure full height */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Hide the default window scrollbar */  
+}
+
+#root {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure the root takes the full height */
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1px solid #9E9E9E80;
+}
+
+/* Header content that should be hidden on mobile screens */
+.header-right-content {
+  display: flex; /* Default display */
+}
+
+.back-to-top-button {
+  position: absolute;
+  bottom: 90px;
+  right: 0px;
+  background-color: #fefefe09;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+/* Hide on mobile screens */
+@media (max-width: 640px) {
+  .header-right-content {
+    display: none;
+  }
+}
+.header-content {
+  flex-grow: 1;
+  overflow-y: auto; /* Allow scrolling inside the header */
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  height: 100%;
+}
+
+/* Main content wrapper */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 60px;
+  min-height: calc(100vh - 75px); /* Ensure footer is always at the bottom */
+  transition: margin-left 0.3s ease;
+}
+
+/* Expand the sidebar and adjust main content margin when on the dashboard path */
+.sidebar.w-full-expanded.dashboard-expanded ~ .main-content {
+  margin-left: 250px;
+}
+
+
+/* Content wrapper with custom scrollbar */
+.content-wrapper {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+/* Footer */
+.footer {
+  background-color: #EAF1F3;
+  padding: 20px;
+  text-align: center;
+  z-index: 1000;
+  margin-top: auto; /* Pushes footer to the bottom */
+  position: relative;
+  bottom: -55px;
+}
+
+/* Custom Scrollbar Styles */
+.custom-scroll-container {
+  scrollbar-width: auto;
+  scrollbar-color: #22cbd74c transparent; /* Firefox */
+}
+
+/* Chrome, Edge, and Safari */
+.custom-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scroll-container::-webkit-scrollbar-track {
+  background: #e4e4e4;
+}
+
+.custom-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #2acea83b;
+  border-radius: 99px;
+}
+
+.customInput {
+  position: relative;
+}
+.customInput-span{
+  position:absolute;
+  right: 10px;
+  border-radius: 5.673px;
+  background: #DCF6F3;
+  padding: 5px;
+  color: var(--Turquoise-Text-blue, #255C57);
+  font-size: 16px;
+  font-weight: 500;
+
+}
+
+
+
+/* AntdCustomTable.css */
+
+/* Set the table cell background color */
+.custom-table .ant-table-tbody > tr > td {
+  background-color: #fefefe; /* Light blue color */
+}
+
+/* Set the border for each column */
+.custom-table .ant-table-tbody > tr > td,
+.custom-table .ant-table-thead > tr > th {
+  border: 1px solid rgb(225, 246, 246); /* Blue border color */
+}
+
+/* Set the header background color */
+
+.custom-table .ant-table-thead > tr > th {
+  background-color: #daeaf1e7; /* Light gray-blue */
+  color: #174067; /* Dark blue text */
+  font-weight: bold;
+}
+
+/* Set hover effects for table rows */
+.custom-table .ant-table-tbody > tr:hover > td {
+  background-color: #23e1d7; /* Slightly different blue on hover */
+}
+
+
+.editable-cell {
+  /* width: 80px;  */
+  overflow: hidden; /* Hide any overflow */
+  padding: 0px;
+}
+
+
+/* Sidebar hidden on mobile by default */
+@media (max-width: 768px) {
+
+  .main-content {
+    margin-left: 0px;
+  }
+
+  .sidebar.w-full-expanded.dashboard-expanded ~ .main-content {
+    margin-left: 0px;
+  }
+}
+
+.notification-div {
+  width: 48.3px;
+  height: 39.72px;
+  gap: 0px;
+  border-radius: 6.62px;
+  background: #27D7A21A;
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: center;     /* Centers content vertically */
+}
+
+.css-fgp5ep {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex
+;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-bottom: -1px;
+  border-bottom: none;
+}
+
+.css-fgp5ep {
+  display: flex
+;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin-bottom: -1px;
+  border-bottom: none;
+  gap: 2px;
+}
+
+.css-3yikpd-container {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 45px !important;
+}
+
+
+.custom-summary td {
+  border: 1px solid rgb(225, 246, 246) !important;
+  /* Ensure borders appear */
+  text-align: center;
+  /* Align text properly */
+  font-weight: bold;
+  background-color: #F8F8FF;
+  /* Light background for distinction */
+}
+
+.ant-table-cell {
+  padding: 10px !important;
+}
+
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  line-height: 1;
+  z-index: 10;
+}
+
+
+.css-fgp5ep {
+  display: -ms-flexbox;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin-bottom: -1px;
+  border-bottom: none;
+  gap: 2px;
+  background-color: #e6e6e6;
+  border-radius: 20px;
+}
+
+.css-175b7lq {
+  background: none;
+}
