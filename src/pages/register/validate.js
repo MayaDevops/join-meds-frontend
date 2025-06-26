@@ -46,7 +46,7 @@ export const OrganizationRegisterDetailsSchema = yup.object().shape({
         .string()
         .required(t('isRequired', { type: t('Confirm Password') }))
         .min(6, t('mustBeAtLeast', { type: t('Confirm Password'), count: 7, unit: t('characters') }))
-        .oneOf([yup.ref('password')], t('passwordMismatch', { type: t('Confirm Password') }))
+        .oneOf([yup.ref('password')], t('Password Mismatch', { type: t('Confirm Password') }))
 
 })
     .required();
