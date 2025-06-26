@@ -5,9 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { createOrganizationDetails } from '../actions';
 import { actions as commonActions } from 'pages/common/slice';
 import { OrganizationRegisterDetailsSchema } from '../validate';
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 function OrganisationRegister() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -19,7 +22,11 @@ function OrganisationRegister() {
   });
 
   const onSubmit = (data) => {
-    dispatch(createOrganizationDetails(data));
+    const finalParams = {
+      ...data,
+      userType: 'ORGANIZATION'
+    };
+    dispatch(createOrganizationDetails(finalParams));
   };
 
   return (
@@ -119,16 +126,19 @@ function OrganisationRegister() {
           </div>
         </div>
 
-        <div className="flex gap-4 mt-6">
+        <div className="flex justify-end gap-4 mt-6">
+
           <button
             type="button"
-            className="w-full bg-gray-300 text-black font-semibold py-2 rounded-md hover:bg-gray-400"
+            className="bg-[#717e83] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#008FCC]"
+            onClick={() => navigate('/')}
+
           >
-            Home
+            Back
           </button>
           <button
             type="submit"
-            className="w-full bg-[#00A4E1] text-white font-semibold py-2 rounded-md hover:bg-[#008FCC]"
+            className="bg-[#00A4E1] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#008FCC]"
           >
             Continue
           </button>

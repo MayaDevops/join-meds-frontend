@@ -33,3 +33,19 @@ export const saveOrganizationDetailsApi = (data) => {
     }
   };
 };
+
+export const updateOrganizationDetailsApi = (data) => {
+  console.log(data,'1111111111111111dataapi')
+  return {
+    url: API_URL.JOINT_MEDS.ORGANIZATION.UPDATE_ORG.replace(':id', data?.userId),
+    method: REQUEST_METHOD.PUT,
+    payload: {
+      types: [
+        ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_REQUEST,
+        ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS,
+        ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_FAILURE
+      ],
+      data
+    }
+  };
+};

@@ -5,7 +5,8 @@ import { STATE_REDUCER_KEY } from './constants';
 
 const initialState = {
   country: {},
-   organizationRegisterDetails: {},
+  organizationRegisterDetails: {},
+  organizationRegisterUpdateDetails: {},
 };
 
 const slice = createSlice({
@@ -13,8 +14,11 @@ const slice = createSlice({
   name: STATE_REDUCER_KEY,
   reducers: {
     clearAll: () => initialState,
-      setOrganizationRegisterDetails: (state, { payload }) => {
+    setOrganizationRegisterDetails: (state, { payload }) => {
       _.set(state, 'organizationRegisterDetails', payload);
+    },
+     setUpdateOrganizationRegisterDetails: (state, { payload }) => {
+      _.set(state, 'organizationRegisterUpdateDetails', payload);
     },
   },
   extraReducers: (builder) => {

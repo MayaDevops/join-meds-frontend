@@ -1,7 +1,6 @@
-import { utils } from 'common/components';
+import { encryption } from '../common/utils/index';
 
 const { VITE_SECRET } = import.meta.env;
-const { encryption } = utils;
 const {
   setDataToStorage, getDataFromStorage, encrypt, decrypt
 } = encryption.createEncryptionFunctions(VITE_SECRET);

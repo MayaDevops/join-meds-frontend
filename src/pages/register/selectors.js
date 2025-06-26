@@ -8,3 +8,6 @@ export const getCountry = flow(getCommonData, country);
 
 const organizationRegisterDetails = (state) => state.organizationRegisterDetails;
 export const getOrganizationRegisterDetails = flow(getCommonData, organizationRegisterDetails);
+
+const organizationRegisterUpdateDetails = (state) => state.organizationRegisterUpdateDetails;
+export const getOrganizationRegisterUpdateDetails = flow(getCommonData, organizationRegisterUpdateDetails);
