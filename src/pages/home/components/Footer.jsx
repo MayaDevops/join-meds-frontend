@@ -7,7 +7,6 @@ import React from 'react';
 function Fooder() {
   return (
     <footer className="bg-[#029dbc] text-white py-10 px-10 md:px-32">
-
       <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between gap-12">
         {/* Logo & Description */}
         <div className="flex flex-col gap-4 max-w-md">
@@ -24,8 +23,7 @@ function Fooder() {
           </p>
           {/* Social Icons */}
           <div className="flex gap-4 text-white mt-2">
-            <FacebookIcon />
-            
+            <FacebookIcon />            
             <InstagramIcon />
             <LinkedInIcon />
           </div>
@@ -39,7 +37,7 @@ function Fooder() {
           </p>
           <p className="mt-3">
             <strong className="text-white">Phone:</strong><br />
-            <FacebookIcon />+918086664419, +917558885566
+            +918086664419, +917558885566
           </p>
           <p className="mt-3">
             <strong className="text-white">Email:</strong><br />

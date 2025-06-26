@@ -1,16 +1,18 @@
-import Header from 'pages/home/components/Header'
-import Footer from 'pages/home/components/Footer'
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import React from 'react'
+import Header from 'pages/home/components/Header';
+import Footer from 'pages/home/components/Footer';
 
 const HomeLayout = () => {
-    return (
-        <div>
-            <Header />
-            <Outlet />
-            <Footer />
-        </div>
-    )
-}
+  const [headerProps, setHeaderProps] = useState({});
 
-export default HomeLayout
+  return (
+    <div>
+      <Header {...headerProps} />
+      <Outlet context={{ setHeaderProps }} />
+      <Footer />
+    </div>
+  );
+};
+
+export default HomeLayout;

@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { createOrganizationDetails } from '../actions';
 import { OrganizationRegisterDetailsSchema } from '../validate';
 import { useNavigate } from 'react-router-dom';
+import { NUM_ONLY } from 'common/regex';
 
 function OrganisationRegister() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function OrganisationRegister() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors }, setValue
   } = useForm({
     mode: 'all',
     resolver: yupResolver(OrganizationRegisterDetailsSchema)
@@ -28,6 +29,11 @@ function OrganisationRegister() {
       userType: 'ORGANIZATION'
     };
     dispatch(createOrganizationDetails(finalParams));
+  };
+
+  const mobileNoChange = (e) => {
+    const NUMBER_ONLY = e.target.value.replace(NUM_ONLY, '');
+    setValue('emailMobile', NUMBER_ONLY);
   };
 
   return (
@@ -61,6 +67,7 @@ function OrganisationRegister() {
               placeholder="Enter your Name of business/organisation"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
               autoComplete="off"
+              maxLength={200}
             />
             {errors.orgName && <p className="text-red-500 text-sm">{errors.orgName.message}</p>}
           </div>
@@ -85,6 +92,7 @@ function OrganisationRegister() {
               placeholder="Enter your incorporation no."
               className="w-full border border-gray-400 rounded-md px-4 py-2"
               autoComplete="off"
+              maxLength={100}
             />
             {errors.incorporationNo && <p className="text-red-500 text-sm">{errors.incorporationNo.message}</p>}
           </div>
@@ -98,6 +106,7 @@ function OrganisationRegister() {
               className="w-full border border-gray-400 rounded-md px-4 py-2"
               autoComplete="off"
               maxLength={10}
+              onChange={mobileNoChange}
             />
             {errors.emailMobile && <p className="text-red-500 text-sm">{errors.emailMobile.message}</p>}
           </div>
@@ -112,6 +121,8 @@ function OrganisationRegister() {
                 placeholder="Enter your password"
                 className="w-full border border-gray-400 rounded-md px-4 py-2 pr-12"
                 autoComplete="off"
+                maxLength={15}
+
               />
               <span
                 onClick={() => setShowPassword(!showPassword)}
@@ -133,6 +144,8 @@ function OrganisationRegister() {
                 placeholder="Confirm your password"
                 className="w-full border border-gray-400 rounded-md px-4 py-2 pr-12"
                 autoComplete="off"
+                maxLength={15}
+
               />
               <span
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}

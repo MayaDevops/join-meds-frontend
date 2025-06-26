@@ -2,7 +2,7 @@
 import { lazy } from 'react';
 
 
-const Home = lazy(() => import('pages/home/components'));
+const Home = lazy(() => import('pages/home/components/WebPortalWrapper'));
 const Register = lazy(() => import('pages/register/components'));
 
 export const routes = [
