@@ -110,20 +110,21 @@ function* invokeApi(method, url, payload) {
   const commonConfig = yield select(getCommonConfigSelector);
   const bearerToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
 
-  if (_.isEmpty(bearerToken) && (!checkWhiteListUrlWithParam(url))) {
-    apiStatus.tokenExpired = true;
-    // const logoutAction = () => {
-    //   store.dispatch(logoutUser());
-    // };
-    // yield put(commonServicesSliceActions.setLoader(false));
-    yield put(commonActions.setAlertToast({
-      open: true,
-      variant: 'error',
-      title: t('yourSessionExpiredInactivity'),
-      message: t('timedOutDueInactivityLongTimeDontWorry'),
-    }));
-    return { response: {}, error: {} };
-  }
+  // if (_.isEmpty(bearerToken) &&  (!checkWhiteListUrlWithParam(url))) {
+  //   console.log(checkWhiteListUrlWithParam(url),_.isEmpty(bearerToken),bearerToken, '111111111111')
+  //   apiStatus.tokenExpired = true;
+  //   // const logoutAction = () => {
+  //   //   store.dispatch(logoutUser());
+  //   // };
+  //   // yield put(commonServicesSliceActions.setLoader(false));
+  //   yield put(commonActions.setAlertToast({
+  //     open: true,
+  //     variant: 'error',
+  //     title: t('yourSessionExpiredInactivity'),
+  //     message: t('timedOutDueInactivityLongTimeDontWorry'),
+  //   }));
+  //   return { response: {}, error: {} };
+  // }
 
   apiStatus.tokenExpired = false;
 
@@ -141,7 +142,7 @@ function* invokeApi(method, url, payload) {
   if (isDocument) {
     _.set(config, 'responseType', 'blob');
   }
-  
+  console.log(api, config, baseURL, data, '1111111111http');
   yield put(requestAction({ isLoading: true, status: REQUEST_STATUS.PROGRESS }));
   const apiResponse = yield call(api, url, { config, baseURL, data });
   const { data: response, error } = apiResponse;
