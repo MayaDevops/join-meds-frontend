@@ -1,7 +1,7 @@
-/* eslint-disable no-nested-ternary */
+ 
 import React from 'react';
 import { Button } from '@chakra-ui/react';
-import { ArrowRightIcon, SaveIcon } from 'assets';
+// import { ArrowRightIcon, SaveIcon } from 'assets';
 
 const CustomButton = ({
   buttonColor = '#FFC537',
@@ -40,8 +40,8 @@ const CustomButton = ({
   };
 
   const renderIcon = () => {
-    if (text === 'submit') return <span className="ml-2"><ArrowRightIcon /></span>;
-    if (text === 'save') return <span className="ml-2"><SaveIcon /></span>;
+    if (text === 'submit') return <span className="ml-2"></span>;
+    if (text === 'save') return <span className="ml-2"></span>;
     return null;
   };
 

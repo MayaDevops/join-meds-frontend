@@ -9,12 +9,12 @@ import {
   Heading
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux'; //
-import {
-  ErrorInfo, InfoIcon, ModalClose, TimerSnoozeZzz
-} from 'assets';
-import { actions as commonServicesSliceActions } from '../../commonServices/slice';
-import { getAlertAction } from '../../commonServices/selectors';
+// import {
+//   ErrorInfo, InfoIcon, ModalClose, TimerSnoozeZzz
+// } from 'assets';
+import { actions as commonServicesSliceActions } from 'pages/common/slice';
 import CustomButton from './CustomButton';
+import { getAlertAction } from '../selectors';
 
 const CustomAlert = () => {
   const dispatch = useDispatch();
@@ -43,19 +43,19 @@ const CustomAlert = () => {
       case 'error':
         return (
           <div className="bg-[#FFEBEE] p-1 rounded-md">
-            <ErrorInfo />
+            {/* <ErrorInfo /> */}
           </div>
         );
       case 'sessionExpired':
         return (
           <div className="bg-[#E6F4FF] p-1 rounded-md">
-            <TimerSnoozeZzz />
+            {/* <TimerSnoozeZzz /> */}
           </div>
         );
       default:
         return (
           <div className="bg-[#FFD65A] p-1 rounded-md">
-            <InfoIcon />
+            {/* <InfoIcon /> */}
           </div>
         );
     }
@@ -84,7 +84,9 @@ const CustomAlert = () => {
               </p>
             </div>
           </div>
-          <span onClick={backwardAction} className="text-gray-500 hover:text-gray-700"><ModalClose /></span>
+          <span onClick={backwardAction} className="text-gray-500 hover:text-gray-700">
+            {/* <ModalClose /> */}
+          </span>
         </ModalHeader>
 
         <ModalFooter className="flex justify-center gap-4">

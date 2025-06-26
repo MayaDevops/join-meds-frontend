@@ -1,77 +1,72 @@
 import React, { useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
-import { actions as commonServicesSliceActions } from 'pages/common/slice';
-import { getToastAction } from '../selectors';
 import { CheckSvg } from 'assets';
-
-const CustomToast = ({open = true,
-    variant = 'default',
-    message = ''}) => {
+import { getToastAction } from '../selectors';
+import { actions as commonActions } from '../slice';
+ 
+const CustomToast = () => {
   const toast = useToast();
   const dispatch = useDispatch();
-  const toastAction = useSelector(getToastAction) || {};
-console.log(toastAction,'111111111toastAction')
-  // const {
-  //   open = true,
-  //   variant = 'default',
-  //   message = ''
-  // } = toastAction;
-
+  const { open = false, variant = 'default', message = '' } = useSelector(getToastAction);
+ 
   const variantColors = {
     success: {
       bg: '#EBFFD8',
-      text: 'text-green-900',
-      border: 'border-green-600',
+      text: 'text-white',
+      border: 'border-l-[5px] border-[#328E6E]',
       icon: <CheckSvg />
     },
     error: {
-      bg: '#FEE2E2',
-      text: 'text-red-800',
-      border: 'border-red-600',
+      bg: '#E55050',
+      text: 'text-white',
+      border: 'border-l-[5px] border-red-800',
       icon: '❌'
     },
     warning: {
-      bg: '#FEF3C7',
-      text: 'text-yellow-800',
-      border: 'border-yellow-600',
+      bg: 'bg-yellow-400',
+      text: 'text-yellow-900',
+      border: 'border-l-[5px] border-yellow-600',
       icon: '⚠️'
     },
     default: {
-      bg: '#DBEAFE',
-      text: 'text-blue-900',
-      border: 'border-blue-600',
+      bg: 'bg-blue-500',
+      text: 'text-white',
+      border: 'border-l-[5px] border-blue-700',
       icon: 'ℹ️'
     }
   };
-
-  const { bg, text, border, icon } = variantColors[variant] || variantColors.default;
-
+ 
+  const variantColor = variantColors[variant] || variantColors.default;
+  const { bg, text, border, icon } = variantColor;
+ 
   useEffect(() => {
-    if (open && message) {
+    if (open) {
       toast({
-        duration: 2500,
+        duration: 2000,
         isClosable: true,
         position: 'top-right',
         render: () => (
           <div
-            style={{ backgroundColor: bg }}
-            className={`rounded-md border-l-4 ${border} shadow-md p-4 max-w-sm flex items-start space-x-4`}
+            style={bg.startsWith('#') ? { backgroundColor: bg } : {}}
+            className={`${bg.startsWith('#') ? '' : bg} ${text} ${border} rounded-lg shadow-xl p-5 max-w-sm flex items-start space-x-4`}
+            role="alert"
           >
-            <div className="text-xl mt-1">{icon}</div>
-            <div className={`flex-1 ${text}`}>
-              <p className="text-sm font-medium">{message}</p>
+            <div className="text-3xl flex-shrink-0 mt-[2px]">{icon}</div>
+            <div>
+              <p className="text-md text-[#000000] text-center">{message}</p>
             </div>
           </div>
         )
       });
-
-      // Clear toast state
-      dispatch(commonServicesSliceActions.setAlertToast({}));
+ 
+      // Reset the alertToast in redux
+      dispatch(commonActions.setAlertToast({ open: false }));
     }
-  }, [open, toast, message, bg, text, border, icon, dispatch, variant]);
-
+  }, [open, toast, message, bg, text, border, variant, icon, dispatch]);
+ 
   return null;
 };
-
+ 
 export default CustomToast;
+ 

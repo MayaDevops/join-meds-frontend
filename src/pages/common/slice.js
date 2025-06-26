@@ -24,7 +24,8 @@ const initialState = {
       body: 'md:col-span-10',
       correction: false
     }
-  }
+  },
+   alertAction: {},
 };
 
 const slice = createSlice({
@@ -46,6 +47,9 @@ const slice = createSlice({
     setAlertToast: (state, { payload = null }) => {
       console.log(payload,'1111111111111111')
       _.set(state, 'alertToast', payload);
+    },
+     setAlertAction: (state, { payload = null }) => {
+      _.set(state, 'alertAction', payload);
     },
   },
   extraReducers: (builder) => {

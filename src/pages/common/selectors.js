@@ -15,4 +15,7 @@ export const getLayoutColumns = flow(getCommonData, layoutColumns);
 const alertToast = (state) => state?.alertToast;
 export const getToastAction = flow(getCommonData, alertToast);
 
+const alertAction = (state) => state?.alertAction;
+export const getAlertAction = flow(getCommonData, alertAction);
+
 

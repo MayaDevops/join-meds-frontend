@@ -1,4 +1,4 @@
-import { EMAIL, EN_SPECIAL_NUMBERS, NO_LEAD_TRAIL_SPACE } from 'common/regex';
+import { EMAIL, EN_SPECIAL_NUMBERS, NO_LEAD_TRAIL_SPACE, NUM_ONLY } from 'common/regex';
 import { t } from 'pages/common/components';
 import * as yup from 'yup';
 
@@ -105,7 +105,7 @@ export const OrganizationUpdateDetailsSchema = yup.object().shape({
         jobDesc: yup.string()
             .transform((value) => value.trim())
             .required(t('isRequired', { type: t('Job Description') }))
-            .max(200, t('shouldNotBeGreaterThan', { type: t('Job Description'), count: '200', unit: t('character') }))
+            .max(200, t('shouldNotBeGreaterThan', { type: t('Job Description'), count: '2500', unit: t('character') }))
             .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Job Description') }))
 
 

@@ -1,1 +1,1 @@
-export const STATE_REDUCER_KEY = 'common';
+export const STATE_REDUCER_KEY = 'common-home';

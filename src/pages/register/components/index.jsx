@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createOrganizationDetails } from '../actions';
-import { actions as commonActions } from 'pages/common/slice';
 import { OrganizationRegisterDetailsSchema } from '../validate';
-import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 function OrganisationRegister() {
@@ -20,6 +18,9 @@ function OrganisationRegister() {
     mode: 'all',
     resolver: yupResolver(OrganizationRegisterDetailsSchema)
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit = (data) => {
     const finalParams = {
@@ -50,7 +51,6 @@ function OrganisationRegister() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
-
           <div>
             <label className="block font-medium text-gray-800 mb-1">
               Name of business/organisation
@@ -60,7 +60,7 @@ function OrganisationRegister() {
               {...register('orgName')}
               placeholder="Enter your Name of business/organisation"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete='off'
+              autoComplete="off"
             />
             {errors.orgName && <p className="text-red-500 text-sm">{errors.orgName.message}</p>}
           </div>
@@ -72,7 +72,7 @@ function OrganisationRegister() {
               {...register('officialEmail')}
               placeholder="Enter your Official Email id"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete='off'
+              autoComplete="off"
             />
             {errors.officialEmail && <p className="text-red-500 text-sm">{errors.officialEmail.message}</p>}
           </div>
@@ -84,7 +84,7 @@ function OrganisationRegister() {
               {...register('incorporationNo')}
               placeholder="Enter your incorporation no."
               className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete='off'
+              autoComplete="off"
             />
             {errors.incorporationNo && <p className="text-red-500 text-sm">{errors.incorporationNo.message}</p>}
           </div>
@@ -96,43 +96,61 @@ function OrganisationRegister() {
               {...register('emailMobile')}
               placeholder="Enter your mobile number"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete='off'
+              autoComplete="off"
+              maxLength={10}
             />
             {errors.emailMobile && <p className="text-red-500 text-sm">{errors.emailMobile.message}</p>}
           </div>
 
+          {/* Password Field with toggle */}
           <div>
             <label className="block font-medium text-gray-800 mb-1">Password</label>
-            <input
-              type="password"
-              {...register('password')}
-              placeholder="Enter your password"
-              className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete='off'
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                {...register('password')}
+                placeholder="Enter your password"
+                className="w-full border border-gray-400 rounded-md px-4 py-2 pr-12"
+                autoComplete="off"
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-2.5 text-sm text-blue-600 cursor-pointer"
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </span>
+            </div>
             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 
+          {/* Confirm Password Field with toggle */}
           <div>
             <label className="block font-medium text-gray-800 mb-1">Confirm Password</label>
-            <input
-              type="password"
-              {...register('confirmPassword')}
-              placeholder="Confirm your password"
-              className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete='off'
-            />
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                {...register('confirmPassword')}
+                placeholder="Confirm your password"
+                className="w-full border border-gray-400 rounded-md px-4 py-2 pr-12"
+                autoComplete="off"
+              />
+              <span
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-2.5 text-sm text-blue-600 cursor-pointer"
+              >
+                {showConfirmPassword ? 'Hide' : 'Show'}
+              </span>
+            </div>
             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
           </div>
         </div>
 
+        {/* Action Buttons */}
         <div className="flex justify-end gap-4 mt-6">
-
           <button
             type="button"
-            className="bg-[#717e83] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#008FCC]"
+            className="bg-[#717e83] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#5c6a70]"
             onClick={() => navigate('/')}
-
           >
             Back
           </button>

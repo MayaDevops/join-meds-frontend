@@ -7,6 +7,7 @@ import OrganizationProfile from './pages/register/components/OrganizationProfile
 
 import { ChakraProvider } from '@chakra-ui/react';
 import CustomToast from 'pages/common/components/CutomToast';
+import Navigator from 'pages/common/components/Navigator';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="ui/join-meds/register/profile" element={<OrganizationProfile />} />
         </Route>
       </Routes>
-      {/* <CustomToast /> */}
+      <Navigator />
     </Router>
     // </ChakraProvider>
   );
