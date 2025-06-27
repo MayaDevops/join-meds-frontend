@@ -1,4 +1,4 @@
-name: 🚀 Deploy React App to VPS
+name: Deploy React App to VPS
 
 on:
   push:
@@ -10,24 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: ⚙️ Set up Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: 🔨 Build React App
+      - name: Build React App
         run: npm run build
 
-      - name: 🧪 Debug: Check build folder
-        run: ls -R build || echo "❌ Build folder not found"
+      - name: Check build folder
+        run: |
+          echo "Build folder contents:"
+          ls -R build || echo "Build folder not found"
 
-      - name: 📤 Upload build to VPS
+      - name: Upload build to VPS
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
