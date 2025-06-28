@@ -7,7 +7,6 @@ import { STORAGE_KEYS } from 'pages/common/constants';
 
 const ProtectedRoute = () => {
   const { id = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
-console.log(id,'1111111111111111id')
   // Optional: redirect if unauthenticated
   // const token = localStorage.getItem('token');
   // if (!token) return <Navigate to="/ui/join-meds/login" replace />;
