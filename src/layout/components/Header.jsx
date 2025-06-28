@@ -32,7 +32,7 @@ function Header({ toggleSidebar }) {
       {/* Right Side: Welcome + Logout Icon */}
       <div className="flex items-center gap-4">
         <span className="hidden md:block text-gray-700">Welcome, {orgName}</span>
-        <button onClick={handleLogout} className="text-[#00A4E1] hover:text-red-500">
+        <button onClick={handleLogout} className="text-[#00A4E1] hover:text-red-500 cursor-pointer">
           <ArrowRightOnRectangleIcon className="h-6 w-6" />
         </button>
       </div>

@@ -28,14 +28,16 @@ const CustomButton = ({
       padding: '5px 30px',
       backgroundColor: buttonColor,
       color: 'black',
-      _hover: { backgroundColor: hoverColor }
+      _hover: { backgroundColor: hoverColor },
+      cursor: 'pointer'
     },
     outline: {
       padding: '5px 30px',
       border: '1px solid',
       borderColor,
       color: 'black',
-      _hover: { backgroundColor: hoverColor }
+      _hover: { backgroundColor: hoverColor },
+      cursor: 'pointer'
     }
   };
 
