@@ -7,7 +7,7 @@ import {
   ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
-import JoinMedsLogo from '../../../assets/images/join_meds_side.png'; // ✅ Adjust path
+import JoinMedsLogo from '../../../assets/images/join_meds_side.png';
 
 const menuItems = [
   { name: 'Home', icon: HomeIcon, path: '/ui/join-meds/user/dashboard' },
@@ -25,11 +25,15 @@ function Sidebar({ isOpen, toggle }) {
     if (window.innerWidth < 768) toggle(); // Close on mobile
   };
 
+  // ✅ On mobile, don't render the sidebar unless it's open
+  const isMobile = window.innerWidth < 768;
+  if (isMobile && !isOpen) return null;
+
   return (
     <div
-      className={`transition-all duration-300 bg-[#00A4E1] text-white z-40
+      className={`transition-all duration-300 bg-[#00A4E1] text-white z-50
         ${isOpen ? 'w-64' : 'w-16'}
-        fixed md:relative top-0 left-0 h-screen flex flex-col justify-between
+        fixed md:relative top-0 left-0 h-screen flex flex-col justify-between shadow-md
       `}
     >
       {/* Top Section */}
@@ -58,13 +62,15 @@ function Sidebar({ isOpen, toggle }) {
       </div>
 
       {/* Bottom Logo */}
-      <div className="w-full flex justify-center p-4">
-        <img
-          src={JoinMedsLogo}
-          alt="JoinMeds Logo"
-          className="w-60 h-60 object-cover rounded-xl shadow-lg border-2 border-white"
-        />
-      </div>
+      {isOpen && (
+        <div className="w-full flex justify-center p-4">
+          <img
+            src={JoinMedsLogo}
+            alt="JoinMeds Logo"
+            className="w-60 h-60 object-cover rounded-xl shadow-lg border-2 border-white"
+          />
+        </div>
+      )}
     </div>
   );
 }
