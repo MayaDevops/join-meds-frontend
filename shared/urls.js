@@ -8,6 +8,9 @@ export const API_URL = {
     ORGANIZATION: {
       CREATE_ORG: 'api/user/signup',
       UPDATE_ORG: 'api/org/update/:id'
+    },
+    USER_LOGIN: {
+      LOGIN: 'api/user/login'
     }
   }
 

@@ -45,7 +45,6 @@ const slice = createSlice({
       _.set(state, 'layout.columns', { ...state.layout.columns, ...payload });
     },
     setAlertToast: (state, { payload = null }) => {
-      console.log(payload,'1111111111111111')
       _.set(state, 'alertToast', payload);
     },
      setAlertAction: (state, { payload = null }) => {

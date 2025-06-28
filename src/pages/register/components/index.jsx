@@ -53,6 +53,7 @@ function OrganisationRegister() {
 
       {/* Form */}
       <form
+        autoComplete="off" 
         className="w-full max-w-[80%] bg-white px-6 py-6 space-y-6 shadow-md rounded-b-xl"
         onSubmit={handleSubmit(onSubmit)}
       >

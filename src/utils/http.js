@@ -142,7 +142,7 @@ function* invokeApi(method, url, payload) {
   if (isDocument) {
     _.set(config, 'responseType', 'blob');
   }
-  console.log(api, config, baseURL, data, '1111111111http');
+  
   yield put(requestAction({ isLoading: true, status: REQUEST_STATUS.PROGRESS }));
   const apiResponse = yield call(api, url, { config, baseURL, data });
   const { data: response, error } = apiResponse;

@@ -5,7 +5,7 @@ body, html {
   height: 100%;
   width: 100%;
   overflow: hidden; /* Hide the default window scrollbar */  
-  font-family: "Open Sans", sans-serif; /* Default font */
+  /* font-family: "Open Sans", sans-serif; Default font */
 }
 
 #root {

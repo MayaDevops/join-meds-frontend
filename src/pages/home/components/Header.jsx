@@ -45,9 +45,9 @@ function Header({ onNavigate, refs, activeSection, scrollProgress }) {
           <Button
             style={{ backgroundColor: '#00a4e1' }}
             type="primary"
-            onClick={() => navigate('/ui/join-meds/register')}
+            onClick={() => navigate('/ui/join-meds/login')}
           >
-            Register
+            Sign In
           </Button>
         </div>
 
@@ -69,11 +69,11 @@ function Header({ onNavigate, refs, activeSection, scrollProgress }) {
             style={{ backgroundColor: '#00a4e1', marginTop: '8px' }}
             type="primary"
             onClick={() => {
-              navigate('/ui/join-meds/register');
+              navigate('/ui/join-meds/login');
               setIsMenuOpen(false);
             }}
           >
-            Register
+            Sign In
           </Button>
         </div>
       )}

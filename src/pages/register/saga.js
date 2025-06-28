@@ -43,7 +43,7 @@ export function* saveOrganizationDetails({ payload = {} }) {
     yield put(commonActions.setAlertToast({
       open: true,
       variant: 'error',
-      message: 'Organization Details saved successfully',
+      message: 'Organization Details save failed. Please try again',
     }));
   }
 }
@@ -54,11 +54,12 @@ export function* updateOrganizationDetails({ payload = {} }) {
     ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS,
     ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_FAILURE]);
   if (type === ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS) {
+    localStorage.removeItem('userDetails');
     yield put(commonActions.setAlertAction({
       open: true,
       variant: 'success',
       message: 'Organization Details saved successfully',
-      title: t('milkAttendance'),
+      title: t('About Organization'),
       forwardActionText: t('ok'),
       forwardAction: () => { routeRedirect(`/`); },
     }));

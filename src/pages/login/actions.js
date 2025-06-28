@@ -1,0 +1,15 @@
+import { createAction } from '@reduxjs/toolkit';
+import { STATE_REDUCER_KEY } from './constants';
+
+export const ACTION_TYPES = {
+
+  VERIFY_LOGIN: `${STATE_REDUCER_KEY}/VERIFY_LOGIN`,
+  VERIFY_LOGIN_REQUEST: `${STATE_REDUCER_KEY}/VERIFY_LOGIN_REQUEST`,
+  VERIFY_LOGIN_SUCCESS: `${STATE_REDUCER_KEY}/VERIFY_LOGIN_SUCCESS`,
+  VERIFY_LOGIN_FAILURE: `${STATE_REDUCER_KEY}/VERIFY_LOGIN_FAILURE`
+
+};
+
+export const verifyLogin = createAction(ACTION_TYPES.VERIFY_LOGIN);
+
+
