@@ -5,7 +5,7 @@ import { Button } from '@chakra-ui/react';
 
 const CustomButton = ({
   buttonColor = '#00A4E1',
-  hoverColor = '#e6b800',
+  hoverColor = '#008FCC',
   colorScheme = 'teal',
   variant = 'solid',
   isLoading = false,

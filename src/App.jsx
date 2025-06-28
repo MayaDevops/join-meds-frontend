@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './layout/components/HomeLayout';
-import WebPortal from './pages/home/components/WebPortal';
+// import WebPortal from './pages/home/components/WebPortal';
+import OrganisationAuthLanding from './pages/login/components/OrganisationAuthLanding';
+
 import Login from './pages/login/components/Login';
 import Register from './pages/register/components';
 import OrganizationProfile from './pages/register/components/OrganizationProfile';
@@ -15,7 +17,7 @@ function App() {
       <Routes>
         {/* 🌐 Public layout */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<WebPortal />} />
+          <Route index element={<OrganisationAuthLanding />} />
           <Route path="ui/join-meds/login" element={<Login />} />
           <Route path="ui/join-meds/register" element={<Register />} />
         </Route>

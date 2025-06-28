@@ -26,7 +26,7 @@ function OrganizationProfile() {
     const onSubmit = (data) => {
         const finalParams = {
             ...data,
-            userId
+            userId:id || userId
         };
         dispatch(updateOrganizationDetails(finalParams));
     };

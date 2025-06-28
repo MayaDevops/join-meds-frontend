@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   HomeIcon,
   BriefcaseIcon,
@@ -19,18 +19,36 @@ const menuItems = [
 
 function Sidebar({ isOpen, toggle }) {
   const navigate = useNavigate();
+  const sidebarRef = useRef(null);
 
-  const handleNavigation = (path) => {
-    navigate(path);
+  const handleNavigation = (item) => {
+    if (item.name === 'Logout') {
+      localStorage.clear(); // Clear all localStorage
+    }
+    navigate(item.path);
     if (window.innerWidth < 768) toggle(); // Close on mobile
   };
 
-  // ✅ On mobile, don't render the sidebar unless it's open
+  // ✅ Detect clicks outside sidebar
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        if (isOpen && window.innerWidth < 768) {
+          toggle(); // Close sidebar
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen, toggle]);
+
   const isMobile = window.innerWidth < 768;
   if (isMobile && !isOpen) return null;
 
   return (
     <div
+      ref={sidebarRef}
       className={`transition-all duration-300 bg-[#00A4E1] text-white z-50
         ${isOpen ? 'w-64' : 'w-16'}
         fixed md:relative top-0 left-0 h-screen flex flex-col justify-between shadow-md
@@ -38,7 +56,6 @@ function Sidebar({ isOpen, toggle }) {
     >
       {/* Top Section */}
       <div>
-        {/* Header */}
         <div className="flex items-center justify-between p-4">
           {isOpen && <span className="text-lg font-bold">JoinMeds</span>}
           <button onClick={toggle} className="text-white hover:text-gray-200 cursor-pointer">
@@ -51,7 +68,7 @@ function Sidebar({ isOpen, toggle }) {
           {menuItems.map((item) => (
             <div
               key={item.name}
-              onClick={() => handleNavigation(item.path)}
+              onClick={() => handleNavigation(item)}
               className="flex items-center gap-4 px-3 py-2 hover:bg-[#008FCC] rounded cursor-pointer"
             >
               {item.icon && <item.icon className="h-5 w-5 flex-shrink-0" />}
