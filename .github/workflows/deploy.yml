@@ -1,4 +1,4 @@
-name: Deploy React App to VPS
+name: 🚀 Deploy Vite React App to VPS
 
 on:
   push:
@@ -10,29 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: ⬇️ Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: 🛠 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: 📦 Install Dependencies
         run: npm install
 
-      - name: Build React App
+      - name: 🏗 Build Project
         run: npm run build
 
-      - name: Check build folder
-        run: ls -R build || echo "Build folder not found"
+      - name: 📁 List Dist Folder (Debug)
+        run: ls -lh dist || echo "❌ No dist folder found"
 
-      - name: Upload build to VPS
+      - name: 🚀 Upload to VPS
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
-          source: "build/**/*"
+          source: "dist/*"
           target: "/var/www/html/react-app"
