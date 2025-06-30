@@ -43,7 +43,7 @@ function Dashboard() {
 
    useEffect(() => {
     if (!_.isEmpty(id)) {
-      console.log(dashBoardDetails,'1111111111111')
+      console.log(id,'1111111111111')
        dispatch(fetchDashboardInfo({userId:id}));
     }
   }, [id]);
