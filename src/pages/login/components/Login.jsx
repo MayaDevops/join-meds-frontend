@@ -38,8 +38,8 @@ function Login() {
       </div>
 
       {/* Right Login Form */}
-      <div className="lg:w-1/2 w-full flex flex-col items-center justify-center px-6 py-12 bg-white mt-10 sm:mt-0">
-        <div className="w-full max-w-md space-y-6 text-center">
+      <div className="lg:w-1/2 w-full flex flex-col items-center justify-center px-6 py-12 bg-white mt-15">
+        <div className="w-full max-w-sm space-y-6 text-center">
           {/* App Logo / Title */}
           <div className="flex items-center gap-4 mb-6 flex-wrap justify-center">
             <img src={Logo} alt="JoinMeds Logo" className="w-30 h-15" />
@@ -49,7 +49,7 @@ function Login() {
           {/* Login Form */}
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6 text-left"
+            className="space-y-6 text-left mt-10"
             autoComplete="off"
           >
             <div>
