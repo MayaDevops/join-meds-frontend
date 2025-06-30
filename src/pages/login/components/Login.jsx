@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import bannerPattern from '../../../assets/images/ad-banner.jpg'; // Replace with your actual path
+import bannerPattern from '../../../assets/images/all_in_1_bg.png'; // Replace with your actual path
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { _ } from 'utils/lodash';
 import { verifyLogin } from '../actions';
+import Logo from '../../../assets/images/Logo.png';
+import medLandLogo from '../../../assets/images/med-land-logo.jpg';
 
 function Login() {
   const navigate = useNavigate();
@@ -27,22 +29,21 @@ function Login() {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Banner */}
-      <div className="lg:w-1/2 w-full h-[200px] lg:h-auto">
+      <div className="hidden lg:block lg:w-1/2 h-auto">
         <img
           src={bannerPattern}
           alt="Login Banner"
-          className="w-full h-full object-cover"
+          className="w-full h-[750px] object-cover"
         />
       </div>
 
       {/* Right Login Form */}
-      <div className="lg:w-1/2 w-full flex flex-col items-center justify-center px-6 py-12 bg-white">
+      <div className="lg:w-1/2 w-full flex flex-col items-center justify-center px-6 py-12 bg-white mt-10 sm:mt-0">
         <div className="w-full max-w-md space-y-6 text-center">
           {/* App Logo / Title */}
-          <div className="flex justify-center">
-            <div className="bg-[#00A4E1] text-white rounded-full px-6 py-2 font-bold text-xl">
-              Join Meds
-            </div>
+          <div className="flex items-center gap-4 mb-6 flex-wrap justify-center">
+            <img src={Logo} alt="JoinMeds Logo" className="w-30 h-15" />
+            <h2 className="text-3xl font-bold text-gray-800">Organisation</h2>
           </div>
 
           {/* Login Form */}
@@ -78,20 +79,20 @@ function Login() {
             </div>
 
             <div className="flex justify-end gap-2">
-               <button
+              <button
                 type="button"
-                className="bg-[#b3c9d1] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#008FCC] cursor-pointer"
-                onClick={() => navigate('/')}
+                style={{ borderColor: '#00A4E1' }}
+                className="border-3 border-[#00A4E1] text-[#00A4E1] hover:bg-[#e6faff]  px-6 py-2 rounded-md font-semibold cursor-pointer"
+                onClick={() => navigate('/ui/join-meds/register')}
               >
-                Back
-              </button> 
-              
+                Sign Up
+              </button>
               <button
                 type="submit"
                 className="bg-[#00A4E1] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#008FCC] cursor-pointer"
               >
                 Login
-              </button>              
+              </button>
             </div>
           </form>
 
@@ -128,6 +129,9 @@ function Login() {
           >
             ← Back to Home
           </button> */}
+        </div>
+        <div className="mt-36 mb-6 flex justify-center">
+          <img src={medLandLogo} alt="Medland Logo" className="h-20" />
         </div>
       </div>
     </div>

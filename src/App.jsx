@@ -17,8 +17,8 @@ function App() {
       <Routes>
         {/* 🌐 Public layout */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<OrganisationAuthLanding />} />
-          <Route path="ui/join-meds/login" element={<Login />} />
+          <Route index element={<Login />} />
+          {/* <Route path="ui/join-meds/login" element={<Login />} /> */}
           <Route path="ui/join-meds/register" element={<Register />} />
         </Route>
 
