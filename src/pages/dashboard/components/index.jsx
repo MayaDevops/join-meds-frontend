@@ -10,36 +10,36 @@ import { useDispatch } from 'react-redux';
 import { getDataFromStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
 
-const jobList = [
-  {
-    title: 'Doctors MBBS & MD',
-    hospital: 'KIMSHEALTH Hospital Trivandrum',
-    datePosted: '21 January 2025',
-    rate: 'From ₹800 an hour',
-    jobType: 'Full-time'
-  },
-  {
-    title: 'Pharmacist',
-    hospital: 'Aster Medcity Kochi',
-    datePosted: '18 January 2025',
-    rate: '₹500/hour',
-    jobType: 'Part-time'
-  },
-  {
-    title: 'Nurse BSc',
-    hospital: 'Lakeshore Hospital',
-    datePosted: '16 January 2025',
-    rate: '₹700/hour',
-    jobType: 'Full-time'
-  }
-];
+// const jobList = [
+//   {
+//     title: 'Doctors MBBS & MD',
+//     hospital: 'KIMSHEALTH Hospital Trivandrum',
+//     datePosted: '21 January 2025',
+//     rate: 'From ₹800 an hour',
+//     jobType: 'Full-time'
+//   },
+//   {
+//     title: 'Pharmacist',
+//     hospital: 'Aster Medcity Kochi',
+//     datePosted: '18 January 2025',
+//     rate: '₹500/hour',
+//     jobType: 'Part-time'
+//   },
+//   {
+//     title: 'Nurse BSc',
+//     hospital: 'Lakeshore Hospital',
+//     datePosted: '16 January 2025',
+//     rate: '₹700/hour',
+//     jobType: 'Full-time'
+//   }
+// ];
 
 function Dashboard() {
  const dispatch = useDispatch();
   const dashBoardDetails = useSelector(getDashBoardInfo);
   const { id = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
 
-  // const [jobList, setJobList] = useState([]);
+  const [jobList, setJobList] = useState([]);
 
    useEffect(() => {
     if (!_.isEmpty(id)) {
@@ -51,7 +51,7 @@ function Dashboard() {
   useEffect(() => {
     if (!_.isEmpty(dashBoardDetails)) {
       console.log(dashBoardDetails,'1111111111111')
-      // setJobList(dashBoardDetails)
+      setJobList(dashBoardDetails)
     }
   }, [dashBoardDetails]);
 

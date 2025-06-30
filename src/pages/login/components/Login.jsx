@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import bannerPattern from '../../../assets/images/all_in_1_bg.png'; // Replace with your actual path
+import bannerPattern from '../../../assets/images/all_in_1_bg_new.png'; // Replace with your actual path
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { _ } from 'utils/lodash';
@@ -130,7 +130,7 @@ function Login() {
             ← Back to Home
           </button> */}
         </div>
-        <div className="mt-36 mb-6 flex justify-center">
+        <div className="mt-12 mb-6 flex justify-center">
           <img src={medLandLogo} alt="Medland Logo" className="h-20" />
         </div>
       </div>

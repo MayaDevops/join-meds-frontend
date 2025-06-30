@@ -4,13 +4,24 @@ import { useDispatch } from 'react-redux';
 import { actions as commonActions } from 'pages/common/slice';
 import { t } from 'pages/common/components';
 
-function JobCard({ title, hospital, datePosted, rate, jobType }) {
+function JobCard({ 
+aboutCompany = '',
+  jobHiringFor = '',
+  // yearExp = '',
+  // skillRequired = '',
+  natureJob = '',
+  payFrom = '',
+  payTo = '',
+  salaryRange = '',
+  // jobDesc = '',
+  createdAt=''
+}) {
   const dispatch = useDispatch();
 
-   const removeApplication = () => {  
+  const removeApplication = () => {
 
-      // dispatch(saveSchoolBasicInfoDetails());
-    
+    // dispatch(saveSchoolBasicInfoDetails());
+
   };
 
   const onRemove = () => {
@@ -18,7 +29,7 @@ function JobCard({ title, hospital, datePosted, rate, jobType }) {
       open: true,
       variant: 'default',
       message: t('Do you want to remove this job?'),
-      title: title,
+      title: aboutCompany,
       backwardActionText: t('No'),
       forwardActionText: t('Yes'),
       forwardAction: () => removeApplication(),
@@ -29,16 +40,16 @@ function JobCard({ title, hospital, datePosted, rate, jobType }) {
   return (
     <div className="max-w-sm w-full border rounded-lg shadow-md overflow-hidden bg-white">
       <div className="p-4">
-        <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-        <p className="text-sm text-gray-600 mt-1">{hospital}</p>
-        <p className="text-xs text-gray-500 mt-1">Posted: {datePosted}</p>
+        <h2 className="text-lg font-semibold text-gray-800">{jobHiringFor}</h2>
+        <p className="text-sm text-gray-600 mt-1">{aboutCompany}</p>
+        <p className="text-xs text-gray-500 mt-1">Posted: {createdAt}</p>
 
         <div className="flex gap-2 mt-3">
           <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full">
-            {rate}
+            {payFrom} - {payTo} - {salaryRange}
           </span>
           <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full">
-            {jobType}
+            {natureJob}
           </span>
         </div>
       </div>

@@ -60,7 +60,7 @@ const getRequestParams = ({
     params = requestParams;
     data = requestData;
   }
-  const baseURL = 'http://joinmeds.in:8082';
+  const baseURL = 'https://api.joinmeds.in';
   // import.meta.env.VITE_API_URL;
 
   let authHeaders = {};
