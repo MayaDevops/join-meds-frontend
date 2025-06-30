@@ -33,7 +33,7 @@ function Login() {
         <img
           src={bannerPattern}
           alt="Login Banner"
-          className="w-full h-[750px] object-cover"
+          className="w-full  object-cover"
         />
       </div>
 
