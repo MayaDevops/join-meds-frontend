@@ -5,7 +5,7 @@ import { ACTION_TYPES } from "./actions";
 
 export const fetchDashBoardInfoApi = (data) => {
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_BY_ID.replace(':userId', data?.userId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_JOBS.replace(':userId', data?.userId),
     method: REQUEST_METHOD.GET,
     payload: {
       types: [

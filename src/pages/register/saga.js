@@ -9,8 +9,6 @@ import { handleAPIRequest } from 'utils/http';
 import * as api from './api';
 import { actions as commonActions } from 'pages/common/slice';
 import { _ } from 'utils/lodash';
-import { setDataToStorage } from 'utils/encryption';
-import { STORAGE_KEYS } from 'pages/common/constants';
 import { t } from 'pages/common/components';
 import { routeRedirect } from 'utils/common';
 
@@ -24,9 +22,9 @@ export function* saveOrganizationDetails({ payload = {} }) {
     ACTION_TYPES.CREATE_ORGANIZATION_DETAILS_SUCCESS,
     ACTION_TYPES.CREATE_ORGANIZATION_DETAILS_FAILURE]);
   if (type === ACTION_TYPES.CREATE_ORGANIZATION_DETAILS_SUCCESS) {
-    setDataToStorage(STORAGE_KEYS.USER_DETAILS, {
-      userId: responsePayLoad?.userId
-    }, true);
+    // setDataToStorage(STORAGE_KEYS.USER_DETAILS, {
+    //   userId: responsePayLoad?.userId
+    // }, true);
     yield put(commonActions.setAlertToast({
       open: true,
       variant: 'success',
@@ -35,7 +33,7 @@ export function* saveOrganizationDetails({ payload = {} }) {
     if (!_.isEmpty(responsePayLoad)) {
       yield put(sliceActions.setOrganizationRegisterDetails(responsePayLoad));
       yield put(commonActions.navigateTo({
-        to: `/ui/join-meds/register/profile`,
+        to: `/`,
         isSameModule: true
       }));
     }
@@ -48,34 +46,68 @@ export function* saveOrganizationDetails({ payload = {} }) {
   }
 }
 
-export function* updateOrganizationDetails({ payload = {} }) {
-  yield fork(handleAPIRequest, api.updateOrganizationDetailsApi, payload);
+export function* createJobDetails({ payload = {} }) {
+  yield fork(handleAPIRequest, api.createJobDetailsApi, payload);
   const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
-    ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS,
-    ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_FAILURE]);
-  if (type === ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS) {
-    localStorage.removeItem('userDetails');
+    ACTION_TYPES.CREATE_JOB_DETAILS_SUCCESS,
+    ACTION_TYPES.CREATE_JOB_DETAILS_FAILURE]);
+  if (type === ACTION_TYPES.CREATE_JOB_DETAILS_SUCCESS) {
+    // localStorage.removeItem('userDetails');
     yield put(commonActions.setAlertAction({
       open: true,
       variant: 'success',
-      message: 'Organization Details saved successfully',
-      title: t('About Organization'),
+      message: 'Job Details saved successfully',
+      title: t('Job Details'),
       forwardActionText: t('ok'),
-      forwardAction: () => { routeRedirect(`/`); },
+      forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
-      yield put(sliceActions.setUpdateOrganizationRegisterDetails(responsePayLoad));
-      yield put(commonActions.navigateTo({
-        to: `/`,
-        isSameModule: true
-      }));
+      yield put(sliceActions.setJobDetails(responsePayLoad));
+      // yield put(commonActions.navigateTo({
+      //   to: `/`,
+      //   isSameModule: true
+      // }));
     }
   } else {
      yield put(commonActions.setAlertAction({
       open: true,
       variant: 'error',
-      message: 'Organization Details saved failed.Please try again',
-      title: t('Organization Details'),
+      message: 'Job Details saved failed.Please try again',
+      title: t('Job Details'),
+      forwardActionText: t('ok'),
+      forwardAction: () => { routeRedirect(``); },
+    }));
+  }
+}
+
+export function* updateJobDetails({ payload = {} }) {
+  yield fork(handleAPIRequest, api.UpdateJobDetailsApi, payload);
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
+    ACTION_TYPES.UPDATE_JOB_DETAILS_SUCCESS,
+    ACTION_TYPES.UPDATE_JOB_DETAILS_FAILURE]);
+  if (type === ACTION_TYPES.UPDATE_JOB_DETAILS_SUCCESS) {
+    // localStorage.removeItem('userDetails');
+    yield put(commonActions.setAlertAction({
+      open: true,
+      variant: 'success',
+      message: 'Job Details updated successfully',
+      title: t('Job Details'),
+      forwardActionText: t('ok'),
+      // forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
+    }));
+    if (!_.isEmpty(responsePayLoad)) {
+      yield put(sliceActions.setJobDetails(responsePayLoad));
+      // yield put(commonActions.navigateTo({
+      //   to: `/`,
+      //   isSameModule: true
+      // }));
+    }
+  } else {
+     yield put(commonActions.setAlertAction({
+      open: true,
+      variant: 'error',
+      message: 'Job Details update failed.Please try again',
+      title: t('Job Details'),
       forwardActionText: t('ok'),
       forwardAction: () => { routeRedirect(``); },
     }));
@@ -84,11 +116,13 @@ export function* updateOrganizationDetails({ payload = {} }) {
 
 
 
+
 export default function* commonSaga() {
   yield all([
     takeLatest(ACTION_TYPES.FETCH_COUNTRY, fetchCountry),
     takeLatest(ACTION_TYPES.CREATE_ORGANIZATION_DETAILS, saveOrganizationDetails),
-    takeLatest(ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS, updateOrganizationDetails),
+    takeLatest(ACTION_TYPES.CREATE_JOB_DETAILS, createJobDetails),
+    takeLatest(ACTION_TYPES.UPDATE_JOB_DETAILS, updateJobDetails),
 
   ]);
 }

@@ -2,38 +2,62 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { updateOrganizationDetails } from '../actions';
+import { createJobDetails, updateJobDetails } from '../actions';
 import { OrganizationUpdateDetailsSchema } from '../validate';
 import { useNavigate } from 'react-router-dom';
 import { getDataFromStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
+import { useLocation } from 'react-router-dom';
+import { _ } from 'utils/lodash';
 
 function OrganizationProfile() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const location = useLocation();
+    const selectedJob = location.state?.selectedJob;
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm({
         mode: 'all',
-        resolver: yupResolver(OrganizationUpdateDetailsSchema)
+        resolver: yupResolver(OrganizationUpdateDetailsSchema),
+        defaultValues: {
+            jobHiringFor: selectedJob?.hiringFor || '',
+            payFrom: selectedJob?.payFrom || '',
+            payTo: selectedJob?.payTo || '',
+            salaryRange: selectedJob?.payRange || '',
+            natureJob: selectedJob?.natureJob || '',
+            jobDesc: selectedJob?.jobDesc || '',
+            skills: selectedJob?.skills || '',
+            payRange: selectedJob?.payRange || '',
+            yearExp: selectedJob?.yearExp || '',
+            hiringFor: selectedJob?.hiringFor || '',
+            jobId: selectedJob?.id || ''
+
+        }
     });
     const { userId = '' } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || {};
-    const { id = '',orgName='' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+    const { id = '', orgName = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
 
     const onSubmit = (data) => {
-        const finalParams = {
-            ...data,
-            userId:id || userId
-        };
-        dispatch(updateOrganizationDetails(finalParams));
+        if (!_.isEmpty(selectedJob?.id) && selectedJob?.id !== 'undefined') {
+            const finalParams = {
+                ...data,
+                jobId: selectedJob?.id
+            };
+            dispatch(updateJobDetails(finalParams));
+        } else {
+            const finalParams = {
+                ...data,
+                userId: id || userId
+            };
+            dispatch(createJobDetails(finalParams));
+        }
     };
-
     return (
         <div className={!id ? `flex flex-col items-center justify-start min-h-screen pt-24 pb-10 px-4 bg-white` :
-          'flex flex-col items-center justify-start min-h-screen pt-4 pb-10 px-4 bg-white' }>
+            'flex flex-col items-center justify-start min-h-screen pt-4 pb-10 px-4 bg-white'}>
             {/* Banner */}
             <div className="w-full max-w-full rounded-t-xl overflow-hidden">
                 <div className="bg-gradient-to-b from-[#D1EEFC] to-white px-6 pt-8 pb-4">
@@ -49,7 +73,7 @@ function OrganizationProfile() {
 
             {/* Form */}
             <form
-                autoComplete="off" 
+                autoComplete="off"
                 className={!id ? `w-full max-w-[80%] bg-white px-6 py-6 space-y-6 shadow-md rounded-b-xl` :
                     `w-full bg-white px-6 py-6 space-y-6 shadow-md rounded-b-xl`}
                 onSubmit={handleSubmit(onSubmit)}
@@ -73,13 +97,13 @@ function OrganizationProfile() {
                         <label className="block font-medium text-gray-800 mb-1">Job Hiring Of</label>
                         <input
                             type="text"
-                            {...register('jobHiringFor')}
+                            {...register('hiringFor')}
                             placeholder="eg: Nurse, Doctor, Pharmacist"
                             className="w-full border border-gray-400 rounded-md px-4 py-2"
                             autoComplete='off'
                             maxLength={150}
                         />
-                        {errors.jobHiringFor && <p className="text-red-500 text-sm">{errors.jobHiringFor.message}</p>}
+                        {errors.hiringFor && <p className="text-red-500 text-sm">{errors.hiringFor.message}</p>}
                     </div>
                     <div>
                         <label className="block font-medium text-gray-800 mb-1">Years of Experience</label>
@@ -98,13 +122,13 @@ function OrganizationProfile() {
                     <label className="block font-medium text-gray-800 mb-1">Skills Required</label>
                     <textarea
                         type="text"
-                        {...register('skillRequired')}
+                        {...register('skills')}
                         placeholder="eg: OT,NICU,Surgeon etc"
                         className="w-full border border-gray-400 rounded-md px-4 py-2"
                         autoComplete='off'
                         maxLength={2500}
                     />
-                    {errors.skillRequired && <p className="text-red-500 text-sm">{errors.skillRequired.message}</p>}
+                    {errors.skills && <p className="text-red-500 text-sm">{errors.skills.message}</p>}
                 </div>
                 <div>
                     <label className="block font-medium text-gray-800 mb-1">Nature of Job</label>
@@ -146,13 +170,13 @@ function OrganizationProfile() {
                     </div>
                     <div>
                         <label className="block font-medium text-gray-800 mb-1">Range</label>
-                        <select name="range" id="range"  {...register('salaryRange')} className="w-full border border-gray-400 rounded-md px-4 py-2">
+                        <select name="payRange" id="payRange"  {...register('payRange')} className="w-full border border-gray-400 rounded-md px-4 py-2">
                             <option value="Null">Select Range</option>
                             <option value="Hour">Hour</option>
                             <option value="Month">Month</option>
                             <option value="Year">Year</option>
                         </select>
-                        {errors.salaryRange && <p className="text-red-500 text-sm">{errors.salaryRange.message}</p>}
+                        {errors.payRange && <p className="text-red-500 text-sm">{errors.payRange.message}</p>}
                     </div>
 
                 </div>

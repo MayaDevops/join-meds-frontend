@@ -34,15 +34,30 @@ export const saveOrganizationDetailsApi = (data) => {
   };
 };
 
-export const updateOrganizationDetailsApi = (data) => {
+export const createJobDetailsApi = (data) => {
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.UPDATE_ORG.replace(':id', data?.userId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.CREATE_JOB.replace(':userId', data?.userId),
+    method: REQUEST_METHOD.POST,
+    payload: {
+      types: [
+        ACTION_TYPES.CREATE_JOB_DETAILS_REQUEST,
+        ACTION_TYPES.CREATE_JOB_DETAILS_SUCCESS,
+        ACTION_TYPES.CREATE_JOB_DETAILS_FAILURE
+      ],
+      data
+    }
+  };
+};
+
+export const UpdateJobDetailsApi = (data) => {
+  return {
+    url: API_URL.JOINT_MEDS.ORGANIZATION.UPDATE_JOB.replace(':jobId', data?.jobId),
     method: REQUEST_METHOD.PUT,
     payload: {
       types: [
-        ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_REQUEST,
-        ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_SUCCESS,
-        ACTION_TYPES.UPDATE_ORGANIZATION_DETAILS_FAILURE
+        ACTION_TYPES.UPDATE_JOB_DETAILS_REQUEST,
+        ACTION_TYPES.UPDATE_JOB_DETAILS_SUCCESS,
+        ACTION_TYPES.UPDATE_JOB_DETAILS_FAILURE
       ],
       data
     }

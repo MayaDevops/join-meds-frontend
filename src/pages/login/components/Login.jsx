@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import bannerPattern from '../../../assets/images/all_in_1_bg_new.png';
+import bannerPattern from '../../../assets/images/all_in_1_bg.png';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { _ } from 'utils/lodash';

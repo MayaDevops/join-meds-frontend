@@ -7,8 +7,9 @@ export const API_URL = {
   JOINT_MEDS: {
     ORGANIZATION: {
       CREATE_ORG: 'api/user/signup',
-      UPDATE_ORG: 'api/org/update/:id',
-      FETCH_BY_ID: 'api/user-profile/org/details/:userId'
+      CREATE_JOB: 'api/org-job/save/:userId',
+      UPDATE_JOB: 'api/org-job/update/:jobId',
+      FETCH_JOBS: 'api/org-job/list/:userId',
     },
     USER_LOGIN: {
       LOGIN: 'api/user/login'

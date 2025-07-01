@@ -43,14 +43,12 @@ function Dashboard() {
 
    useEffect(() => {
     if (!_.isEmpty(id)) {
-      console.log(id,'1111111111111')
        dispatch(fetchDashboardInfo({userId:id}));
     }
   }, [id]);
 
   useEffect(() => {
     if (!_.isEmpty(dashBoardDetails)) {
-      console.log(dashBoardDetails,'1111111111111')
       setJobList(dashBoardDetails)
     }
   }, [dashBoardDetails]);
@@ -67,7 +65,7 @@ function Dashboard() {
     ) : (
       <div className="flex flex-wrap gap-4">
         {jobList?.map((job, index) => (
-          <JobCard key={index} {...job} />
+          <JobCard key={index} {...job} dashBoardDetails={dashBoardDetails} />
         ))}
       </div>
     )}

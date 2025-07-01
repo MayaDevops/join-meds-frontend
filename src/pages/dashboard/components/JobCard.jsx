@@ -3,21 +3,23 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid'; // ✅ Option
 import { useDispatch } from 'react-redux';
 import { actions as commonActions } from 'pages/common/slice';
 import { t } from 'pages/common/components';
+import { getDataFromStorage } from 'utils/encryption';
+import { STORAGE_KEYS } from 'pages/common/constants';
+import { useNavigate } from 'react-router-dom';
 
-function JobCard({ 
-aboutCompany = '',
-  jobHiringFor = '',
-  // yearExp = '',
-  // skillRequired = '',
-  natureJob = '',
+function JobCard({
+  dashBoardDetails,
+  id,
+  hiringFor = '',
   payFrom = '',
   payTo = '',
-  salaryRange = '',
-  // jobDesc = '',
-  createdAt=''
+  payRange = '',
+  natureJob = '',
+  createdAt = ''
 }) {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const { orgName = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
   const removeApplication = () => {
 
     // dispatch(saveSchoolBasicInfoDetails());
@@ -29,7 +31,7 @@ aboutCompany = '',
       open: true,
       variant: 'default',
       message: t('Do you want to remove this job?'),
-      title: aboutCompany,
+      title: orgName,
       backwardActionText: t('No'),
       forwardActionText: t('Yes'),
       forwardAction: () => removeApplication(),
@@ -40,13 +42,13 @@ aboutCompany = '',
   return (
     <div className="max-w-sm w-full border rounded-lg shadow-md overflow-hidden bg-white">
       <div className="p-4">
-        <h2 className="text-lg font-semibold text-gray-800">{jobHiringFor}</h2>
-        <p className="text-sm text-gray-600 mt-1">{aboutCompany}</p>
+        <h2 className="text-lg font-semibold text-gray-800">{hiringFor}</h2>
+        <p className="text-sm text-gray-600 mt-1">{orgName}</p>
         <p className="text-xs text-gray-500 mt-1">Posted: {createdAt}</p>
 
         <div className="flex gap-2 mt-3">
           <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full">
-            {payFrom} - {payTo} - {salaryRange}
+            {payFrom} - {payTo} - {payRange}
           </span>
           <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full">
             {natureJob}
@@ -55,7 +57,15 @@ aboutCompany = '',
       </div>
 
       <div className="flex border-t">
-        <button className="flex-1 flex items-center justify-center gap-2 bg-[#00A4E1] hover:bg-[#0092cc] text-white py-2 text-sm font-semibold cursor-pointer">
+        <button
+          className="flex-1 flex items-center justify-center gap-2 bg-[#00A4E1] hover:bg-[#0092cc] text-white py-2 text-sm font-semibold cursor-pointer"
+          onClick={() => {
+            const selectedJob = dashBoardDetails?.find(job => job.id === id);
+            navigate('/ui/join-meds/register/profile', {
+              state: { selectedJob } // Only pass the matched job
+            });
+          }}
+        >
           <PencilIcon className="h-4 w-4" />
           Edit
         </button>

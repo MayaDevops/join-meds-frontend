@@ -11,7 +11,6 @@ import { ACTION_TYPES } from './actions';
 import { actions as sliceActions } from './slice';
 
 export function* fetchDashBoardInfo({ payload = {} }) {
-  console.log(payload,'11111111111111111paysaga')
   yield fork(handleAPIRequest, api.fetchDashBoardInfoApi, payload);
   const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
     ACTION_TYPES.FETCH_DASHBOARD_INFO_SUCCESS,

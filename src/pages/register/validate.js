@@ -53,13 +53,13 @@ export const OrganizationRegisterDetailsSchema = yup.object().shape({
 export const OrganizationUpdateDetailsSchema = yup.object().shape({
 
 
-    aboutCompany: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('About Your Company/organisation') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('About Your Company/organisation'), count: '200', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('About Your Company/organisation') })),
+    // aboutCompany: yup.string()
+    //     .transform((value) => value.trim())
+    //     .required(t('isRequired', { type: t('About Your Company/organisation') }))
+    //     .max(200, t('shouldNotBeGreaterThan', { type: t('About Your Company/organisation'), count: '200', unit: t('character') }))
+    //     .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('About Your Company/organisation') })),
 
-    jobHiringFor: yup.string()
+    hiringFor: yup.string()
         .transform((value) => value.trim())
         .required(t('isRequired', { type: t('Job Hiring Of') }))
         .max(200, t('shouldNotBeGreaterThan', { type: t('Job Hiring Of'), count: '200', unit: t('character') }))
@@ -71,7 +71,7 @@ export const OrganizationUpdateDetailsSchema = yup.object().shape({
         .max(200, t('shouldNotBeGreaterThan', { type: t('Years of Experience'), count: '200', unit: t('character') }))
         .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Years of Experience') })),
 
-    skillRequired: yup.string()
+    skills: yup.string()
         .transform((value) => value.trim())
         .required(t('isRequired', { type: t('Skills Required') }))
         .max(200, t('shouldNotBeGreaterThan', { type: t('Skills Required'), count: '200', unit: t('character') }))
@@ -115,7 +115,7 @@ export const OrganizationUpdateDetailsSchema = yup.object().shape({
         .required('Pay To is required')
         .moreThan(yup.ref('payFrom'), 'Pay To must be greater than Pay From'),
 
-    salaryRange: yup
+    payRange: yup
         .string()
         .required('Salary Range is required')
         .notOneOf(['Null'], 'Please select a valid range'),
