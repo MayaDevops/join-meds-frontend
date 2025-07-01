@@ -25,7 +25,11 @@ function Sidebar({ isOpen, toggle }) {
     if (item.name === 'Logout') {
       localStorage.clear(); // Clear all localStorage
     }
-    navigate(item.path);
+    if (item?.name === 'Add Job') {
+      navigate('/ui/join-meds/register/profile', {  state: { selectedJob: null } });
+    } else {
+      navigate(item.path);
+    }
     if (window.innerWidth < 768) toggle(); // Close on mobile
   };
 

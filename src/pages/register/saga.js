@@ -11,6 +11,9 @@ import { actions as commonActions } from 'pages/common/slice';
 import { _ } from 'utils/lodash';
 import { t } from 'pages/common/components';
 import { routeRedirect } from 'utils/common';
+import { fetchDashBoardInfo } from 'pages/dashboard/saga';
+import { getDataFromStorage } from 'utils/encryption';
+import { STORAGE_KEYS } from 'pages/common/constants';
 
 export function* fetchCountry() {
   yield put(sliceActions.setCountry());
@@ -58,7 +61,7 @@ export function* createJobDetails({ payload = {} }) {
       variant: 'success',
       message: 'Job Details saved successfully',
       title: t('Job Details'),
-      forwardActionText: t('ok'),
+      forwardActionText: t('Ok'),
       forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
@@ -74,14 +77,14 @@ export function* createJobDetails({ payload = {} }) {
       variant: 'error',
       message: 'Job Details saved failed.Please try again',
       title: t('Job Details'),
-      forwardActionText: t('ok'),
-      forwardAction: () => { routeRedirect(``); },
+      forwardActionText: t('Ok'),
+      // forwardAction: () => { routeRedirect(``); },
     }));
   }
 }
 
 export function* updateJobDetails({ payload = {} }) {
-  yield fork(handleAPIRequest, api.UpdateJobDetailsApi, payload);
+  yield fork(handleAPIRequest, api.updateJobDetailsApi, payload);
   const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
     ACTION_TYPES.UPDATE_JOB_DETAILS_SUCCESS,
     ACTION_TYPES.UPDATE_JOB_DETAILS_FAILURE]);
@@ -92,7 +95,7 @@ export function* updateJobDetails({ payload = {} }) {
       variant: 'success',
       message: 'Job Details updated successfully',
       title: t('Job Details'),
-      forwardActionText: t('ok'),
+      forwardActionText: t('Ok'),
       // forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
@@ -108,8 +111,40 @@ export function* updateJobDetails({ payload = {} }) {
       variant: 'error',
       message: 'Job Details update failed.Please try again',
       title: t('Job Details'),
-      forwardActionText: t('ok'),
-      forwardAction: () => { routeRedirect(``); },
+      forwardActionText: t('Ok'),
+      // forwardAction: () => { routeRedirect(``); },
+    }));
+  }
+}
+
+export function* removeJobDetails({ payload = {} }) {
+  yield fork(handleAPIRequest, api.removeJobDetailsApi, payload);
+  const { id = '' } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || {};
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
+    ACTION_TYPES.REMOVE_JOB_DETAILS_SUCCESS,
+    ACTION_TYPES.REMOVE_JOB_DETAILS_FAILURE]);
+  if (type === ACTION_TYPES.REMOVE_JOB_DETAILS_SUCCESS) {
+    yield put(commonActions.setAlertAction({
+      open: true,
+      variant: 'success',
+      message: 'Job Details removed successfully',
+      title: t('Job Details'),
+      forwardActionText: t('Ok'),
+      // forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
+    }));
+    if (!_.isEmpty(responsePayLoad)) {
+      yield* fetchDashBoardInfo({  userId:id });
+    }
+  } else {
+      yield* fetchDashBoardInfo({  userId:id });
+
+     yield put(commonActions.setAlertAction({
+      open: true,
+      variant: 'error',
+      message: 'Job Details update failed.Please try again',
+      title: t('Job Details'),
+      forwardActionText: t('Ok'),
+      // forwardAction: () => { routeRedirect(``); },
     }));
   }
 }
@@ -123,6 +158,7 @@ export default function* commonSaga() {
     takeLatest(ACTION_TYPES.CREATE_ORGANIZATION_DETAILS, saveOrganizationDetails),
     takeLatest(ACTION_TYPES.CREATE_JOB_DETAILS, createJobDetails),
     takeLatest(ACTION_TYPES.UPDATE_JOB_DETAILS, updateJobDetails),
+    takeLatest(ACTION_TYPES.REMOVE_JOB_DETAILS, removeJobDetails),
 
   ]);
 }

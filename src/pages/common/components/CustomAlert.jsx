@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Modal,
@@ -6,15 +5,14 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
-  Heading
+  Heading,
+  ModalBody
 } from '@chakra-ui/react';
-import { useSelector, useDispatch } from 'react-redux'; //
-// import {
-//   ErrorInfo, InfoIcon, ModalClose, TimerSnoozeZzz
-// } from 'assets';
+import { useSelector, useDispatch } from 'react-redux';
 import { actions as commonServicesSliceActions } from 'pages/common/slice';
 import CustomButton from './CustomButton';
 import { getAlertAction } from '../selectors';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
 
 const CustomAlert = () => {
   const dispatch = useDispatch();
@@ -28,7 +26,7 @@ const CustomAlert = () => {
     title = '',
     backwardActionText = null,
     forwardActionText = null,
-    forwardAction = () => {},
+    forwardAction = () => { },
     backwardAction = () => {
       dispatch(commonServicesSliceActions.setAlertAction({}));
     },
@@ -40,24 +38,29 @@ const CustomAlert = () => {
 
   const renderIcon = () => {
     switch (variant) {
+      case 'success':
+        return (
+          <div className="text-green-600 flex items-center justify-center mr-2">
+          
+
+            {/* ✅ Option 2: If using Heroicons */}
+            <CheckCircleIcon className="h-10 w-10 text-green-600" />
+          </div>
+        );
       case 'error':
         return (
-          <div className="bg-[#FFEBEE] p-1 rounded-md">
-            {/* <ErrorInfo /> */}
+          <div className="text-red-500 font-bold text-lg mr-2">
+            ❌
           </div>
         );
       case 'sessionExpired':
         return (
-          <div className="bg-[#E6F4FF] p-1 rounded-md">
+          <div className="bg-blue-100 p-1 rounded-md">
             {/* <TimerSnoozeZzz /> */}
           </div>
         );
       default:
-        return (
-          <div className="bg-[#FFD65A] p-1 rounded-md">
-            {/* <InfoIcon /> */}
-          </div>
-        );
+        return null;
     }
   };
 
@@ -71,30 +74,36 @@ const CustomAlert = () => {
       closeOnEsc={closeOnEsc}
     >
       <ModalOverlay />
-      <ModalContent className="rounded-lg shadow-lg bg-white">
-        <ModalHeader className="flex items-start justify-between">
-          <div className="flex items-center gap-4 mt-8">
-            {renderIcon()}
-            <div>
-              <Heading as="h4" size="md" className="font-semibold text-black">
-                {title}
-              </Heading>
-              <p className="text-sm text-gray-500 mt-1">
-                {message}
-              </p>
-            </div>
+      <ModalContent className="rounded-lg shadow-lg bg-white overflow-hidden">
+        {/* Header */}
+        <ModalHeader className="flex items-start justify-between px-4 py-2 bg-[#00B5D8] text-white text-sm">
+          <div className="flex items-center gap-3">
+
+            <Heading as="h4" size="sm" className="text-white font-medium">
+              {title}
+            </Heading>
           </div>
-          <span onClick={backwardAction} className="text-gray-500 hover:text-gray-700">
-            {/* <ModalClose /> */}
+          <span
+            onClick={backwardAction}
+            className="text-gray-200 hover:text-white cursor-pointer text-lg"
+          >
+            &times;
           </span>
         </ModalHeader>
 
-        <ModalFooter className="flex justify-center gap-4">
+        {/* Middle Section for Message */}
+        <ModalBody className="px-6 py-4 text-center flex items-center justify-center min-h-[80px]">
+          {renderIcon()}
+          <p className="text-black-700 text-md">{message}</p>
+        </ModalBody>
+
+        {/* Footer */}
+        <ModalFooter className="flex justify-center gap-4 py-2 bg-[#E0F2FE]">
           {backwardActionText && (
             <CustomButton
               variant="outline"
-              size="md"
-              className="border text-black  rounded-md"
+              size="sm"
+              className="border text-[#0C4A6E] rounded-md px-4"
               onClick={backwardAction}
             >
               {backwardActionText}
@@ -103,8 +112,8 @@ const CustomAlert = () => {
           {forwardActionText && (
             <CustomButton
               variant="solid"
-              size="md"
-              className=" text-white  rounded-md "
+              size="sm"
+              className="bg-[#0C4A6E] text-white rounded-md px-4"
               onClick={() => {
                 forwardAction();
                 close();

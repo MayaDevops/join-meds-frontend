@@ -3,9 +3,10 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid'; // ✅ Option
 import { useDispatch } from 'react-redux';
 import { actions as commonActions } from 'pages/common/slice';
 import { t } from 'pages/common/components';
+import { useNavigate } from 'react-router-dom';
+import { removeJobDetails } from 'pages/register/actions';
 import { getDataFromStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
-import { useNavigate } from 'react-router-dom';
 
 function JobCard({
   dashBoardDetails,
@@ -15,15 +16,15 @@ function JobCard({
   payTo = '',
   payRange = '',
   natureJob = '',
-  createdAt = ''
+  createdAt = '',
+  yearExp = ''
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { orgName = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+  const { id : userId  = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+
   const removeApplication = () => {
-
-    // dispatch(saveSchoolBasicInfoDetails());
-
+    dispatch(removeJobDetails({userId}));
   };
 
   const onRemove = () => {
@@ -31,7 +32,7 @@ function JobCard({
       open: true,
       variant: 'default',
       message: t('Do you want to remove this job?'),
-      title: orgName,
+      title: `${hiringFor}`,
       backwardActionText: t('No'),
       forwardActionText: t('Yes'),
       forwardAction: () => removeApplication(),
@@ -43,7 +44,7 @@ function JobCard({
     <div className="max-w-sm w-full border rounded-lg shadow-md overflow-hidden bg-white">
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-800">{hiringFor}</h2>
-        <p className="text-sm text-gray-600 mt-1">{orgName}</p>
+        <p className="text-sm text-gray-600 mt-1">{yearExp}</p>
         <p className="text-xs text-gray-500 mt-1">Posted: {createdAt}</p>
 
         <div className="flex gap-2 mt-3">

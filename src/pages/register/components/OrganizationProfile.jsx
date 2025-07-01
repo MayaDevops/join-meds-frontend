@@ -9,6 +9,9 @@ import { getDataFromStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
 import { useLocation } from 'react-router-dom';
 import { _ } from 'utils/lodash';
+import { actions as commonActions } from 'pages/common/slice';
+import { t } from 'pages/common/components';
+import { useEffect } from 'react';
 
 function OrganizationProfile() {
     const dispatch = useDispatch();
@@ -18,7 +21,8 @@ function OrganizationProfile() {
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        reset
     } = useForm({
         mode: 'all',
         resolver: yupResolver(OrganizationUpdateDetailsSchema),
@@ -40,19 +44,64 @@ function OrganizationProfile() {
     const { userId = '' } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || {};
     const { id = '', orgName = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
 
+    useEffect(() => {
+        if (!selectedJob) {
+            reset({
+                jobHiringFor: '',
+                payFrom: '',
+                payTo: '',
+                salaryRange: '',
+                natureJob: '',
+                jobDesc: '',
+                skills: '',
+                payRange: '',
+                yearExp: '',
+                hiringFor: '',
+                jobId: ''
+            });
+        }
+    }, [selectedJob, reset]);
+
+    const updateApplication = (finalParams) => {
+        dispatch(updateJobDetails(finalParams));
+    }
+
+    const createApplication = (finalParams) => {
+        dispatch(createJobDetails(finalParams));
+    }
+
     const onSubmit = (data) => {
+
         if (!_.isEmpty(selectedJob?.id) && selectedJob?.id !== 'undefined') {
             const finalParams = {
                 ...data,
                 jobId: selectedJob?.id
             };
-            dispatch(updateJobDetails(finalParams));
+            dispatch(commonActions.setAlertAction({
+                open: true,
+                variant: 'default',
+                message: t('Would you like to update this job posting?'),
+                title: selectedJob?.hiringFor || '',
+                backwardActionText: t('No'),
+                forwardActionText: t('Yes'),
+                forwardAction: () => updateApplication(finalParams),
+                backwardAction: () => dispatch(commonActions.setAlertAction({}))
+            }));
         } else {
             const finalParams = {
                 ...data,
                 userId: id || userId
             };
-            dispatch(createJobDetails(finalParams));
+            dispatch(commonActions.setAlertAction({
+                open: true,
+                variant: 'default',
+                message: t('Would you like to create this job posting?'),
+                title: selectedJob?.hiringFor || '',
+                backwardActionText: t('No'),
+                forwardActionText: t('Yes'),
+                forwardAction: () => createApplication(finalParams),
+                backwardAction: () => dispatch(commonActions.setAlertAction({}))
+            }));
         }
     };
     return (
@@ -193,16 +242,14 @@ function OrganizationProfile() {
                     {errors.jobDesc && <p className="text-red-500 text-sm">{errors.jobDesc.message}</p>}
                 </div>
                 <div className="flex justify-end gap-4 mt-6">
-                    {!id && (
-                        <button
-                            type="button"
-                            className="bg-[#717e83] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#008FCC] cursor-pointer"
-                            onClick={() => navigate('/')}
+                    <button
+                        type="button"
+                        className="border-2 border-[#00A4E1] text-[#00A4E1] hover:bg-[#e6faff] font-semibold px-6 py-2 rounded-md  cursor-pointer"
+                        onClick={() => navigate('/ui/join-meds/user/dashboard')}
 
-                        >
-                            Back
-                        </button>
-                    )}
+                    >
+                        Back
+                    </button>
                     <button
                         type="submit"
                         className="bg-[#00A4E1] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#008FCC] cursor-pointer"
