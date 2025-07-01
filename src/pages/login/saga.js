@@ -48,10 +48,10 @@ export function* verifyPenDetails({ payload }) {
   } else {
     yield put(commonActions.setAlertAction({
       open: true,
-      variant: 'alert',
+      variant: 'information',
       message: t('Invalid Login Credentials'),
       title: t('Login Details'),
-      backwardActionText: t('close')
+      backwardActionText: t('Close')
     }));
   }
 }

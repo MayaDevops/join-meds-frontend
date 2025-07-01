@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions as commonServicesSliceActions } from 'pages/common/slice';
 import CustomButton from './CustomButton';
 import { getAlertAction } from '../selectors';
-import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 
 const CustomAlert = () => {
   const dispatch = useDispatch();
@@ -38,10 +38,17 @@ const CustomAlert = () => {
 
   const renderIcon = () => {
     switch (variant) {
+      case 'information':
+        return (
+          <div className="text-green-600 flex items-center justify-center mr-2">         
+
+            {/* ✅ Option 2: If using Heroicons */}
+            <InformationCircleIcon className="h-10 w-10 text-blue-500" />
+          </div>
+        );
       case 'success':
         return (
-          <div className="text-green-600 flex items-center justify-center mr-2">
-          
+          <div className="text-green-600 flex items-center justify-center mr-2">          
 
             {/* ✅ Option 2: If using Heroicons */}
             <CheckCircleIcon className="h-10 w-10 text-green-600" />
