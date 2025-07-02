@@ -107,7 +107,7 @@ function OrganizationProfile() {
     };
     return (
         <div className={!id ? `flex flex-col items-center justify-start min-h-screen pt-24 pb-10 px-4 bg-white` :
-            'flex flex-col items-left justify-start min-h-screen pt-4 pb-10 px-4 bg-white'}>            
+            'flex flex-col items-left justify-start min-h-screen pt-4 pb-10 px-4 bg-white'}>
             <Breadcrumbs pageTitle="About Job" />
             {/* Banner */}
             <div className="w-full max-w-full rounded-t-xl overflow-hidden">
@@ -221,8 +221,16 @@ function OrganizationProfile() {
                     </div>
                     <div>
                         <label className="block font-medium text-gray-800 mb-1">Range</label>
-                        <select name="payRange" id="payRange"  {...register('payRange')} className="w-full border border-gray-400 rounded-md px-4 py-2">
-                            <option value="Null">Select Range</option>
+                        <select
+                            name="payRange"
+                            id="payRange"
+                            {...register('payRange')}
+                            className="w-full border border-gray-400 rounded-md px-4 py-2"
+                            defaultValue="" // Ensure empty default for react-hook-form
+                        >
+                            <option value="" disabled hidden>
+                                Select Pay Range
+                            </option>
                             <option value="Hour">Hour</option>
                             <option value="Month">Month</option>
                             <option value="Year">Year</option>
