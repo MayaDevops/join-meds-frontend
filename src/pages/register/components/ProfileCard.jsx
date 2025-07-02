@@ -7,8 +7,9 @@ import { _ } from 'utils/lodash';
 // import { useSelector } from 'react-redux';
 // import { getProfileDetails } from '../selectors';
 // import { fetchProfileDetails } from '../actions';
-import { BuildingLibraryIcon } from '@heroicons/react/24/solid';
+// import { BuildingLibraryIcon } from '@heroicons/react/24/solid';
 import Breadcrumbs from 'pages/common/components/Breadcrumbs';
+import corporate from '../../../assets/images/corporate.png';
 
 const ProfilePage = () => {
 
@@ -34,12 +35,12 @@ const ProfilePage = () => {
         <div className="flex flex-col md:flex-row md:items-start md:space-x-10">
           {/* Avatar Section */}
           <div className="flex flex-col items-center md:items-start w-full md:w-1/3 mb-6 md:mb-0">
-            {/* <img
-              src={avatar}
+            <img
+              src={corporate}
               alt="Profile"
-              className="w-36 h-36 rounded-full border-4 border-teal-500 shadow"
-            /> */}
-            <BuildingLibraryIcon className="w-40 h-40 text-[#00B5D8]" />
+              className="w-36 h-36  border-teal-500 shadow"
+            />
+            {/* <BuildingLibraryIcon className="w-40 h-40 text-[#00B5D8]" /> */}
             {/* <button className="mt-4 text-teal-600 hover:text-teal-800 flex items-center space-x-1">
               <PencilIcon className="w-5 h-5" />
               <span>Edit Photo</span>
