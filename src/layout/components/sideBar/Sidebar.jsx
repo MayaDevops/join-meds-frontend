@@ -12,8 +12,8 @@ import JoinMedsLogo from '../../../assets/images/join_meds_side.png';
 const menuItems = [
   { name: 'Home', icon: HomeIcon, path: '/ui/join-meds/user/dashboard' },
   { name: 'Add Job', icon: BriefcaseIcon, path: '/ui/join-meds/register/profile' },
-  { name: 'Contact', icon: PhoneIcon, path: '#' },
-  { name: 'Profile', icon: UserCircleIcon, path: '#' },
+  { name: 'Contact', icon: PhoneIcon, path: '/ui/join-meds/user/profile' },
+  { name: 'Profile', icon: UserCircleIcon, path: '/ui/join-meds/user/profile' },
   { name: 'Logout', icon: ArrowLeftOnRectangleIcon, path: '/' }
 ];
 

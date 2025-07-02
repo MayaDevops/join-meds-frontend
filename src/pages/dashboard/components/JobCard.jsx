@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { removeJobDetails } from 'pages/register/actions';
 import { getDataFromStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
+import { formatDate } from 'utils/date';
 
 function JobCard({
   dashBoardDetails,
@@ -17,20 +18,21 @@ function JobCard({
   payRange = '',
   natureJob = '',
   createdAt = '',
-  yearExp = ''
+  yearExp = '',
+  jobId
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id : userId  = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
 
   const removeApplication = () => {
-    dispatch(removeJobDetails({userId}));
+    dispatch(removeJobDetails({jobId}));
   };
 
   const onRemove = () => {
     dispatch(commonActions.setAlertAction({
       open: true,
-      variant: 'default',
+      variant: 'information',
       message: t('Do you want to remove this job?'),
       title: `${hiringFor}`,
       backwardActionText: t('No'),
@@ -45,7 +47,7 @@ function JobCard({
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-800">{hiringFor}</h2>
         <p className="text-sm text-gray-600 mt-1">{yearExp}</p>
-        <p className="text-xs text-gray-500 mt-1">Posted: {createdAt}</p>
+        <p className="text-xs text-gray-500 mt-1">Posted: {formatDate(createdAt)}</p>
 
         <div className="flex gap-2 mt-3">
           <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full">

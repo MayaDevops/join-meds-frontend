@@ -7,6 +7,7 @@ import OrganisationAuthLanding from './pages/login/components/OrganisationAuthLa
 import Login from './pages/login/components/Login';
 import Register from './pages/register/components';
 import OrganizationProfile from './pages/register/components/OrganizationProfile';
+import ProfileCard from './pages/register/components/ProfileCard';
 import Dashboard from './pages/dashboard/components';
 import ProtectedRoute from './layout/components/ProtectedRoute';
 import Navigator from 'pages/common/components/Navigator';
@@ -27,6 +28,7 @@ function App() {
           <Route path="/ui/join-meds/user/dashboard" element={<Dashboard />} />
           <Route path="/ui/join-meds/register/profile" element={<OrganizationProfile />} />
           <Route path="/profile" element={<OrganizationProfile />} />
+          <Route path="/ui/join-meds/user/profile" element={<ProfileCard />} />
         </Route>
       </Routes>
       <Navigator />

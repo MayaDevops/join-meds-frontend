@@ -163,14 +163,14 @@ function OrganisationRegister() {
         <div className="flex justify-end gap-4 mt-6">
           <button
             type="button"
-            className="bg-[#717e83] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#5c6a70]"
+            className="border-2 border-[#00A4E1] text-[#00A4E1] hover:bg-[#e6faff] font-semibold px-6 py-2 rounded-md  cursor-pointer"
             onClick={() => navigate('/')}
           >
             Back
           </button>
           <button
             type="submit"
-            className="bg-[#00A4E1] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#008FCC]"
+            className="bg-[#00A4E1] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#008FCC] cursor-pointer"
           >
             Continue
           </button>

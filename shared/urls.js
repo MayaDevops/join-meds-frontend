@@ -10,8 +10,8 @@ export const API_URL = {
       CREATE_JOB: 'api/org-job/save/:userId',
       UPDATE_JOB: 'api/org-job/update/:jobId',
       FETCH_JOBS: 'api/org-job/list/:userId',
-      REMOVE_JOBS: 'api/org-job/remove/:jobId',
-
+      REMOVE_JOBS: 'api/org-job/delete/:jobId',
+      FETCH_PROFILE_ORG : 'api/user-profile/org/details/:userId',
     },
     USER_LOGIN: {
       LOGIN: 'api/user/login'

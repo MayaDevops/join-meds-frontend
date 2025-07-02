@@ -7,6 +7,7 @@ const initialState = {
   country: {},
   organizationRegisterDetails: {},
   jobDetails: {},
+  profileDetails: {}
 };
 
 const slice = createSlice({
@@ -17,8 +18,11 @@ const slice = createSlice({
     setOrganizationRegisterDetails: (state, { payload }) => {
       _.set(state, 'organizationRegisterDetails', payload);
     },
-     setJobDetails: (state, { payload }) => {
+    setJobDetails: (state, { payload }) => {
       _.set(state, 'jobDetails', payload);
+    },
+    setProfileDetails: (state, { payload }) => {
+      _.set(state, 'profileDetails', payload);
     },
   },
   extraReducers: (builder) => {

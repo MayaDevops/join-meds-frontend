@@ -12,6 +12,7 @@ import { _ } from 'utils/lodash';
 import { actions as commonActions } from 'pages/common/slice';
 import { t } from 'pages/common/components';
 import { useEffect } from 'react';
+import Breadcrumbs from 'pages/common/components/Breadcrumbs';
 
 function OrganizationProfile() {
     const dispatch = useDispatch();
@@ -79,7 +80,7 @@ function OrganizationProfile() {
             };
             dispatch(commonActions.setAlertAction({
                 open: true,
-                variant: 'default',
+                variant: 'information',
                 message: t('Would you like to update this job posting?'),
                 title: selectedJob?.hiringFor || '',
                 backwardActionText: t('No'),
@@ -94,7 +95,7 @@ function OrganizationProfile() {
             };
             dispatch(commonActions.setAlertAction({
                 open: true,
-                variant: 'default',
+                variant: 'information',
                 message: t('Would you like to create this job posting?'),
                 title: selectedJob?.hiringFor || '',
                 backwardActionText: t('No'),
@@ -106,7 +107,8 @@ function OrganizationProfile() {
     };
     return (
         <div className={!id ? `flex flex-col items-center justify-start min-h-screen pt-24 pb-10 px-4 bg-white` :
-            'flex flex-col items-center justify-start min-h-screen pt-4 pb-10 px-4 bg-white'}>
+            'flex flex-col items-left justify-start min-h-screen pt-4 pb-10 px-4 bg-white'}>            
+            <Breadcrumbs pageTitle="About Job" />
             {/* Banner */}
             <div className="w-full max-w-full rounded-t-xl overflow-hidden">
                 <div className="bg-gradient-to-b from-[#D1EEFC] to-white px-6 pt-8 pb-4">

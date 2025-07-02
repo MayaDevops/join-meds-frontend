@@ -19,6 +19,7 @@
     "antd": "^5.26.2",
     "axios": "^1.10.0",
     "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.19.1",
     "i18next": "^25.2.1",

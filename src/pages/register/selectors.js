@@ -11,3 +11,7 @@ export const getOrganizationRegisterDetails = flow(getCommonData, organizationRe
 
 const organizationRegisterUpdateDetails = (state) => state.organizationRegisterUpdateDetails;
 export const getOrganizationRegisterUpdateDetails = flow(getCommonData, organizationRegisterUpdateDetails);
+
+const profileDetails = (state) => state.profileDetails;
+export const getProfileDetails = flow(getCommonData, profileDetails);
+

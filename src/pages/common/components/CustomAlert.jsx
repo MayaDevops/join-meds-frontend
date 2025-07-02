@@ -5,8 +5,9 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
+  ModalBody,
   Heading,
-  ModalBody
+  Box
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions as commonServicesSliceActions } from 'pages/common/slice';
@@ -22,36 +23,32 @@ const CustomAlert = () => {
     open = false,
     variant = '',
     message = '',
-    size = 'lg',
     title = '',
     backwardActionText = null,
     forwardActionText = null,
-    forwardAction = () => { },
-    backwardAction = () => {
-      dispatch(commonServicesSliceActions.setAlertAction({}));
-    },
+    forwardAction = () => {},
+    backwardAction = () =>
+      dispatch(commonServicesSliceActions.setAlertAction({})),
     closeOnOverlayClick = false,
     closeOnEsc = false
   } = alertAction;
 
-  const close = () => dispatch(commonServicesSliceActions.setAlertAction({}));
+  const close = () => {
+    dispatch(commonServicesSliceActions.setAlertAction({}));
+  };
 
   const renderIcon = () => {
     switch (variant) {
       case 'information':
         return (
-          <div className="text-green-600 flex items-center justify-center mr-2">         
-
-            {/* ✅ Option 2: If using Heroicons */}
-            <InformationCircleIcon className="h-10 w-10 text-blue-500" />
+          <div className="text-blue-500 flex items-center justify-center mr-2">
+            <InformationCircleIcon className="h-10 w-10" />
           </div>
         );
       case 'success':
         return (
-          <div className="text-green-600 flex items-center justify-center mr-2">          
-
-            {/* ✅ Option 2: If using Heroicons */}
-            <CheckCircleIcon className="h-10 w-10 text-green-600" />
+          <div className="text-green-600 flex items-center justify-center mr-2">
+            <CheckCircleIcon className="h-10 w-10" />
           </div>
         );
       case 'error':
@@ -63,7 +60,7 @@ const CustomAlert = () => {
       case 'sessionExpired':
         return (
           <div className="bg-blue-100 p-1 rounded-md">
-            {/* <TimerSnoozeZzz /> */}
+            {/* Add session timeout icon if needed */}
           </div>
         );
       default:
@@ -76,16 +73,20 @@ const CustomAlert = () => {
       isOpen={open}
       onClose={close}
       isCentered
-      size={size}
       closeOnOverlayClick={closeOnOverlayClick}
       closeOnEsc={closeOnEsc}
     >
       <ModalOverlay />
-      <ModalContent className="rounded-lg shadow-lg bg-white overflow-hidden">
-        {/* Header */}
+      <ModalContent
+        className="
+          rounded-lg shadow-lg bg-white
+          w-[95%] max-w-[500px]
+          sm:w-full sm:max-w-lg
+          max-h-[80vh] overflow-y-auto
+        "
+      >
         <ModalHeader className="flex items-start justify-between px-4 py-2 bg-[#00B5D8] text-white text-sm">
           <div className="flex items-center gap-3">
-
             <Heading as="h4" size="sm" className="text-white font-medium">
               {title}
             </Heading>
@@ -98,13 +99,13 @@ const CustomAlert = () => {
           </span>
         </ModalHeader>
 
-        {/* Middle Section for Message */}
-        <ModalBody className="px-6 py-4 text-center flex items-center justify-center min-h-[80px]">
-          {renderIcon()}
-          <p className="text-black-700 text-md">{message}</p>
+        <ModalBody className="px-4 py-4 text-center">
+          <Box className="flex flex-col items-center justify-center gap-3">
+            {renderIcon()}
+            <p className="text-gray-700 text-md">{message}</p>
+          </Box>
         </ModalBody>
 
-        {/* Footer */}
         <ModalFooter className="flex justify-center gap-4 py-2 bg-[#E0F2FE]">
           {backwardActionText && (
             <CustomButton

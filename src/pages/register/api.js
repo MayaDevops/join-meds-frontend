@@ -67,7 +67,7 @@ export const updateJobDetailsApi = (data) => {
 export const removeJobDetailsApi = (data) => {
   return {
     url: API_URL.JOINT_MEDS.ORGANIZATION.REMOVE_JOBS.replace(':jobId', data?.jobId),
-    method: REQUEST_METHOD.PUT,
+    method: REQUEST_METHOD.DELETE,
     payload: {
       types: [
         ACTION_TYPES.REMOVE_JOB_DETAILS_REQUEST,
@@ -75,6 +75,20 @@ export const removeJobDetailsApi = (data) => {
         ACTION_TYPES.REMOVE_JOB_DETAILS_FAILURE
       ],
       data
+    }
+  };
+};
+
+export const fetchProfileDetailsApi = (data) => {
+  return {
+    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_PROFILE_ORG.replace(':userId', data?.userId),
+    method: REQUEST_METHOD.GET,
+    payload: {
+      types: [
+        ACTION_TYPES.FETCH_PROFILE_DETAILS_REQUEST,
+        ACTION_TYPES.FETCH_PROFILE_DETAILS_SUCCESS,
+        ACTION_TYPES.FETCH_PROFILE_DETAILS_FAILURE
+      ]
     }
   };
 };

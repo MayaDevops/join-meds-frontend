@@ -81,3 +81,11 @@ export const ROLE = {
   ADMINISTRATOR: 'ADMINISTRATOR',
   HEADMASTER: 'HM'
 };
+
+export const DATE_FORMAT = {
+  DATE_TIME_GMT: 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ',
+  DATE_YYYYMMDD: 'YYYY-MM-DD',
+  DATE_LOCAL: 'DD-MM-YYYY',
+  TIME_LOCAL: 'HH:mm:ss',
+  DATE_TIME: 'DD-MM-YYYY hh:mm:ss'
+};

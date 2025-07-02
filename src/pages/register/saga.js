@@ -62,7 +62,7 @@ export function* createJobDetails({ payload = {} }) {
       message: 'Job Details saved successfully',
       title: t('Job Details'),
       forwardActionText: t('Ok'),
-      forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
+      forwardAction: () => { routeRedirect(`ui/join-meds/user/dashboard`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
       yield put(sliceActions.setJobDetails(responsePayLoad));
@@ -78,7 +78,7 @@ export function* createJobDetails({ payload = {} }) {
       message: 'Job Details saved failed.Please try again',
       title: t('Job Details'),
       forwardActionText: t('Ok'),
-      // forwardAction: () => { routeRedirect(``); },
+      // forwardAction: () => { routeRedirect('/'); },
     }));
   }
 }
@@ -96,7 +96,7 @@ export function* updateJobDetails({ payload = {} }) {
       message: 'Job Details updated successfully',
       title: t('Job Details'),
       forwardActionText: t('Ok'),
-      // forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
+      forwardAction: () => { routeRedirect(`ui/join-meds/user/dashboard`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
       yield put(sliceActions.setJobDetails(responsePayLoad));
@@ -119,7 +119,7 @@ export function* updateJobDetails({ payload = {} }) {
 
 export function* removeJobDetails({ payload = {} }) {
   yield fork(handleAPIRequest, api.removeJobDetailsApi, payload);
-  const { id = '' } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || {};
+  const { id = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
   const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
     ACTION_TYPES.REMOVE_JOB_DETAILS_SUCCESS,
     ACTION_TYPES.REMOVE_JOB_DETAILS_FAILURE]);
@@ -130,13 +130,14 @@ export function* removeJobDetails({ payload = {} }) {
       message: 'Job Details removed successfully',
       title: t('Job Details'),
       forwardActionText: t('Ok'),
-      // forwardAction: () => { routeRedirect(`ui/join-meds/register/profile`); },
+      forwardAction: () => { routeRedirect(`ui/join-meds/user/dashboard`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
-      yield* fetchDashBoardInfo({  userId:id });
+      console.log(id,'1111111111111111sagaid')
+      // yield* fetchDashBoardInfo({ userId:id });
     }
   } else {
-      yield* fetchDashBoardInfo({  userId:id });
+      // yield* fetchDashBoardInfo({  userId:id });
 
      yield put(commonActions.setAlertAction({
       open: true,
@@ -146,6 +147,17 @@ export function* removeJobDetails({ payload = {} }) {
       forwardActionText: t('Ok'),
       // forwardAction: () => { routeRedirect(``); },
     }));
+  }
+}
+
+export function* fetchProfileInfo({ payload = {} }) {
+  yield fork(handleAPIRequest, api.fetchProfileDetailsApi, payload);
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
+    ACTION_TYPES.FETCH_PROFILE_DETAILS_SUCCESS,
+    ACTION_TYPES.FETCH_PROFILE_DETAILS_FAILURE
+  ]);
+  if (type === ACTION_TYPES.FETCH_PROFILE_DETAILS_SUCCESS) {
+    yield put(sliceActions.setProfileDetails( responsePayLoad));
   }
 }
 
@@ -159,6 +171,7 @@ export default function* commonSaga() {
     takeLatest(ACTION_TYPES.CREATE_JOB_DETAILS, createJobDetails),
     takeLatest(ACTION_TYPES.UPDATE_JOB_DETAILS, updateJobDetails),
     takeLatest(ACTION_TYPES.REMOVE_JOB_DETAILS, removeJobDetails),
+    takeLatest(ACTION_TYPES.FETCH_PROFILE_DETAILS, fetchProfileInfo),
 
   ]);
 }
