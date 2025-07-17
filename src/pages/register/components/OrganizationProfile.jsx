@@ -108,7 +108,7 @@ function OrganizationProfile() {
     return (
         <div className={!id ? `flex flex-col items-center justify-start min-h-screen pt-24 pb-10 px-4 bg-white` :
             'flex flex-col items-left justify-start min-h-screen pt-4 pb-10 px-4 bg-white'}>
-            <Breadcrumbs pageTitle="About Job" />
+            <Breadcrumbs pageTitle="Add Job" />
             {/* Banner */}
             <div className="w-full max-w-full rounded-t-xl overflow-hidden">
                 <div className="bg-gradient-to-b from-[#D1EEFC] to-white px-6 pt-8 pb-4">
