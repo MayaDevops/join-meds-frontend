@@ -4,7 +4,8 @@ import {
   BriefcaseIcon,
   PhoneIcon,
   UserCircleIcon,
-  ArrowLeftOnRectangleIcon
+  ArrowLeftOnRectangleIcon,
+  DocumentChartBarIcon
 } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import JoinMedsLogo from '../../../assets/images/join_meds_side.png';
@@ -14,6 +15,7 @@ const menuItems = [
   { name: 'Add Job', icon: BriefcaseIcon, path: '/ui/join-meds/register/profile' },
   { name: 'Contact', icon: PhoneIcon, path: '/ui/join-meds/user/profile' },
   { name: 'Profile', icon: UserCircleIcon, path: '/ui/join-meds/user/profile' },
+  { name: 'Report', icon: DocumentChartBarIcon, path: '/ui/join-meds/user/reports' },
   { name: 'Logout', icon: ArrowLeftOnRectangleIcon, path: '/' }
 ];
 
@@ -26,7 +28,7 @@ function Sidebar({ isOpen, toggle }) {
       localStorage.clear(); // Clear all localStorage
     }
     if (item?.name === 'Add Job') {
-      navigate('/ui/join-meds/register/profile', {  state: { selectedJob: null } });
+      navigate('/ui/join-meds/register/profile', { state: { selectedJob: null } });
     } else {
       navigate(item.path);
     }

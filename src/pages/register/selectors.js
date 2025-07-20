@@ -15,3 +15,9 @@ export const getOrganizationRegisterUpdateDetails = flow(getCommonData, organiza
 const profileDetails = (state) => state.profileDetails;
 export const getProfileDetails = flow(getCommonData, profileDetails);
 
+const allJobReports = (state) => state.allJobReports;
+export const getAllJobReports = flow(getCommonData, allJobReports);
+
+const downloadResumeDetails = (state) => state?.downloadResumeDetails;
+export const getDownloadResumeDetails = flow(getCommonData, downloadResumeDetails);
+

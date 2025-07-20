@@ -28,16 +28,14 @@ function OrganizationProfile() {
         mode: 'all',
         resolver: yupResolver(OrganizationUpdateDetailsSchema),
         defaultValues: {
-            jobHiringFor: selectedJob?.hiringFor || '',
+            hiringFor: selectedJob?.hiringFor || '',
+            yearExp: selectedJob?.yearExp || '',
+            skills: selectedJob?.skills || '',
+            natureJob: selectedJob?.natureJob || '',
             payFrom: selectedJob?.payFrom || '',
             payTo: selectedJob?.payTo || '',
-            salaryRange: selectedJob?.payRange || '',
-            natureJob: selectedJob?.natureJob || '',
-            jobDesc: selectedJob?.jobDesc || '',
-            skills: selectedJob?.skills || '',
             payRange: selectedJob?.payRange || '',
-            yearExp: selectedJob?.yearExp || '',
-            hiringFor: selectedJob?.hiringFor || '',
+            jobDesc: selectedJob?.jobDesc || '',
             jobId: selectedJob?.id || ''
 
         }
@@ -48,16 +46,14 @@ function OrganizationProfile() {
     useEffect(() => {
         if (!selectedJob) {
             reset({
-                jobHiringFor: '',
+                hiringFor: '',
+                yearExp: '',
+                skills: '',
+                natureJob: '',
                 payFrom: '',
                 payTo: '',
-                salaryRange: '',
-                natureJob: '',
-                jobDesc: '',
-                skills: '',
                 payRange: '',
-                yearExp: '',
-                hiringFor: '',
+                jobDesc: '',
                 jobId: ''
             });
         }

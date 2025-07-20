@@ -11,7 +11,10 @@ export const API_URL = {
       UPDATE_JOB: 'api/org-job/update/:jobId',
       FETCH_JOBS: 'api/org-job/list/:userId',
       REMOVE_JOBS: 'api/org-job/delete/:jobId',
-      FETCH_PROFILE_ORG : 'api/user-profile/org/details/:userId',
+      FETCH_PROFILE_ORG: 'api/user-profile/org/details/:userId',
+      FETCH_APPLIED_JOBS: 'api/job-applied/search?',  
+      DOWNLOAD_RESUME: 'api/resume/:filename'
+      
     },
     USER_LOGIN: {
       LOGIN: 'api/user/login'

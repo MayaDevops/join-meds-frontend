@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import { ACTION_TYPES } from './actions';
+import { ACTION_TYPES, downloadResume } from './actions';
 import { STATE_REDUCER_KEY } from './constants';
+import { downloadResumeDetails } from './saga';
 
 const initialState = {
   country: {},
   organizationRegisterDetails: {},
   jobDetails: {},
-  profileDetails: {}
+  profileDetails: {},
+  allJobReports: {},
+  downloadResumeDetails: {}
 };
 
 const slice = createSlice({
@@ -23,6 +26,12 @@ const slice = createSlice({
     },
     setProfileDetails: (state, { payload }) => {
       _.set(state, 'profileDetails', payload);
+    },
+    setAllJobsReportDetails: (state, { payload }) => {
+      _.set(state, 'allJobReports', payload);
+    },
+    setDownloadResume: (state, { payload }) => {
+      _.set(state, 'downloadResumeDetails', payload);
     },
   },
   extraReducers: (builder) => {

@@ -14,6 +14,7 @@ import { routeRedirect } from 'utils/common';
 import { fetchDashBoardInfo } from 'pages/dashboard/saga';
 import { getDataFromStorage } from 'utils/encryption';
 import { STORAGE_KEYS } from 'pages/common/constants';
+import { saveAs } from 'file-saver';
 
 export function* fetchCountry() {
   yield put(sliceActions.setCountry());
@@ -133,7 +134,6 @@ export function* removeJobDetails({ payload = {} }) {
       forwardAction: () => { routeRedirect(`ui/join-meds/user/dashboard`); },
     }));
     if (!_.isEmpty(responsePayLoad)) {
-      console.log(id,'1111111111111111sagaid')
       // yield* fetchDashBoardInfo({ userId:id });
     }
   } else {
@@ -161,7 +161,36 @@ export function* fetchProfileInfo({ payload = {} }) {
   }
 }
 
+export function* fetchReportAllJobsInfo({ payload = {} }) {
+  yield fork(handleAPIRequest, api.fetchReportAppliedJobsDetailsApi, payload);
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
+    ACTION_TYPES.FETCH_REPORT_APPLIED_SUCCESS,
+    ACTION_TYPES.FETCH_REPORT_APPLIED_FAILURE
+  ]);
+  if (type === ACTION_TYPES.FETCH_REPORT_APPLIED_SUCCESS) {
+    yield put(sliceActions.setAllJobsReportDetails( responsePayLoad));
+  }
+}
 
+export function* downloadResumeDetails({ payload = {} }) {
+  yield fork(handleAPIRequest, api.downloadResumeApi, payload);
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
+    ACTION_TYPES.DOWNLAOD_RESUME_SUCCESS,
+    ACTION_TYPES.DOWNLAOD_RESUME_FAILURE
+  ]);
+  if (type === ACTION_TYPES.DOWNLAOD_RESUME_SUCCESS) {
+    const filename = payload?.filename || 'resume.pdf';
+
+    // Convert responsePayLoad to a Blob if it's PDF content
+    const blob = new Blob([responsePayLoad], { type: 'application/pdf' });
+
+    // Trigger download using FileSaver.js or native
+    saveAs(blob, filename);
+
+    // Also store in state if you still need it
+    yield put(sliceActions.setDownloadResume(responsePayLoad));
+  }
+}
 
 
 export default function* commonSaga() {
@@ -172,6 +201,8 @@ export default function* commonSaga() {
     takeLatest(ACTION_TYPES.UPDATE_JOB_DETAILS, updateJobDetails),
     takeLatest(ACTION_TYPES.REMOVE_JOB_DETAILS, removeJobDetails),
     takeLatest(ACTION_TYPES.FETCH_PROFILE_DETAILS, fetchProfileInfo),
+    takeLatest(ACTION_TYPES.FETCH_REPORT_APPLIED, fetchReportAllJobsInfo),
+    takeLatest(ACTION_TYPES.DOWNLAOD_RESUME, downloadResumeDetails)
 
   ]);
 }
