@@ -16,3 +16,17 @@ export const fetchDashBoardInfoApi = (data) => {
     }
   };
 };
+
+export const fetchAdminDashBoardInfoApi = () => {
+  return {
+    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_ALL_JOBS,
+    method: REQUEST_METHOD.GET,
+    payload: {
+      types: [
+        ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_REQUEST,
+        ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_SUCCESS,
+        ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_FAILURE
+      ]
+    }
+  };
+};

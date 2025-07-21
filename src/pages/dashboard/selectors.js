@@ -5,3 +5,6 @@ const commonServicesDetails = (state) => state[STATE_REDUCER_KEY];
 
 const dashBoardInfo = (state) => state.dashBoardInfo;
 export const getDashBoardInfo = flow(commonServicesDetails, dashBoardInfo);
+
+const dashBoardAllInfo = (state) => state.dashBoardAllInfo;
+export const getDashBoardAllInfo = flow(commonServicesDetails, dashBoardAllInfo);

@@ -21,8 +21,21 @@ export function* fetchDashBoardInfo({ payload = {} }) {
   }
 }
 
+export function* fetchAdminDashBoardInfo({ payload = {} }) {
+  yield fork(handleAPIRequest, api.fetchAdminDashBoardInfoApi, payload);
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
+    ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_SUCCESS,
+    ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_FAILURE
+  ]);
+  if (type === ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_SUCCESS) {
+    yield put(sliceActions.setDashBoardInfo({ value: responsePayLoad }));
+  }
+}
+
 export default function* dashBoardServiceSaga() {
   yield all([
-    takeLatest(ACTION_TYPES.FETCH_DASHBOARD_INFO, fetchDashBoardInfo)
+    takeLatest(ACTION_TYPES.FETCH_DASHBOARD_INFO, fetchDashBoardInfo),
+    takeLatest(ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO, fetchAdminDashBoardInfo)
+
   ]);
 }

@@ -3,7 +3,9 @@ import { _ } from 'utils/lodash';
 import { STATE_REDUCER_KEY } from './constants';
 
 const initialState = {
-  dashBoardInfo: {}
+  dashBoardInfo: {},
+  dashBoardAllInfo: {}
+
 };
 const slice = createSlice({
   initialState,
@@ -11,6 +13,9 @@ const slice = createSlice({
   reducers: {
     setDashBoardInfo: (state, { payload }) => {
       _.set(state, 'dashBoardInfo', payload.value);
+    },
+    setAdminDashBoardInfo: (state, { payload }) => {
+      _.set(state, 'dashBoardAllInfo', payload.value);
     }
   }
 });

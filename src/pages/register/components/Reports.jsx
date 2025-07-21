@@ -10,22 +10,40 @@ import { formatDate } from 'utils/date';
 import Download from '../../../assets/gifs/download.gif';
 import { actions as commonActions } from 'pages/common/slice';
 import { saveAs } from 'file-saver';
+import JoinMedsLoader from 'pages/common/components/JoinMedsLoader';
+import { useState } from 'react';
 
 const Reports = () => {
     const dispatch = useDispatch();
-    const { id = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+    const { id = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        const fetchReports = async () => {
+            setLoading(true);
+            try {
+                if (userType === 'SUPERADMIN') {
+                    await dispatch(fetchReportAppliedJobDetails());
+                } else {
+                    await dispatch(fetchReportAppliedJobDetails({ orgId: id }));
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
         if (!_.isEmpty(id)) {
-            dispatch(fetchReportAppliedJobDetails({ orgId: id }));
+            fetchReports();
         }
-    }, [id]);
+    }, [id, dispatch]);
+
 
     const appliedJobDetails = useSelector(getAllJobReports);
 
     const handleResumeDownload = async (resumeId, fullName = 'resume') => {
         if (!resumeId) return;
 
+        setLoading(true);
         try {
             const response = await fetch(`https://api.joinmeds.in/api/resume/${resumeId}`);
             if (!response.ok) throw new Error('Failed to fetch resume');
@@ -37,20 +55,22 @@ const Reports = () => {
                 .trim()
                 .toLowerCase()
                 .replace(/\s+/g, '_')
-                .replace(/[^\w\-]/g, ''); // remove special chars
+                .replace(/[^\w\-]/g, '');
 
             saveAs(blob, `resume_${safeName}.pdf`);
-             dispatch(commonActions.setAlertToast({
-                  open: true,
-                  variant: 'success',
-                  message: 'Resume Downloaded successfully',
-                }));
 
+            dispatch(commonActions.setAlertToast({
+                open: true,
+                variant: 'success',
+                message: 'Resume downloaded successfully',
+            }));
         } catch (error) {
-            // console.error('Download error:', error);
             alert('Failed to download resume. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
+
 
 
     const columns = [
@@ -92,6 +112,7 @@ const Reports = () => {
 
     return (
         <div className="p-4">
+            {loading && <JoinMedsLoader />}
             <ReportTable
                 title="Applied Jobs"
                 columns={columns}

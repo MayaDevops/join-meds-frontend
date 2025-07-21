@@ -13,6 +13,8 @@ import { actions as commonActions } from 'pages/common/slice';
 import { t } from 'pages/common/components';
 import { useEffect } from 'react';
 import Breadcrumbs from 'pages/common/components/Breadcrumbs';
+import JoinMedsLoader from 'pages/common/components/JoinMedsLoader';
+import { useState } from 'react';
 
 function OrganizationProfile() {
     const dispatch = useDispatch();
@@ -42,6 +44,8 @@ function OrganizationProfile() {
     });
     const { userId = '' } = getDataFromStorage(STORAGE_KEYS.USER_DETAILS, true) || {};
     const { id = '', orgName = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+    const [loading, setLoading] = useState(false);
+
 
     useEffect(() => {
         if (!selectedJob) {
@@ -59,16 +63,28 @@ function OrganizationProfile() {
         }
     }, [selectedJob, reset]);
 
-    const updateApplication = (finalParams) => {
-        dispatch(updateJobDetails(finalParams));
-    }
+    const updateApplication = async (finalParams) => {
+        setLoading(true);
+        try {
+            await dispatch(updateJobDetails(finalParams));
+            navigate('/ui/join-meds/user/dashboard');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const createApplication = (finalParams) => {
-        dispatch(createJobDetails(finalParams));
-    }
+    const createApplication = async (finalParams) => {
+        setLoading(true);
+        try {
+            await dispatch(createJobDetails(finalParams));
+            navigate('/ui/join-meds/user/dashboard');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const onSubmit = (data) => {
 
+    const onSubmit = async (data) => {
         if (!_.isEmpty(selectedJob?.id) && selectedJob?.id !== 'undefined') {
             const finalParams = {
                 ...data,
@@ -101,9 +117,11 @@ function OrganizationProfile() {
             }));
         }
     };
+
     return (
         <div className={!id ? `flex flex-col items-center justify-start min-h-screen pt-24 pb-10 px-4 bg-white` :
             'flex flex-col items-left justify-start min-h-screen pt-4 pb-10 px-4 bg-white'}>
+             {loading && <JoinMedsLoader />}
             <Breadcrumbs pageTitle="Add Job" />
             {/* Banner */}
             <div className="w-full max-w-full rounded-t-xl overflow-hidden">
