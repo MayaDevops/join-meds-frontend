@@ -13,7 +13,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -27,7 +27,7 @@ jobs:
       - name: List dist folder
         run: ls -lah dist
 
-      - name: Clean remote dist directory before upload
+      - name: Clean remote dist folder before upload
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -48,7 +48,7 @@ jobs:
           source: "dist/*"
           target: "/var/www/join-meds-frontend/dist"
 
-      - name: Restart Nginx
+      - name: Fix permissions and restart Nginx
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -56,4 +56,6 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
           script: |
+            sudo chown -R www-data:www-data /var/www/join-meds-frontend/dist
+            sudo chmod -R 755 /var/www/join-meds-frontend/dist
             sudo systemctl restart nginx
