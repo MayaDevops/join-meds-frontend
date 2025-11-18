@@ -44,8 +44,8 @@ export function* saveOrganizationDetails({ payload = {} }) {
   } else {
     yield put(commonActions.setAlertToast({
       open: true,
-      variant: 'error',
-      message: 'Organization Details save failed. Please try again',
+      variant: 'warning',
+      message: 'User already exists with this email/mobile.',
     }));
   }
 }

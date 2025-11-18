@@ -17,7 +17,6 @@ function Dashboard() {
   const { id = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
   const [jobList, setJobList] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     if (!_.isEmpty(id)) {
       setLoading(true);
@@ -27,7 +26,7 @@ function Dashboard() {
         dispatch(fetchDashboardInfo({ userId: id }));
       }
     }
-  }, [id]);
+  }, [id,userType]);
 
   useEffect(() => {
     if (!_.isEmpty(dashBoardDetails)) {

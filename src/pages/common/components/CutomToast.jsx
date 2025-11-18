@@ -24,7 +24,7 @@ const CustomToast = () => {
       icon: '❌'
     },
     warning: {
-      bg: 'bg-yellow-400',
+      bg: 'bg-yellow-100',
       text: 'text-yellow-900',
       border: 'border-l-[5px] border-yellow-600',
       icon: '⚠️'
