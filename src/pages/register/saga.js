@@ -50,6 +50,9 @@ export function* saveOrganizationDetails({ payload = {} }) {
   }
 }
 
+
+
+
 export function* createJobDetails({ payload = {} }) {
   yield fork(handleAPIRequest, api.createJobDetailsApi, payload);
   const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
@@ -73,7 +76,7 @@ export function* createJobDetails({ payload = {} }) {
       // }));
     }
   } else {
-     yield put(commonActions.setAlertAction({
+    yield put(commonActions.setAlertAction({
       open: true,
       variant: 'error',
       message: 'Job Details saved failed.Please try again',
@@ -107,7 +110,7 @@ export function* updateJobDetails({ payload = {} }) {
       // }));
     }
   } else {
-     yield put(commonActions.setAlertAction({
+    yield put(commonActions.setAlertAction({
       open: true,
       variant: 'error',
       message: 'Job Details update failed.Please try again',
@@ -137,9 +140,9 @@ export function* removeJobDetails({ payload = {} }) {
       // yield* fetchDashBoardInfo({ userId:id });
     }
   } else {
-      // yield* fetchDashBoardInfo({  userId:id });
+    // yield* fetchDashBoardInfo({  userId:id });
 
-     yield put(commonActions.setAlertAction({
+    yield put(commonActions.setAlertAction({
       open: true,
       variant: 'error',
       message: 'Job Details update failed.Please try again',
@@ -157,7 +160,7 @@ export function* fetchProfileInfo({ payload = {} }) {
     ACTION_TYPES.FETCH_PROFILE_DETAILS_FAILURE
   ]);
   if (type === ACTION_TYPES.FETCH_PROFILE_DETAILS_SUCCESS) {
-    yield put(sliceActions.setProfileDetails( responsePayLoad));
+    yield put(sliceActions.setProfileDetails(responsePayLoad));
   }
 }
 
@@ -168,7 +171,7 @@ export function* fetchReportAllJobsInfo({ payload = {} }) {
     ACTION_TYPES.FETCH_REPORT_APPLIED_FAILURE
   ]);
   if (type === ACTION_TYPES.FETCH_REPORT_APPLIED_SUCCESS) {
-    yield put(sliceActions.setAllJobsReportDetails( responsePayLoad));
+    yield put(sliceActions.setAllJobsReportDetails(responsePayLoad));
   }
 }
 
