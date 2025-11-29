@@ -114,6 +114,15 @@ function Login() {
                 Login
               </button>
             </div>
+            <div className="text-right mt-2 mb-4">
+              <button
+                type="button"
+                className="text-blue-600 hover:underline cursor-pointer font-semibold"
+                onClick={() => navigate('/ui/join-meds/forgot-password')}
+              >
+                Forgot Password?
+              </button>
+            </div>
           </form>
         </div>
 

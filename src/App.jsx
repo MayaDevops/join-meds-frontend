@@ -6,6 +6,8 @@ import OrganisationAuthLanding from './pages/login/components/OrganisationAuthLa
 
 import Login from './pages/login/components/Login';
 import Register from './pages/register/components';
+import ForgotPassword from './pages/login/components/ForgotPassword';
+
 import OrganizationProfile from './pages/register/components/OrganizationProfile';
 import ProfileCard from './pages/register/components/ProfileCard';
 import Dashboard from './pages/dashboard/components';
@@ -20,7 +22,7 @@ function App() {
         {/* 🌐 Public layout */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
-          {/* <Route path="ui/join-meds/login" element={<Login />} /> */}
+          <Route path="ui/join-meds/forgot-password" element={<ForgotPassword />} />
           <Route path="ui/join-meds/register" element={<Register />} />
         </Route>
 

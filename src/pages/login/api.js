@@ -20,3 +20,18 @@ export const verifyLoginDetailsApi = (data) => {
     }
   };
 };
+
+export const forgotPasswordApi = (data) => {
+  return {
+    url: API_URL.JOINT_MEDS.USER_LOGIN.FORGOT_PASSWORD,
+    method: REQUEST_METHOD.POST,
+    payload: {
+      types: [
+        ACTION_TYPES.FORGOT_PASSWORD_REQUEST,
+        ACTION_TYPES.FORGOT_PASSWORD_SUCCESS,
+        ACTION_TYPES.FORGOT_PASSWORD_FAILURE
+      ],
+      data
+    }
+  };
+};

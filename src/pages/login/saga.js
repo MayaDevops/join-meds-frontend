@@ -56,9 +56,35 @@ export function* verifyPenDetails({ payload }) {
   }
 }
 
+export function* forgotPassworddetails({ payload }) {
+  yield fork(handleAPIRequest, api.forgotPasswordApi, payload);
+  const {    type
+  } = yield take(
+    [ACTION_TYPES.FORGOT_PASSWORD_SUCCESS,
+    ACTION_TYPES.FORGOT_PASSWORD_FAILURE]
+  );
+  if (type === ACTION_TYPES.FORGOT_PASSWORD_SUCCESS) {
+    yield put(commonActions.setAlertToast({
+      open: true,
+      variant: 'success',
+      message: `${t('Login Successful')}`
+    }));
+  } else {
+    yield put(commonActions.setAlertAction({
+      open: true,
+      variant: 'information',
+      message: t('Invalid Login Credentials'),
+      title: t('Login Details'),
+      backwardActionText: t('Close')
+    }));
+  }
+}
+
 
 export default function* loginSaga() {
   yield all([
     takeLatest(ACTION_TYPES.VERIFY_LOGIN, verifyPenDetails),
+    takeLatest(ACTION_TYPES.FORGOT_PASSWORD, forgotPassworddetails),
+
   ]);
 }

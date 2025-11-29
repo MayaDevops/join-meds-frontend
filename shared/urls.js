@@ -18,7 +18,9 @@ export const API_URL = {
       
     },
     USER_LOGIN: {
-      LOGIN: 'api/user/login'
+      LOGIN: 'api/user/login',
+      FORGOT_PASSWORD: 'api/user/login'
+
     }
   }
 

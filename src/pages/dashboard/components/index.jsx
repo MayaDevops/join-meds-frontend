@@ -17,6 +17,7 @@ function Dashboard() {
   const { id = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
   const [jobList, setJobList] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     if (!_.isEmpty(id)) {
       setLoading(true);
@@ -48,7 +49,7 @@ function Dashboard() {
     { key: 'jobDesc', label: 'Job Description' },
     {
       key: 'createdAt',
-      label: 'Publsihed On',
+      label: 'Published On',
       render: (value) => formatDate(value),
     }
   ];
