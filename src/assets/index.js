@@ -17,6 +17,7 @@ import FB from './images/FB.png';
 import insta from './images/insta.png';
 import Twitter from './images/Twitter.png';
 import Youtube from './images/Youtube.png';
+import JoinMedsLogo from './images/logo.png';
 
 
 export {
@@ -37,5 +38,6 @@ export {
   FB,
   insta,
   Twitter,
-  Youtube
+  Youtube,
+  JoinMedsLogo
 }

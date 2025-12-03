@@ -1,15 +1,12 @@
 import React from "react";
 import {
-  FacebookIcon,
   FB,
   insta,
-  InstagramIcon,
-  LinkedInIcon,
   map,
   Twitter,
   Youtube,
+  JoinMedsLogo
 } from "../../../assets";
-import logo from "../../../assets/images/logo.png";
 
 function Footer() {
   return (
@@ -18,7 +15,7 @@ function Footer() {
 
         {/* LEFT - Logo + Address + Contact */}
         <div className="space-y-6">
-          <img src={logo} alt="JoinMeds Logo" className="w-20" />
+          <img src={JoinMedsLogo} alt="JoinMeds Logo" className="w-20" />
 
           <div>
             <h3 className="font-semibold tracking-wide">OFFICE | INDIA</h3>
