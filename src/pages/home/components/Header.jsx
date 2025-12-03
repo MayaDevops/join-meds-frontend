@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import logo from "../../../assets/images/logo.png";
 import { Menu, X } from "lucide-react";
-import { bgHome } from "assets";
+import { bgHome, JoinMedsLogo } from "assets";
 import { useNavigate } from "react-router-dom";
 
 
@@ -25,7 +24,7 @@ function Header({ onNavigate, refs }) {
     >
 
       {/* LOGO */}
-      <img src={logo} alt="JoinMeds Logo" className="h-12 cursor-pointer"
+      <img src={JoinMedsLogo} alt="JoinMeds Logo" className="h-12 cursor-pointer"
         onClick={() => onNavigate({ ref: refs.homeRef, name: "home" })}
       />
 
