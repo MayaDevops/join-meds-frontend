@@ -17,7 +17,7 @@ import FB from './images/FB.png';
 import insta from './images/insta.png';
 import Twitter from './images/Twitter.png';
 import Youtube from './images/Youtube.png';
-import JoinMedsLogo from './images/logo.png';
+import JoinMedsLogo from './images/Logo.png';
 
 
 export {
