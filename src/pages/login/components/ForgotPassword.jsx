@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import bannerPattern from '../../../assets/images/all_in_1_bg.png';
 import { useForm } from 'react-hook-form';
 import Logo from '../../../assets/images/Logo.png';
-import medLandLogo from '../../../assets/images/med-land-logo.jpg';
+// import medLandLogo from '../../../assets/images/med-land-logo.jpg';
 import { _ } from 'utils/lodash';
 import { useDispatch } from 'react-redux';
 import { forgotPassword } from '../actions';
@@ -138,9 +138,9 @@ function ForgotPassword() {
                 </div>
 
                 {/* Footer Logo */}
-                <div className="flex justify-center p-4">
+                {/* <div className="flex justify-center p-4">
                     <img src={medLandLogo} alt="Medland Logo" className="h-20 object-contain" />
-                </div>
+                </div> */}
             </div>
         </div>
     );

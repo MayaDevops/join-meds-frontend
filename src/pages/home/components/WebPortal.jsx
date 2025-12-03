@@ -1,98 +1,84 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Header from './Header';
 import Home from './Home';
-import About from './About';
+import WhyChoose from './WhyChoose';
+import AboutUs from './AboutUs';
 import ContactUs from './ContactUs';
 import Footer from './Footer';
 import { useLocation } from 'react-router-dom';
+import Header from './Header';
+import DownloadApp from './DownloadApp';
 
 const WebPortal = () => {
   const homeRef = useRef(null);
+  const whyRef = useRef(null);
   const aboutRef = useRef(null);
+  const downloadRef = useRef(null);
   const contactRef = useRef(null);
 
+  // eslint-disable-next-line no-unused-vars
   const [activeSection, setActiveSection] = useState('home');
-  const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
 
   const scrollToSection = ({ ref, name }) => {
-    ref?.current?.scrollIntoView({ behavior: 'smooth' });
+    ref?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setActiveSection(name);
   };
 
-  // Scroll based on ?scrollTo query
+  // scroll using query param
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const target = params.get('scrollTo');
 
     const refMap = {
       home: homeRef,
+      why: whyRef,
       about: aboutRef,
-      contact: contactRef,
+      download: downloadRef,
+      contact: contactRef
     };
 
     if (target && refMap[target]?.current) {
       setTimeout(() => {
         refMap[target].current.scrollIntoView({ behavior: 'smooth' });
         setActiveSection(target);
-      }, 100); // wait a bit for DOM render
+      }, 150);
     }
   }, [location.search]);
 
-  // Track scroll for active section
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-
-    const sections = [
-      { ref: homeRef, id: 'home' },
-      { ref: aboutRef, id: 'about' },
-      { ref: contactRef, id: 'contact' },
-    ];
-
-    sections.forEach(({ ref, id }) => {
-      if (ref.current) {
-        ref.current.id = id;
-        observer.observe(ref.current);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Scroll progress
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = (scrollTop / docHeight) * 100;
-      setScrollProgress(scrolled);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div>
-      <Header
-        onNavigate={scrollToSection}
-        refs={{ homeRef, aboutRef, contactRef }}
-        activeSection={activeSection}
-        scrollProgress={scrollProgress}
-      />
-      <div ref={homeRef}><Home /></div>
-      <div ref={aboutRef}><About /></div>
-      <div ref={contactRef}><ContactUs /></div>
-      {/* <Footer /> */}
+      <Header onNavigate={scrollToSection} refs={{ homeRef, whyRef, aboutRef, downloadRef, contactRef }} />
+      {/* HOME SECTION */}
+      <section ref={homeRef} id="home" className="scroll-mt-24">
+        <Home
+          onNavigate={scrollToSection}
+          refs={{ homeRef, whyRef, aboutRef, downloadRef, contactRef }}
+        />
+      </section>
+
+      {/* WHY CHOOSE */}
+      <section ref={whyRef} id="why" className="scroll-mt-24">
+        <WhyChoose />
+      </section>
+
+      {/* ABOUT US */}
+      <section ref={aboutRef} id="about" className="scroll-mt-24">
+        <AboutUs />
+      </section>
+
+      <section ref={downloadRef} id="download">
+        <DownloadApp />
+      </section>
+
+
+      {/* CONTACT */}
+      {/* <section ref={contactRef} id="contact">
+        <ContactUs />
+      </section> */}
+      <section ref={contactRef} id="contact">
+        <Footer />
+      </section>
+
     </div>
   );
 };

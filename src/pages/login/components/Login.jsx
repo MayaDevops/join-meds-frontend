@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { _ } from 'utils/lodash';
 import { verifyLogin } from '../actions';
 import Logo from '../../../assets/images/Logo.png';
-import medLandLogo from '../../../assets/images/med-land-logo.jpg';
+// import medLandLogo from '../../../assets/images/med-land-logo.jpg';
 import { useState } from 'react';
 
 function Login() {
@@ -127,9 +127,9 @@ function Login() {
         </div>
 
         {/* Bottom: Medland Logo */}
-        <div className="flex justify-center p-4">
+        {/* <div className="flex justify-center p-4">
           <img src={medLandLogo} alt="Medland Logo" className="h-20 object-contain" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

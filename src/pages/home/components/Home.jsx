@@ -1,97 +1,107 @@
-
-import React from 'react';
-// import useEmblaCarousel from 'embla-carousel-react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-// import { Button } from 'antd';
-// import { useNavigate } from 'react-router-dom';
-import { bannerBg } from '../../../assets';
-// import kidsVideo from '../../../../assets/video/kids.mp4';
-
-// const carouselMedia = [
-//   // {
-//   //   type: 'video',
-//   //   src: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-//   //   alt: 'Students participating in meal preparation'
-//   // },
-//   // {
-//   //   type: 'video',
-//   //   src: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-//   //   poster: 'https://images.unsplash.com/photo-1544716278-e513176f20b5?auto=format&fit=crop&w=600&h=400&q=80',
-//   //   alt: 'Students participating in meal preparation'
-//   // },
-//   // {
-//   //   type: 'image',
-//   //   src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=600&h=400&q=80',
-//   //   alt: 'School children having lunch together'
-//   // }
-// ];
+import React from "react";
+import { Search, Globe, ArrowRight, Menu, X } from "lucide-react";
+import { bannerBg, bgHome } from "assets";
 
 function Home() {
-  // const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  // const [selectedIndex, setSelectedIndex] = useState(0);
-  // const [isHovering, setIsHovering] = useState(false);
-
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!emblaApi) return;
-
-  //   // const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
-  //   emblaApi.on('select', onSelect);
-  //   onSelect();
-
-  //   const intervalId = setInterval(() => {
-  //     if (!isHovering) {
-  //       emblaApi.scrollNext();
-  //     }
-  //   }, 15000);
-
-  //   return () => clearInterval(intervalId);
-  // }, [emblaApi, isHovering]);
-
-  // const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
-  // const scrollNext = () => emblaApi && emblaApi.scrollNext();
-
-  // const handleMouseEnter = () => setIsHovering(true);
-  // const handleMouseLeave = () => setIsHovering(false);
 
   return (
     <div
-      className="w-full flex h-auto min-h-screen overflow-y-auto items-center justify-center"
+      className="w-full flex flex-col relative"
       style={{
-        backgroundImage: `linear-gradient(285deg, rgba(255, 255, 255, 0.00) 35.83%, rgba(255, 255, 255, 0.80) 61.37%), url(${bannerBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center -10px',
-        backgroundRepeat: 'no-repeat',
-        backgroundColor: 'lightgray'
+        height: "75vh",
+        minHeight: "825px",
+        maxHeight: "900px",
+        backgroundImage: `url(${bgHome})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
+      {/* ================= HERO SECTION ================= */}
+      <div
+        className="
+          w-full max-w-[1900px] mx-auto px-6 lg:px-20
+          flex flex-col lg:flex-row
+          justify-between items-center gap-4
+        "
+      >
+        {/* LEFT TEXT */}
+        <div className="text-white max-w-2xl">
+          <div
+            className="
+              inline-block text-white text-md px-6 py-2 mb-4
+              rounded-tl-full rounded-tr-full rounded-bl-full rounded-br-none
+            "
+            style={{
+              background: "linear-gradient(90deg, #2ECC7199 0%, #2ECC71CC 100%)",
+            }}
+          >
+            TRUSTED TALENT. FASTER HIRING.
+          </div>
 
-      <div className="flex flex-col lg:flex-row gap-16 items-center justify-left max-w-[1300px] w-full px-6 py-12 pt-70">
-
-        {/* Text + Carousel (stacked on small screens) */}
-        <div className="flex flex-col items-center lg:items-start gap-10 max-w-[680px] w-full text-white text-center lg:text-left">
-          <h1 className="text-4xl sm:text-2xl md:text-6xl font-bold leading-tight px-4 sm:px-8 md:px-0 ">
-            <span className="text-[#F67070]">Crafting Careers,</span><br />
-            <span className="text-[#F67070]">Connecting Talent</span>
+          <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-4">
+            Find The Right Talent <br />
+            Faster and Smarter <br />
+            With <span className="text-[#cde2ff]">JoinMeds</span>
           </h1>
 
-          {/* Carousel under heading on small screens */}
-          <div
-            className="relative w-full h-[250px] sm:h-[280px] md:h-[320px] lg:hidden rounded-[24px] overflow-hidden shadow-2xl bg-white group"
+          <p className="text-lg text-white/90 mb-6 max-w-md">
+            Streamlined hiring designed exclusively for healthcare organisations.
+          </p>
 
-          >
-            <div className="overflow-hidden" >
-
-            </div>
-          </div>
-
-          <div>
-          </div>
+          <button className="bg-[#00A4E1] text-[#0a4da3] px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-blue-50">
+            Get Started <ArrowRight size={18} />
+          </button>
         </div>
 
-        {/* Carousel on right side for large screens only */}
-        <div></div>
+        {/* RIGHT IMAGE */}
+        <div className="relative mt-10 lg:mt-0 flex justify-center lg:justify-end pr-10">
+          <div className="absolute w-[420px] h-[420px] lg:w-[470px] lg:h-[470px] bg-blue-400/20 rounded-full blur-3xl right-0"></div>
+
+          <img
+            src={bannerBg}
+            alt="Doctor"
+            className="relative z-10 w-[300px] lg:w-[674px] object-contain"
+          />
+        </div>
+      </div>
+
+      {/* ================= SEARCH BAR (BOTTOM CENTER) ================= */}
+      <div
+        className="
+          absolute left-1/2 bottom-0
+          transform -translate-x-1/2 translate-y-1/2
+          w-full flex justify-center px-6 z-50
+        "
+      >
+        <div className="bg-white shadow-xl rounded-full flex items-center px-8 py-3 w-full max-w-4xl gap-6">
+          <div className="flex items-center flex-1 gap-3">
+            <Search className="text-gray-600" size={20} />
+            <input
+              type="text"
+              placeholder="Search job"
+              className="w-full outline-none"
+            />
+          </div>
+
+          <div className="h-6 w-[1px] bg-gray-300" />
+
+          <div className="flex items-center flex-1 gap-3">
+            <Globe className="text-gray-600" size={20} />
+            <select className="w-full outline-none cursor-pointer">
+              <option>Select Country</option>
+              <option>India</option>
+              <option>UAE</option>
+              <option>Qatar</option>
+            </select>
+          </div>
+
+          <div className="h-6 w-[1px] bg-gray-300" />
+
+          <button className="bg-[#0a4da3] hover:bg-[#083e85] text-white w-12 h-12 rounded-full flex items-center justify-center">
+            <Search size={20} />
+          </button>
+        </div>
       </div>
     </div>
   );

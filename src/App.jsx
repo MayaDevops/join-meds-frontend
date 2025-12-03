@@ -4,6 +4,8 @@ import Layout from './layout/components/HomeLayout';
 // import WebPortal from './pages/home/components/WebPortal';
 import OrganisationAuthLanding from './pages/login/components/OrganisationAuthLanding';
 
+import WebPortal from './pages/home/components/WebPortal';
+
 import Login from './pages/login/components/Login';
 import Register from './pages/register/components';
 import ForgotPassword from './pages/login/components/ForgotPassword';
@@ -21,7 +23,8 @@ function App() {
       <Routes>
         {/* 🌐 Public layout */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<Login />} />
+          <Route index element={<WebPortal />} />
+          <Route path="ui/join-meds/login" element={<Login />} />
           <Route path="ui/join-meds/forgot-password" element={<ForgotPassword />} />
           <Route path="ui/join-meds/register" element={<Register />} />
         </Route>

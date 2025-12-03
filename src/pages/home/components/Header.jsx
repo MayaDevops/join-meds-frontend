@@ -1,89 +1,105 @@
-import React, { useState } from 'react';
-import { Button } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import { LogoImg } from '../../../assets';
-import { t } from 'pages/common/components';
+import React, { useState } from "react";
+import logo from "../../../assets/images/logo.png";
+import { Menu, X } from "lucide-react";
+import { bgHome } from "assets";
+import { useNavigate } from "react-router-dom";
 
-function Header({ onNavigate, refs, activeSection, scrollProgress }) {
+
+function Header({ onNavigate, refs }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleNav = (section, ref) => {
-    setIsMenuOpen(false);
-
-    if (location.pathname === '/') {
-      // If on homepage, scroll
-      onNavigate({ ref, name: section });
-    } else {
-      // Else, navigate with scrollTo query param
-      navigate(`/?scrollTo=${section}`);
-    }
-  };
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
-      <div className="flex items-center justify-between px-4 sm:px-8 h-[65px]">
-        {/* Logo Section */}
-        <div className="flex items-center gap-2">
-          <img src={LogoImg} alt="logo" width="70px" />
-          <span className="font-semibold text-[#323232] text-sm sm:text-base whitespace-nowrap">
-            {t('MedLand Education and Placement Service')}
-          </span>
-        </div>
+    <div
+      className="
+        w-full sticky top-0 z-[200]
+        text-white flex items-center justify-between
+        px-6 lg:px-20 py-4
+      "
+      style={{
+        backgroundImage: `url(${bgHome})`,   // ⭐ APPLY BG IMAGE HERE
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex gap-10 text-[#323232] text-sm font-medium">
-          <span className={`cursor-pointer hover:underline ${activeSection === 'home' ? 'text-[#FF6F61]' : ''}`} onClick={() => handleNav('home', refs?.homeRef)}>Home</span>
-          <span className={`cursor-pointer hover:underline ${activeSection === 'about' ? 'text-[#FF6F61]' : ''}`} onClick={() => handleNav('about', refs?.aboutRef)}>About Us</span>
-          <span className={`cursor-pointer hover:underline ${activeSection === 'contact' ? 'text-[#FF6F61]' : ''}`} onClick={() => handleNav('contact', refs?.contactRef)}>Contact Us</span>
-        </nav>
+      {/* LOGO */}
+      <img src={logo} alt="JoinMeds Logo" className="h-12 cursor-pointer"
+        onClick={() => onNavigate({ ref: refs.homeRef, name: "home" })}
+      />
 
-        {/* Register */}
-        <div className="hidden lg:flex ml-2">
-          <Button
-            style={{ backgroundColor: '#00a4e1' }}
-            type="primary"
-            onClick={() => navigate('/ui/join-meds/login')}
-          >
-            Sign In
-          </Button>
-        </div>
+      {/* DESKTOP MENU */}
+      <div className="hidden lg:flex gap-12 text-sm font-semibold">
+        <p className="cursor-pointer"
+          onClick={() => onNavigate({ ref: refs.homeRef, name: "home" })}>Home</p>
 
-        {/* Hamburger Icon */}
-        <div className="lg:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
+        <p
+          className="cursor-pointer"
+          onClick={() => navigate("/ui/join-meds/login")}
+        >
+          For Job Seekers
+        </p>
+
+        <p
+          className="cursor-pointer"
+          onClick={() => navigate("/ui/join-meds/login")}
+        >
+          For Employers
+        </p>
+
+        <p className="cursor-pointer"
+          onClick={() => onNavigate({ ref: refs.whyRef, name: "why" })}>Why Choose Us</p>
+
+        <p className="cursor-pointer"
+          onClick={() => onNavigate({ ref: refs.aboutRef, name: "about" })}>About</p>
+
+        <p className="cursor-pointer"
+          onClick={() => onNavigate({ ref: refs.contactRef, name: "contact" })}>Contact</p>
       </div>
 
-      {/* Mobile Nav */}
-      {isMenuOpen && (
-        <div className="lg:hidden flex flex-col px-4 pb-4 bg-white text-[#323232] text-sm font-medium gap-4 shadow">
-          <span onClick={() => handleNav('home', refs?.homeRef)}>Home</span>
-          <span onClick={() => handleNav('about', refs?.aboutRef)}>About Us</span>
-          <span onClick={() => handleNav('contact', refs?.contactRef)}>Contact Us</span>
-          <Button
-            style={{ backgroundColor: '#00a4e1', marginTop: '8px' }}
-            type="primary"
-            onClick={() => {
-              navigate('/ui/join-meds/login');
-              setIsMenuOpen(false);
-            }}
+      {/* HAMBURGER BUTTON */}
+      <button className="block lg:hidden" onClick={() => setOpen(!open)}>
+        {open ? <X size={28} /> : <Menu size={28} />}
+      </button>
+
+      {/* MOBILE MENU DROPDOWN */}
+      {open && (
+        <div className="absolute top-full left-0 w-full bg-[#002b5c]/90 text-white p-6 flex flex-col gap-6 lg:hidden">
+
+          <p onClick={() => { onNavigate({ ref: refs.homeRef, name: "home" }); setOpen(false); }}
+            className="cursor-pointer">Home</p>
+
+          <p
+            onClick={() => { navigate("/ui/join-meds/login"); setOpen(false); }}
+            className="cursor-pointer"
           >
-            Sign In
-          </Button>
+            For Job Seekers
+          </p>
+
+          <p
+            onClick={() => { navigate("/ui/join-meds/login"); setOpen(false); }}
+            className="cursor-pointer"
+          >
+            For Employers
+          </p>
+
+          <p onClick={() => { onNavigate({ ref: refs.whyRef, name: "why" }); setOpen(false); }}
+            className="cursor-pointer">Why Choose Us</p>
+
+          <p onClick={() => { onNavigate({ ref: refs.aboutRef, name: "about" }); setOpen(false); }}
+            className="cursor-pointer">About</p>
+
+          <p onClick={() => { onNavigate({ ref: refs.contactRef, name: "contact" }); setOpen(false); }}
+            className="cursor-pointer">Contact</p>
+
+          <p onClick={() => { onNavigate({ ref: refs.contactRef, name: "contact" }); setOpen(false); }}
+            className="cursor-pointer">For Job Seekers
+          </p>
+
         </div>
       )}
-
-      {/* Scroll Progress Bar */}
-      <div
-        className="absolute bottom-0 left-0 h-1 bg-[#8ACCD5]"
-        style={{ width: `${scrollProgress || 0}%`, transition: 'width 0.2s ease-out' }}
-      />
-    </header>
+    </div>
   );
 }
 

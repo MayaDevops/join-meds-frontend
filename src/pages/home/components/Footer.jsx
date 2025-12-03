@@ -1,71 +1,120 @@
-
+import React from "react";
 import {
-  FacebookIcon, InstagramIcon, LinkedInIcon, medLandLogo
-} from '../../../assets'; // Adjust the import path as necessary
-import React from 'react';
+  FacebookIcon,
+  FB,
+  insta,
+  InstagramIcon,
+  LinkedInIcon,
+  map,
+  Twitter,
+  Youtube,
+} from "../../../assets";
+import logo from "../../../assets/images/logo.png";
 
-function Fooder() {
+function Footer() {
   return (
-    <footer className="bg-[#029dbc] text-white py-10 px-10 md:px-32">
-      <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between gap-12">
-        {/* Logo & Description */}
-        <div className="flex flex-col gap-4 max-w-md">
-          <div className="flex items-center gap-3">
-            <div className="">
-              <img src={medLandLogo} alt="logo" width="200px" />
-            </div>
-            {/* <span className="font-semibold text-lg text-[#ffff]">
-              
-            </span> */}
+    <footer className="bg-[#1B3C74] text-white pt-12 pb-6 px-6 lg:px-20">
+      <div className="max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+
+        {/* LEFT - Logo + Address + Contact */}
+        <div className="space-y-6">
+          <img src={logo} alt="JoinMeds Logo" className="w-20" />
+
+          <div>
+            <h3 className="font-semibold tracking-wide">OFFICE | INDIA</h3>
+            <p className="text-sm mt-3 leading-6">
+              1ST Floor, Iconic Arcade,<br />
+              Near Alpha Gym, PO, Kalluvathukkal,<br />
+              Kollam, Kerala, PIN 691578, India
+            </p>
           </div>
-          <p className="text-sm text-[#ffff]">
-            we are not here to sell you products, we sell value through our expertise.
-          </p>
-          {/* Social Icons */}
-          <div className="flex gap-4 text-white mt-2">
-            <FacebookIcon />            
-            <InstagramIcon />
-            <LinkedInIcon />
+
+          <div>
+            <h3 className="font-semibold tracking-wide">FOR ENQUIRIES</h3>
+            <p className="text-sm mt-3 leading-6">+91 80866 64415</p>
+            <p className="text-sm mt-1 leading-6">joinmedsofficial@gmail.com</p>
           </div>
         </div>
 
-        {/* Address */}
-        <div className="text-sm text-[#ffff] leading-6">
-          <p><strong className="text-white">Address:</strong><br />
-            MEDLAND EDUCATION AND PLACEMENT SERVICE PRIVATE LIMITED,  ICONIC ARCADE,<br />
-            FIRST FLOOR,  KALLUVATHUKKAL, KOLLAM, KOLLAM-691578, KERALA
-          </p>
-          <p className="mt-3">
-            <strong className="text-white">Phone:</strong><br />
-            +918086664419, +917558885566
-          </p>
-          <p className="mt-3">
-            <strong className="text-white">Email:</strong><br />
-            medlandplacementservices@gmail.com
-          </p>
-        </div>
+        {/* CENTER - Useful Links */}
+        <div className="space-y-4 pl-4 md:pl-10 mt-20">
+          <ul className="space-y-4 text-sm">
+            <li>
+              <a
+                href="/ui/join-meds/login"
+                className="hover:text-gray-300 flex items-center gap-2"
+              >
+                ➤ For Job Seekers
+              </a>
+            </li>
 
-        {/* Links */}
-        <div className="text-sm text-[#ffff]">
-          <strong className="text-white">Quick Links</strong>
-          <ul className="mt-3 space-y-2">
-            <li><a href="#" className="hover:text-white">Home</a></li>
-            <li><a href="#" className="hover:text-white">About Us</a></li>
-            <li><a href="#" className="hover:text-white">Contact</a></li>
+            <li>
+              <a
+                href="/ui/join-meds/login"
+                className="hover:text-gray-300 flex items-center gap-2"
+              >
+                ➤ For Employers
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="#about"
+                className="hover:text-gray-300 flex items-center gap-2"
+              >
+                ➤ About Us
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="#contact"
+                className="hover:text-gray-300 flex items-center gap-2"
+              >
+                ➤ Contact
+              </a>
+            </li>
           </ul>
+        </div>
+
+        {/* RIGHT - Map Box */}
+        <div className="flex justify-center md:justify-end">
+          <img
+            src={map}
+            alt="Map"
+            className="rounded-xl shadow-lg w-[260px] h-[260px] object-cover"
+          />
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="mt-10 border-t border-[#4D8A8A] pt-4 flex flex-col md:flex-row justify-between items-center text-sm text-[#5BBEBE]">
-        <p className="text-white">Designed and Developed by <a href="https://www.revapi.co.in/" className="hover:text-white">revAPI</a>  - 2025 © All rights reserved</p>
-        <div className="flex gap-6 mt-2 md:mt-0">
-          <a href="#" className="text-white">Terms & Conditions</a>
-          <a href="#" className="text-white">Privacy Policy</a>
-        </div>
+      {/* SOCIAL ICONS */}
+      <div className="flex justify-center gap-6 mt-10 mb-6">
+        <img
+          src={FB}
+          alt="Map"
+        // className="rounded-xl shadow-lg w-[260px] h-[260px] object-cover"
+        />
+        <img
+          src={insta}
+          alt="Map"
+        // className="rounded-xl shadow-lg w-[260px] h-[260px] object-cover"
+        /><img
+          src={Twitter}
+          alt="Map"
+        // className="rounded-xl shadow-lg w-[260px] h-[260px] object-cover"
+        /><img
+          src={Youtube}
+          alt="Map"
+        // className="rounded-xl shadow-lg w-[260px] h-[260px] object-cover"
+        />
+      </div>
+
+      {/* COPYRIGHT BAR */}
+      <div className="border-t border-[#284a78] pt-4 text-center text-sm text-gray-300">
+        Copyright ©2025 joinmeds. All Rights Reserved
       </div>
     </footer>
   );
 }
 
-export default Fooder;
+export default Footer;
