@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { bgHome, JoinMedsLogo } from "assets";
 import { useNavigate } from "react-router-dom";
+import { playStoreUrl } from "../constants";
 
 
 function Header({ onNavigate, refs }) {
@@ -35,7 +36,7 @@ function Header({ onNavigate, refs }) {
 
         <p
           className="cursor-pointer"
-          onClick={() => navigate("/ui/join-meds/login")}
+          onClick={() => window.open(playStoreUrl, "_blank")}
         >
           For Job Seekers
         </p>
@@ -70,7 +71,7 @@ function Header({ onNavigate, refs }) {
             className="cursor-pointer">Home</p>
 
           <p
-            onClick={() => { navigate("/ui/join-meds/login"); setOpen(false); }}
+           onClick={() => { window.open(playStoreUrl, "_blank"); setOpen(false); }}
             className="cursor-pointer"
           >
             For Job Seekers

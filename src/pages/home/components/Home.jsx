@@ -1,6 +1,7 @@
 import React from "react";
 import { Search, Globe } from "lucide-react";
 import { bannerBg, bgHome, RightArrowIcon } from "assets";
+import { playStoreUrl } from "../constants";
 
 function Home() {
 
@@ -44,14 +45,16 @@ function Home() {
             Faster and Smarter <br />
             With <span className="text-[#cde2ff]">JoinMeds</span>
           </h1>
-
           <p className="text-lg text-white/90 mb-6 max-w-md">
             Streamlined hiring designed exclusively for healthcare organisations.
           </p>
-
-          <button className="bg-[#00A4E1] text-[#FAFAFA] px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-blue-50">
-            Get Started <RightArrowIcon/>
+          <button
+            className="bg-[#00A4E1] text-[#FAFAFA] px-6 py-3  rounded-full flex items-center gap-2 font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#008EC4] hover:text-white"
+            onClick={() => window.open(playStoreUrl, "_blank")}
+          >
+            Get Started <RightArrowIcon />
           </button>
+
         </div>
 
         {/* RIGHT IMAGE */}
