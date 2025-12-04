@@ -92,10 +92,6 @@ function Header({ onNavigate, refs }) {
           <p onClick={() => { onNavigate({ ref: refs.contactRef, name: "contact" }); setOpen(false); }}
             className="cursor-pointer">Contact</p>
 
-          <p onClick={() => { onNavigate({ ref: refs.contactRef, name: "contact" }); setOpen(false); }}
-            className="cursor-pointer">For Job Seekers
-          </p>
-
         </div>
       )}
     </div>

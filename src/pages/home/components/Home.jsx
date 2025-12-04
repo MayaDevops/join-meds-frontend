@@ -1,6 +1,6 @@
 import React from "react";
-import { Search, Globe, ArrowRight, Menu, X } from "lucide-react";
-import { bannerBg, bgHome } from "assets";
+import { Search, Globe } from "lucide-react";
+import { bannerBg, bgHome, RightArrowIcon } from "assets";
 
 function Home() {
 
@@ -49,8 +49,8 @@ function Home() {
             Streamlined hiring designed exclusively for healthcare organisations.
           </p>
 
-          <button className="bg-[#00A4E1] text-[#0a4da3] px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-blue-50">
-            Get Started <ArrowRight size={18} />
+          <button className="bg-[#00A4E1] text-[#FAFAFA] px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-blue-50">
+            Get Started <RightArrowIcon/>
           </button>
         </div>
 
@@ -79,7 +79,7 @@ function Home() {
             <Search className="text-gray-600" size={20} />
             <input
               type="text"
-              placeholder="Search job"
+              placeholder=" Jobs"
               className="w-full outline-none"
             />
           </div>

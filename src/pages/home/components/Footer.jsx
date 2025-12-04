@@ -34,7 +34,7 @@ function Footer() {
         </div>
 
         {/* CENTER - Useful Links */}
-        <div className="space-y-4 pl-4 md:pl-10 mt-20">
+       <div className="space-y-4 pl-4 md:pl-10 mt-4 md:mt-20">
           <ul className="space-y-4 text-sm">
             <li>
               <a

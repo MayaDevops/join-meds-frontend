@@ -2,6 +2,8 @@
 import FacebookIcon from './svgs/FacebookIcon';
 import InstagramIcon from './svgs/InstagramIcon';
 import LinkedInIcon from './svgs/LinkedInIcon';
+import RightArrowIcon from './svgs/RightArrowIcon';
+
 import bannerBg from './images/ad-banner.png';
 import LogoImg from './images/Logo.png';
 import AboutUsImg from './images/aboutUs.jpg';
@@ -26,6 +28,7 @@ export {
   LinkedInIcon,
   CheckSvg,
   BellIcon,
+  RightArrowIcon,
   bannerBg,
   LogoImg,
   AboutUsImg,
