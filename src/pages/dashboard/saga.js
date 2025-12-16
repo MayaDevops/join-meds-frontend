@@ -18,6 +18,8 @@ export function* fetchDashBoardInfo({ payload = {} }) {
   ]);
   if (type === ACTION_TYPES.FETCH_DASHBOARD_INFO_SUCCESS) {
     yield put(sliceActions.setDashBoardInfo({ value: responsePayLoad }));
+  } else {
+    yield put(sliceActions.setDashBoardInfo({}));
   }
 }
 
@@ -29,6 +31,8 @@ export function* fetchAdminDashBoardInfo({ payload = {} }) {
   ]);
   if (type === ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_SUCCESS) {
     yield put(sliceActions.setDashBoardInfo({ value: responsePayLoad }));
+  } else {
+    yield put(sliceActions.setDashBoardInfo({}));
   }
 }
 

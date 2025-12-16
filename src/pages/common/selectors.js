@@ -18,4 +18,7 @@ export const getToastAction = flow(getCommonData, alertToast);
 const alertAction = (state) => state?.alertAction;
 export const getAlertAction = flow(getCommonData, alertAction);
 
+export const getIsLoggingOut = (state) =>
+  state.common?.isLoggingOut;
+
 

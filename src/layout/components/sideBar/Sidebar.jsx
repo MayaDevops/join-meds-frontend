@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   HomeIcon,
   BriefcaseIcon,
@@ -10,6 +10,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import JoinMedsLogo from '../../../assets/images/join_meds_side.png';
 import { Tooltip } from 'antd';
+import { logout } from 'utils/auth';
+import { useDispatch } from 'react-redux';
 
 const menuItems = [
   { name: 'Home', icon: HomeIcon, path: '/ui/join-meds/user/dashboard', Tooltip: 'Dashboard' },
@@ -21,18 +23,19 @@ const menuItems = [
 ];
 
 function Sidebar({ isOpen, toggle }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
-  const [loggingOut, setLoggingOut] = useState(false);
 
   const handleNavigation = (item) => {
     if (item.name === 'Logout') {
-      setLoggingOut(true);
-      setTimeout(() => {
-        localStorage.clear();
-        navigate('/');
-      }, 2000);
-      return;
+      // setLoggingOut(true);
+      // setTimeout(() => {
+      //   localStorage.clear();
+      //   navigate('/');
+      // }, 2000);
+      // return;
+      logout(dispatch);
     }
 
     if (item?.name === 'Add Job') {
@@ -117,7 +120,7 @@ function Sidebar({ isOpen, toggle }) {
       </div>
 
       {/* 🔁 Logging Out Loader */}
-      {loggingOut && (
+      {/* {loggingOut && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white bg-opacity-90">
           <div
             className="h-16 w-16 border-4 border-t-transparent rounded-full animate-spin mb-4"
@@ -132,7 +135,7 @@ function Sidebar({ isOpen, toggle }) {
             JoinMeds Portal - Logging out...
           </h1>
         </div>
-      )}
+      )} */}
     </>
   );
 }

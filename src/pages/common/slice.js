@@ -6,16 +6,16 @@ import { STATE_REDUCER_KEY } from './constants';
 const initialState = {
   country: {},
   alertToast: {
-    open : false,
-    variant : 'default',
-    message : ''
+    open: false,
+    variant: 'default',
+    message: ''
   },
   navigate: {
     active: false,
     isSameModule: true,
     to: ''
   },
-   layout: {
+  layout: {
     breadCrumbList: [{ title: 'Dashboard', href: '/' }],
     formTitle: { title: '', variant: 'normal', toolbar: false },
     columns: {
@@ -26,6 +26,7 @@ const initialState = {
     }
   },
   alertAction: {},
+  isLoggingOut: false
 };
 
 const slice = createSlice({
@@ -47,9 +48,12 @@ const slice = createSlice({
     setAlertToast: (state, { payload = null }) => {
       _.set(state, 'alertToast', payload);
     },
-     setAlertAction: (state, { payload = null }) => {
+    setAlertAction: (state, { payload = null }) => {
       _.set(state, 'alertAction', payload);
     },
+    setLoggingOut: (state, { payload }) => {
+      state.isLoggingOut = payload;
+    }
   },
   extraReducers: (builder) => {
     builder

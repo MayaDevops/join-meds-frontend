@@ -19,19 +19,23 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    if (!_.isEmpty(id)) {
-      setLoading(true);
-      if (userType === 'SUPERADMIN') {
-        dispatch(fetchAdminDashboardInfo());
-      } else {
-        dispatch(fetchDashboardInfo({ userId: id }));
-      }
-    }
-  }, [id,userType]);
+  if (!id) return;
+
+  setLoading(true);
+
+  if (userType === 'SUPERADMIN') {
+    dispatch(fetchAdminDashboardInfo());
+  } else {
+    dispatch(fetchDashboardInfo({ userId: id }));
+  }
+}, [id, userType]);
+
 
   useEffect(() => {
     if (!_.isEmpty(dashBoardDetails)) {
       setJobList(dashBoardDetails);
+      setLoading(false);
+    } else {
       setLoading(false);
     }
   }, [dashBoardDetails]);

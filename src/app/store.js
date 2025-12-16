@@ -4,6 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducers from './rootReducers';
 import rootSaga from './rootSaga';
 
+export const RESET_STORE = 'RESET_STORE';
+
 const sagaMiddleware = createSagaMiddleware();
 
 const middleWares = [];
@@ -18,6 +20,10 @@ const combinedReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
+  if (action.type === RESET_STORE) {
+    state = undefined; // 🔑 clears entire redux store
+  }
+
   return combinedReducer(state, action);
 };
 
