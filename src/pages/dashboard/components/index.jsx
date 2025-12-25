@@ -17,18 +17,18 @@ function Dashboard() {
   const { id = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
   const [jobList, setJobList] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
-  if (!id) return;
+    if (!id) return;
 
-  setLoading(true);
+    setLoading(true);
 
-  if (userType === 'SUPERADMIN') {
-    dispatch(fetchAdminDashboardInfo());
-  } else {
-    dispatch(fetchDashboardInfo({ userId: id }));
-  }
-}, [id, userType]);
+    if (userType === 'SUPERADMIN') {
+      dispatch(fetchAdminDashboardInfo());
+    } else {
+      dispatch(fetchDashboardInfo({ userId: id }));
+    }
+  }, [id, userType, dispatch]);
 
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function Dashboard() {
 
 
   const columns = [
-  { key: 'orgName', label: 'Organization Name' },
+    { key: 'orgName', label: 'Organization Name' },
     { key: 'hiringFor', label: 'Hiring For' },
     { key: 'yearExp', label: 'Year of Experience' },
     { key: 'skills', label: 'Skills' },
