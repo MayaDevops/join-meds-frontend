@@ -13,13 +13,13 @@ export const API_URL = {
       FETCH_ALL_JOBS: 'api/org-job/list',
       REMOVE_JOBS: 'api/org-job/delete/:jobId',
       FETCH_PROFILE_ORG: 'api/user-profile/org/details/:userId',
-      FETCH_APPLIED_JOBS: 'api/job-applied/search?',  
+      FETCH_APPLIED_JOBS: 'api/job-applied/search?',
       DOWNLOAD_RESUME: 'api/resume/:filename'
-      
+
     },
     USER_LOGIN: {
       LOGIN: 'api/user/login',
-      FORGOT_PASSWORD: 'api/user/login'
+      FORGOT_PASSWORD: 'api/user/reset-password'
 
     }
   }

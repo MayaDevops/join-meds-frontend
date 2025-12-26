@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bannerPattern from '../../../assets/images/all_in_1_bg.png';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Logo from '../../../assets/images/Logo.png';
 // import medLandLogo from '../../../assets/images/med-land-logo.jpg';
 import { _ } from 'utils/lodash';
 import { useDispatch } from 'react-redux';
 import { forgotPassword } from '../actions';
+import { ForgotPasswordSchema } from '../validate';
 
 function ForgotPassword() {
     const navigate = useNavigate();
@@ -18,11 +20,19 @@ function ForgotPassword() {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({ mode: 'all' });
+    } = useForm({
+        mode: 'all',
+        resolver: yupResolver(ForgotPasswordSchema)
+    });
 
     const onSubmit = (data) => {
         if (!_.isEmpty(data)) {
-            dispatch(forgotPassword(data));
+            const payload = {
+                mobileNumber: data.mobile,
+                newPassword: data.newPassword,
+                confirmPassword: data.confirmPassword
+            }
+            dispatch(forgotPassword(payload));
         }
     };
 
@@ -59,9 +69,16 @@ function ForgotPassword() {
                             <label className="block text-gray-700 mb-1">Mobile Number</label>
                             <input
                                 type="text"
-                                {...register('mobile', { required: 'Mobile Number is required' })}
+                                {...register('mobile')}
                                 placeholder="Enter your mobile number"
                                 className="w-full border border-gray-400 rounded-md px-4 py-2"
+                                onKeyPress={(e) => {
+                                    // Only allow numeric keys (0-9)
+                                    if (!/[0-9]/.test(e.key)) {
+                                        e.preventDefault();
+                                    }
+                                }}
+                                maxLength={10}
                             />
                             {errors.mobile && (
                                 <p className="text-red-500 text-sm mt-1">{errors.mobile.message}</p>
@@ -74,9 +91,7 @@ function ForgotPassword() {
                             <div className="relative">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
-                                    {...register('newPassword', {
-                                        required: 'New Password is required'
-                                    })}
+                                    {...register('newPassword')}
                                     placeholder="Enter new password"
                                     className="w-full border border-gray-400 rounded-md px-4 py-2 pr-12"
                                 />
@@ -98,9 +113,7 @@ function ForgotPassword() {
                             <div className="relative">
                                 <input
                                     type={showConfirmPassword ? 'text' : 'password'}
-                                    {...register('confirmPassword', {
-                                        required: 'Confirm Password is required'
-                                    })}
+                                    {...register('confirmPassword')}
                                     placeholder="Re-enter password"
                                     className="w-full border border-gray-400 rounded-md px-4 py-2 pr-12"
                                 />

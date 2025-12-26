@@ -58,7 +58,7 @@ export function* verifyPenDetails({ payload }) {
 
 export function* forgotPassworddetails({ payload }) {
   yield fork(handleAPIRequest, api.forgotPasswordApi, payload);
-  const {    type
+  const { type
   } = yield take(
     [ACTION_TYPES.FORGOT_PASSWORD_SUCCESS,
     ACTION_TYPES.FORGOT_PASSWORD_FAILURE]
@@ -67,14 +67,14 @@ export function* forgotPassworddetails({ payload }) {
     yield put(commonActions.setAlertToast({
       open: true,
       variant: 'success',
-      message: `${t('Login Successful')}`
+      message: `${t('Password Reset Successfully')}`
     }));
   } else {
     yield put(commonActions.setAlertAction({
       open: true,
       variant: 'information',
-      message: t('Invalid Login Credentials'),
-      title: t('Login Details'),
+      message: t('Password Reset Failed'),
+      title: t('Reset Password'),
       backwardActionText: t('Close')
     }));
   }

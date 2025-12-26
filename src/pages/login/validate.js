@@ -128,3 +128,41 @@ export const OrganizationUpdateDetailsSchema = yup.object().shape({
 
 
 }).required();
+
+export const LoginSchema = yup.object().shape({
+    username: yup.string()
+        .transform((value) => value.trim())
+        .required(t('isRequired', { type: t('User Name') }))
+        .test('email-or-mobile', t('invalidType', { type: t('Email/Mobile') }), function (value) {
+            if (!value) return false;
+            // Check if it's a valid email or a 10-digit mobile number
+            const isEmail = EMAIL.test(value);
+            const isMobile = NUM_ONLY.test(value) && value.length === 10;
+            return isEmail || isMobile;
+        }),
+
+    password: yup.string()
+        .required(t('isRequired', { type: t('Password') }))
+        .min(6, t('mustBeAtLeast', { type: t('Password'), count: 6, unit: t('characters') }))
+        .max(15, t('shouldNotBeGreaterThan', { type: t('Password'), count: '15', unit: t('characters') }))
+}).required();
+
+export const ForgotPasswordSchema = yup.object().shape({
+    mobile: yup.string()
+        .transform((value) => value.trim())
+        .required(t('isRequired', { type: t('Mobile Number') }))
+        .matches(/^[0-9]+$/, t('invalidType', { type: t('Mobile Number') }))
+        .min(10, t('mustBe', { type: t('Mobile Number'), count: '10', unit: t('numbers') }))
+        .max(10, t('shouldNotBeGreaterThan', { type: t('Mobile Number'), count: '10', unit: t('numbers') })),
+
+    newPassword: yup.string()
+        .required(t('isRequired', { type: t('New Password') }))
+        .min(6, t('mustBeAtLeast', { type: t('New Password'), count: 6, unit: t('characters') }))
+        .max(15, t('shouldNotBeGreaterThan', { type: t('New Password'), count: '15', unit: t('characters') })),
+
+    confirmPassword: yup.string()
+        .required(t('isRequired', { type: t('Confirm Password') }))
+        .min(6, t('mustBeAtLeast', { type: t('Confirm Password'), count: 6, unit: t('characters') }))
+        .max(15, t('shouldNotBeGreaterThan', { type: t('Confirm Password'), count: '15', unit: t('characters') }))
+        .oneOf([yup.ref('newPassword')], t('Password Mismatch', { type: t('Password') }))
+}).required();
