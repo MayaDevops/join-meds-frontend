@@ -69,6 +69,10 @@ export function* forgotPassworddetails({ payload }) {
       variant: 'success',
       message: `${t('Password Reset Successfully')}`
     }));
+    yield put(commonActions.navigateTo({
+      to: `/ui/join-meds/login`,
+      isSameModule: true
+    }));
   } else {
     yield put(commonActions.setAlertAction({
       open: true,
