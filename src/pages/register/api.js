@@ -51,8 +51,9 @@ export const createJobDetailsApi = (data) => {
 };
 
 export const updateJobDetailsApi = (data) => {
+  const { jobId, ...rest } = data;
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.UPDATE_JOB.replace(':jobId', data?.jobId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.UPDATE_JOB.replace(':jobId', jobId),
     method: REQUEST_METHOD.PUT,
     payload: {
       types: [
@@ -60,7 +61,7 @@ export const updateJobDetailsApi = (data) => {
         ACTION_TYPES.UPDATE_JOB_DETAILS_SUCCESS,
         ACTION_TYPES.UPDATE_JOB_DETAILS_FAILURE
       ],
-      data
+      data: rest
     }
   };
 };
