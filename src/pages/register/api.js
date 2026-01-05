@@ -35,8 +35,9 @@ export const saveOrganizationDetailsApi = (data) => {
 };
 
 export const createJobDetailsApi = (data) => {
+  const { userId, jobId: _jobId, ...rest } = data;
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.CREATE_JOB.replace(':userId', data?.userId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.CREATE_JOB.replace(':userId', userId),
     method: REQUEST_METHOD.POST,
     payload: {
       types: [
@@ -44,7 +45,7 @@ export const createJobDetailsApi = (data) => {
         ACTION_TYPES.CREATE_JOB_DETAILS_SUCCESS,
         ACTION_TYPES.CREATE_JOB_DETAILS_FAILURE
       ],
-      data
+      data: rest
     }
   };
 };
@@ -103,7 +104,7 @@ export const fetchReportAppliedJobsDetailsApi = (data) => {
         ACTION_TYPES.FETCH_REPORT_APPLIED_SUCCESS,
         ACTION_TYPES.FETCH_REPORT_APPLIED_FAILURE
       ],
-       params: {
+      params: {
         jobId: data?.jobId,
         orgId: data?.orgId,
         id: data?.id
