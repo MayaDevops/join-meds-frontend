@@ -1,21 +1,18 @@
-
-
-import { ACTION_TYPES } from './actions';
-import { API_URL } from '../../../shared/urls';
-import { MULTIPART_HEADERS, REQUEST_METHOD } from 'pages/common/constants';
-
+import { ACTION_TYPES } from "./actions";
+import { API_URL } from "../../../shared/urls";
+import { MULTIPART_HEADERS, REQUEST_METHOD } from "pages/common/constants";
 
 export const fetchCountryApi = () => {
   return {
-    url: 'country',
+    url: "country",
     method: REQUEST_METHOD.GET,
     payload: {
       types: [
         ACTION_TYPES.FETCH_COUNTRY_REQUEST,
         ACTION_TYPES.FETCH_COUNTRY_SUCCESS,
-        ACTION_TYPES.FETCH_COUNTRY_FAILURE
-      ]
-    }
+        ACTION_TYPES.FETCH_COUNTRY_FAILURE,
+      ],
+    },
   };
 };
 
@@ -27,71 +24,77 @@ export const saveOrganizationDetailsApi = (data) => {
       types: [
         ACTION_TYPES.CREATE_ORGANIZATION_DETAILS_REQUEST,
         ACTION_TYPES.CREATE_ORGANIZATION_DETAILS_SUCCESS,
-        ACTION_TYPES.CREATE_ORGANIZATION_DETAILS_FAILURE
+        ACTION_TYPES.CREATE_ORGANIZATION_DETAILS_FAILURE,
       ],
-      data
-    }
+      data,
+    },
   };
 };
 
 export const createJobDetailsApi = (data) => {
   const { userId, jobId: _jobId, ...rest } = data;
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.CREATE_JOB.replace(':userId', userId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.CREATE_JOB.replace(":userId", userId),
     method: REQUEST_METHOD.POST,
     payload: {
       types: [
         ACTION_TYPES.CREATE_JOB_DETAILS_REQUEST,
         ACTION_TYPES.CREATE_JOB_DETAILS_SUCCESS,
-        ACTION_TYPES.CREATE_JOB_DETAILS_FAILURE
+        ACTION_TYPES.CREATE_JOB_DETAILS_FAILURE,
       ],
-      data: rest
-    }
+      data: rest,
+    },
   };
 };
 
 export const updateJobDetailsApi = (data) => {
   const { jobId, ...rest } = data;
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.UPDATE_JOB.replace(':jobId', jobId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.UPDATE_JOB.replace(":jobId", jobId),
     method: REQUEST_METHOD.PUT,
     payload: {
       types: [
         ACTION_TYPES.UPDATE_JOB_DETAILS_REQUEST,
         ACTION_TYPES.UPDATE_JOB_DETAILS_SUCCESS,
-        ACTION_TYPES.UPDATE_JOB_DETAILS_FAILURE
+        ACTION_TYPES.UPDATE_JOB_DETAILS_FAILURE,
       ],
-      data: rest
-    }
+      data: rest,
+    },
   };
 };
 
 export const removeJobDetailsApi = (data) => {
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.REMOVE_JOBS.replace(':jobId', data?.jobId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.REMOVE_JOBS.replace(
+      ":jobId",
+      data?.jobId,
+    ),
     method: REQUEST_METHOD.DELETE,
     payload: {
       types: [
         ACTION_TYPES.REMOVE_JOB_DETAILS_REQUEST,
         ACTION_TYPES.REMOVE_JOB_DETAILS_SUCCESS,
-        ACTION_TYPES.REMOVE_JOB_DETAILS_FAILURE
+        ACTION_TYPES.REMOVE_JOB_DETAILS_FAILURE,
       ],
-      data
-    }
+      data,
+    },
   };
 };
 
 export const fetchProfileDetailsApi = (data) => {
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_PROFILE_ORG.replace(':userId', data?.userId),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_PROFILE_ORG.replace(
+      ":userId",
+      data?.userId,
+    ),
     method: REQUEST_METHOD.GET,
     payload: {
       types: [
         ACTION_TYPES.FETCH_PROFILE_DETAILS_REQUEST,
         ACTION_TYPES.FETCH_PROFILE_DETAILS_SUCCESS,
-        ACTION_TYPES.FETCH_PROFILE_DETAILS_FAILURE
-      ]
-    }
+        ACTION_TYPES.FETCH_PROFILE_DETAILS_FAILURE,
+      ],
+    },
   };
 };
 
@@ -103,29 +106,47 @@ export const fetchReportAppliedJobsDetailsApi = (data) => {
       types: [
         ACTION_TYPES.FETCH_REPORT_APPLIED_REQUEST,
         ACTION_TYPES.FETCH_REPORT_APPLIED_SUCCESS,
-        ACTION_TYPES.FETCH_REPORT_APPLIED_FAILURE
+        ACTION_TYPES.FETCH_REPORT_APPLIED_FAILURE,
       ],
       params: {
         jobId: data?.jobId,
         orgId: data?.orgId,
-        id: data?.id
-      }
-    }
+        id: data?.id,
+      },
+    },
   };
 };
 
 export const downloadResumeApi = (data) => {
   return {
-    url: API_URL.JOINT_MEDS.ORGANIZATION.DOWNLOAD_RESUME.replace(':filename', data?.filename),
+    url: API_URL.JOINT_MEDS.ORGANIZATION.DOWNLOAD_RESUME.replace(
+      ":filename",
+      data?.filename,
+    ),
     method: REQUEST_METHOD.GET,
     payload: {
       types: [
         ACTION_TYPES.DOWNLAOD_RESUME_REQUEST,
         ACTION_TYPES.DOWNLAOD_RESUME_SUCCESS,
-        ACTION_TYPES.DOWNLAOD_RESUME_FAILURE
+        ACTION_TYPES.DOWNLAOD_RESUME_FAILURE,
       ],
-      config: { responseType: 'blob' },
-      headers: MULTIPART_HEADERS
-    }
+      config: { responseType: "blob" },
+      headers: MULTIPART_HEADERS,
+    },
+  };
+};
+
+export const fetchUserListApi = (data) => {
+  return {
+    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_ALL_USERS,
+    method: REQUEST_METHOD.GET,
+    payload: {
+      types: [
+        ACTION_TYPES.FETCH_USER_LIST_REQUEST,
+        ACTION_TYPES.FETCH_USER_LIST_SUCCESS,
+        ACTION_TYPES.FETCH_USER_LIST_FAILURE,
+      ],
+      params: data,
+    },
   };
 };

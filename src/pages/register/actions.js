@@ -1,5 +1,5 @@
-import { createAction } from '@reduxjs/toolkit';
-import { STATE_REDUCER_KEY } from './constants';
+import { createAction } from "@reduxjs/toolkit";
+import { STATE_REDUCER_KEY } from "./constants";
 
 export const ACTION_TYPES = {
   FETCH_COUNTRY: `${STATE_REDUCER_KEY}/FETCH_COUNTRY`,
@@ -40,18 +40,26 @@ export const ACTION_TYPES = {
   DOWNLAOD_RESUME: `${STATE_REDUCER_KEY}/DOWNLAOD_RESUME`,
   DOWNLAOD_RESUME_REQUEST: `${STATE_REDUCER_KEY}/DOWNLAOD_RESUME_REQUEST`,
   DOWNLAOD_RESUME_SUCCESS: `${STATE_REDUCER_KEY}/DOWNLAOD_RESUME_SUCCESS`,
-  DOWNLAOD_RESUME_FAILURE: `${STATE_REDUCER_KEY}/DOWNLAOD_RESUME_FAILURE`
+  DOWNLAOD_RESUME_FAILURE: `${STATE_REDUCER_KEY}/DOWNLAOD_RESUME_FAILURE`,
 
+  FETCH_USER_LIST: `${STATE_REDUCER_KEY}/FETCH_USER_LIST`,
+  FETCH_USER_LIST_REQUEST: `${STATE_REDUCER_KEY}/FETCH_USER_LIST_REQUEST`,
+  FETCH_USER_LIST_SUCCESS: `${STATE_REDUCER_KEY}/FETCH_USER_LIST_SUCCESS`,
+  FETCH_USER_LIST_FAILURE: `${STATE_REDUCER_KEY}/FETCH_USER_LIST_FAILURE`,
 };
 
 export const fetchCountry = createAction(ACTION_TYPES.FETCH_COUNTRY);
-export const createOrganizationDetails = createAction(ACTION_TYPES.CREATE_ORGANIZATION_DETAILS);
+export const createOrganizationDetails = createAction(
+  ACTION_TYPES.CREATE_ORGANIZATION_DETAILS,
+);
 export const createJobDetails = createAction(ACTION_TYPES.CREATE_JOB_DETAILS);
 export const updateJobDetails = createAction(ACTION_TYPES.UPDATE_JOB_DETAILS);
 export const removeJobDetails = createAction(ACTION_TYPES.REMOVE_JOB_DETAILS);
-export const fetchProfileDetails = createAction(ACTION_TYPES.FETCH_PROFILE_DETAILS);
-export const fetchReportAppliedJobDetails = createAction(ACTION_TYPES.FETCH_REPORT_APPLIED);
+export const fetchProfileDetails = createAction(
+  ACTION_TYPES.FETCH_PROFILE_DETAILS,
+);
+export const fetchReportAppliedJobDetails = createAction(
+  ACTION_TYPES.FETCH_REPORT_APPLIED,
+);
 export const downloadResume = createAction(ACTION_TYPES.DOWNLAOD_RESUME);
-
-
-
+export const fetchUserList = createAction(ACTION_TYPES.FETCH_USER_LIST);

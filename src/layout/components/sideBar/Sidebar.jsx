@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   HomeIcon,
   BriefcaseIcon,
   PhoneIcon,
   UserCircleIcon,
   ArrowLeftOnRectangleIcon,
-  DocumentChartBarIcon
+  DocumentChartBarIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
 } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import JoinMedsLogo from '../../../assets/images/join_meds_side.png';
@@ -18,7 +20,16 @@ const menuItems = [
   { name: 'Add Job', icon: BriefcaseIcon, path: '/ui/join-meds/register/profile', Tooltip: 'Add Job' },
   { name: 'Contact', icon: PhoneIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Contact' },
   { name: 'Profile', icon: UserCircleIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Profile' },
-  { name: 'Report', icon: DocumentChartBarIcon, path: '/ui/join-meds/user/reports', Tooltip: 'Reports' },
+  {
+    name: 'Report',
+    icon: DocumentChartBarIcon,
+    path: '',
+    Tooltip: 'Reports',
+    subItems: [
+      { name: 'Applied Jobs', path: '/ui/join-meds/user/reports', icon: BriefcaseIcon },
+      { name: 'Registered Users', path: '/ui/join-meds/user/registered-users', icon: UserCircleIcon }
+    ]
+  },
   { name: 'Logout', icon: ArrowLeftOnRectangleIcon, path: '/', Tooltip: 'Logout' }
 ];
 
@@ -26,25 +37,32 @@ function Sidebar({ isOpen, toggle }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
+  const [openSubMenus, setOpenSubMenus] = useState({});
 
-  const handleNavigation = (item) => {
+  const toggleSubMenu = (menuName, e) => {
+    if (e) e.stopPropagation();
+    if (!isOpen) toggle(); // Un-collapse if clicked
+    setOpenSubMenus(prev => ({ ...prev, [menuName]: !prev[menuName] }));
+  };
+
+  const handleNavigation = (item, e) => {
+    if (item.subItems) {
+      toggleSubMenu(item.name, e);
+      return;
+    }
+
     if (item.name === 'Logout') {
-      // setLoggingOut(true);
-      // setTimeout(() => {
-      //   localStorage.clear();
-      //   navigate('/');
-      // }, 2000);
-      // return;
       logout(dispatch);
+      return;
     }
 
     if (item?.name === 'Add Job') {
       navigate('/ui/join-meds/register/profile', { state: { selectedJob: null } });
-    } else {
+    } else if (item.path) {
       navigate(item.path);
     }
 
-    if (window.innerWidth < 768) toggle(); // Auto-close on mobile
+    if (window.innerWidth < 768 && !item.subItems) toggle(); // Auto-close on mobile
   };
 
   // ✅ Detect clicks outside sidebar
@@ -85,14 +103,37 @@ function Sidebar({ isOpen, toggle }) {
           {/* Menu */}
           <nav className="mt-6 space-y-2 px-2">
             {menuItems.map((item) => {
+              const hasSubMenus = item.subItems && item.subItems.length > 0;
+              const isSubMenuOpen = openSubMenus[item.name];
+
               const content = (
-                <div
-                  key={item.name}
-                  onClick={() => handleNavigation(item)}
-                  className="flex items-center gap-4 px-3 py-2 hover:bg-[#008FCC] rounded cursor-pointer"
-                >
-                  {item.icon && <item.icon className="h-5 w-5 flex-shrink-0" />}
-                  {isOpen && <span className="whitespace-nowrap">{item.name}</span>}
+                <div className="flex flex-col w-full">
+                  <div
+                    onClick={(e) => handleNavigation(item, e)}
+                    className="flex justify-between items-center px-3 py-2 hover:bg-[#008FCC] rounded cursor-pointer"
+                  >
+                    <div className="flex items-center gap-4">
+                      {item.icon && <item.icon className="h-5 w-5 flex-shrink-0" />}
+                      {isOpen && <span className="whitespace-nowrap">{item.name}</span>}
+                    </div>
+                    {isOpen && hasSubMenus && (
+                      isSubMenuOpen ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />
+                    )}
+                  </div>
+                  {isOpen && hasSubMenus && isSubMenuOpen && (
+                    <div className="ml-8 mt-1 space-y-1">
+                      {item.subItems.map(subItem => (
+                        <div
+                          key={subItem.name}
+                          onClick={(e) => handleNavigation(subItem, e)}
+                          className="flex items-center gap-3 px-3 py-1.5 hover:bg-[#008FCC] text-sm rounded cursor-pointer whitespace-nowrap"
+                        >
+                          {subItem.icon && <subItem.icon className="h-4 w-4" />}
+                          <span>{subItem.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               );
 
@@ -101,7 +142,7 @@ function Sidebar({ isOpen, toggle }) {
                   {content}
                 </Tooltip>
               ) : (
-                content
+                <React.Fragment key={item.name}>{content}</React.Fragment>
               );
             })}
           </nav>
