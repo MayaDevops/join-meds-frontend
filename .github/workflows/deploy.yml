@@ -20,11 +20,11 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v3
-        with:
-          version: 8
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: |
+          pnpm install
+          npm install -D @tailwindcss/oxide-linux-x64-gnu@4.2.0 @tailwindcss/oxide-linux-x64-musl@4.2.0
 
       - name: Build React app
         run: pnpm run build
