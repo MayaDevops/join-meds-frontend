@@ -11,36 +11,22 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
-
-      # Uses pnpm version from package.json -> "packageManager"
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
-          cache: "pnpm"
+          node-version: 18
 
-      - name: Show versions
-        run: |
-          node -v
-          pnpm -v
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
         run: |
-          rm -rf node_modules
-          pnpm install --frozen-lockfile
-
-      - name: Rebuild Tailwind native deps
-        run: pnpm rebuild @tailwindcss/oxide || true
+          rm -rf node_modules pnpm-lock.yaml package-lock.json
+          pnpm install
 
       - name: Build React app
-        env:
-          CI: true
         run: pnpm run build
 
       - name: List dist folder
@@ -54,7 +40,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
           script: |
-            sudo rm -rf /var/www/join-meds-frontend/dist
+            sudo rm -rf /var/www/join-meds-frontend/dist/*
             sudo mkdir -p /var/www/join-meds-frontend/dist
 
       - name: Upload built files to VPS
@@ -64,8 +50,8 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
-          source: "dist/**"
-          target: "/var/www/join-meds-frontend/"
+          source: "dist/*"
+          target: "/var/www/join-meds-frontend/dist"
 
       - name: Fix permissions and restart Nginx
         uses: appleboy/ssh-action@master
@@ -75,6 +61,8 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
           script: |
+            sudo mkdir -p /var/www/join-meds-frontend/dist
+            sudo cp -r dist/* /var/www/join-meds-frontend/dist/
             sudo chown -R www-data:www-data /var/www/join-meds-frontend/dist
             sudo find /var/www/join-meds-frontend/dist -type d -exec chmod 755 {} \;
             sudo find /var/www/join-meds-frontend/dist -type f -exec chmod 644 {} \;
