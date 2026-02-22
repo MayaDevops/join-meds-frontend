@@ -13,17 +13,22 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      # Install pnpm FIRST so setup-node can use it for caching
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.5
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
 
-      # This is the missing piece: it actually installs pnpm on the runner
-      - name: Enable Corepack and install pnpm
+      - name: Show versions
         run: |
-          corepack enable
-          corepack prepare pnpm@9.15.5 --activate
+          node -v
           pnpm -v
 
       - name: Install dependencies
@@ -31,7 +36,6 @@ jobs:
           rm -rf node_modules
           pnpm install --frozen-lockfile
 
-      # Safety for Tailwind v4 native binding
       - name: Rebuild Tailwind native deps
         run: pnpm rebuild @tailwindcss/oxide || true
 
