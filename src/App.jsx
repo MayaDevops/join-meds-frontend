@@ -22,7 +22,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* 🌐 Public layout */}
+        {/* Public layout */}
         <Route path="/" element={<Layout />}>
           <Route index element={<WebPortal />} />
           <Route path="ui/join-meds/login" element={<Login />} />
@@ -30,7 +30,7 @@ function App() {
           <Route path="ui/join-meds/register" element={<Register />} />
         </Route>
 
-        {/* 🔒 Protected route wrapper decides layout */}
+        {/* Protected route wrapper decides layout */}
         <Route element={<ProtectedRoute />}>
           <Route path="/ui/join-meds/user/dashboard" element={<Dashboard />} />
           <Route path="/ui/join-meds/register/profile" element={<OrganizationProfile />} />
