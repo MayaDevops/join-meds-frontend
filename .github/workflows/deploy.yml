@@ -19,23 +19,19 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Enable Corepack (pnpm)
-        run: corepack enable
-
-      - name: Show versions
+      # This is the missing piece: it actually installs pnpm on the runner
+      - name: Enable Corepack and install pnpm
         run: |
-          node -v
+          corepack enable
+          corepack prepare pnpm@9.15.5 --activate
           pnpm -v
 
-      # IMPORTANT:
-      # - Do NOT delete pnpm-lock.yaml in CI
-      # - Do NOT keep/use package-lock.json if using pnpm
-      - name: Install dependencies (clean, deterministic)
+      - name: Install dependencies
         run: |
           rm -rf node_modules
           pnpm install --frozen-lockfile
 
-      # Safety: ensure Tailwind native binding is built/available
+      # Safety for Tailwind v4 native binding
       - name: Rebuild Tailwind native deps
         run: pnpm rebuild @tailwindcss/oxide || true
 
