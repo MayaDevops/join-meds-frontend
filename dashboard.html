@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subscribers Dashboard</title>
+  <style>
+    :root{
+      --bg:#0f1221;
+      --panel:#171a2b;
+      --panel-2:#1d2140;
+      --text:#e8eaf6;
+      --muted:#a9aec4;
+      --accent:#7c9cff;
+      --good:#34d399;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --line:#2a2e4a;
+      --chip:#222643;
+      --card-radius:18px;
+      --gap:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Arial; background:var(--bg); color:var(--text)}
+
+    /* Layout */
+    .layout{display:grid; grid-template-columns:260px 1fr; min-height:100vh}
+    .sidebar{background:linear-gradient(180deg,#101329 0%, #0d1022 100%); border-right:1px solid var(--line); padding:20px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px}
+    .brand svg{width:28px;height:28px}
+    .nav{margin-top:24px; display:grid; gap:6px}
+    .nav a{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; color:var(--muted); text-decoration:none}
+    .nav a:hover{background:var(--chip); color:var(--text)}
+    .nav a.active{background:var(--accent); color:#0b1027}
+
+    .main{display:grid; grid-template-rows:auto 1fr;}
+    .topbar{position:sticky; top:0; z-index:3; backdrop-filter:saturate(140%) blur(6px); background:rgba(15,18,33,.7); border-bottom:1px solid var(--line)}
+    .topbar-inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 20px}
+    .chips{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{background:var(--chip); color:var(--muted); padding:8px 10px; border-radius:999px; border:1px solid var(--line)}
+
+    .content{padding:20px; display:grid; gap:20px}
+
+    /* Cards grid */
+    .cards{display:grid; grid-template-columns:repeat(12,1fr); gap:var(--gap)}
+    .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--card-radius); padding:16px; display:flex; flex-direction:column; gap:10px}
+    .card h3{margin:0; font-size:14px; color:var(--muted); font-weight:600}
+    .card .big{font-size:28px; font-weight:800; letter-spacing:.3px}
+    .card .sub{color:var(--muted); font-weight:600}
+    .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .pill{background:#10142a; border:1px solid var(--line); padding:6px 10px; border-radius:999px; color:var(--muted)}
+    .trend{font-weight:700}
+    .good{color:var(--good)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+
+    /* Chart placeholders */
+    .chart{height:180px; background:linear-gradient(180deg,rgba(124,156,255,.1),transparent); border:1px dashed #2c3258; border-radius:14px; position:relative; overflow:hidden}
+    .chart::before{content:"Chart placeholder"; position:absolute; inset:auto 0 8px 0; text-align:center; color:var(--muted); font-size:12px}
+
+    /* Tables */
+    table{width:100%; border-collapse:collapse;}
+    thead th{background:var(--panel-2); color:var(--muted); font-weight:700; text-align:left; padding:10px 12px; border-bottom:1px solid var(--line)}
+    tbody td{padding:10px 12px; border-bottom:1px solid var(--line)}
+    tbody tr:hover{background:#141833}
+    .table-wrap{overflow:auto; border:1px solid var(--line); border-radius:14px}
+
+    /* Mini KPI grid */
+    .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap)}
+    .kpi{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px}
+    .kpi .label{color:var(--muted); font-weight:600}
+    .kpi .value{font-size:22px; font-weight:800}
+
+    /* Responsive */
+    @media (max-width:1200px){.cards{grid-template-columns:repeat(8,1fr)}}
+    @media (max-width:900px){.layout{grid-template-columns:1fr} .sidebar{position:sticky; top:0; z-index:4} .kpis{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:600px){.cards{grid-template-columns:repeat(4,1fr)} .kpis{grid-template-columns:1fr}}
+
+    /* Helper column spans */
+    .span-3{grid-column:span 3}
+    .span-4{grid-column:span 4}
+    .span-6{grid-column:span 6}
+    .span-8{grid-column:span 8}
+    .span-12{grid-column:1/-1}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand" aria-label="Brand">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12a8 8 0 1 1 16 0v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6z" stroke="currentColor" stroke-width="2"/><path d="M9 22v-5a3 3 0 1 1 6 0v5" stroke="currentColor" stroke-width="2"/></svg>
+        <span>Control Center</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="#" >Dashboard</a>
+        <a href="#" class="active">Subscribers</a>
+        <a href="#">Partners</a>
+        <a href="#">Corporate</a>
+        <a href="#">Government</a>
+        <a href="#">Finance</a>
+        <a href="#">Sales</a>
+        <a href="#">Dark Fiber</a>
+        <a href="#">Operations</a>
+        <a href="#">Tickets | CRM</a>
+        <a href="#">Setting</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="chips" role="list" aria-label="Sections">
+            <span class="chip">Subscriptions</span>
+            <span class="chip">Inventory</span>
+            <span class="chip">KVBL</span>
+            <span class="chip">KYC</span>
+            <span class="chip">Application</span>
+            <span class="chip">Partners</span>
+            <span class="chip">Support</span>
+            <span class="chip">Finance</span>
+            <span class="chip">More</span>
+          </div>
+          <div class="row">
+            <span class="pill">Phase 1</span>
+            <span class="pill">Phase 2</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="content">
+        <!-- HEADLINE -->
+        <div class="row" style="justify-content:space-between; align-items:flex-end">
+          <div>
+            <h1 style="margin:0; font-size:24px">Subscribers</h1>
+            <div class="sub">Let’s see your Subscribers</div>
+          </div>
+          <div class="sub">11 Aug 2025</div>
+        </div>
+
+        <!-- KPI CARDS -->
+        <div class="cards">
+          <div class="card span-3">
+            <h3>Active Total Subscribers</h3>
+            <div class="big">31,092</div>
+            <div class="row"><span class="pill">102 today</span><span class="trend good">▲ +0.33%</span></div>
+          </div>
+          <div class="card span-3">
+            <h3>Active Home Subscribers</h3>
+            <div class="big">14,467</div>
+            <div class="row"><span class="pill">102 today</span></div>
+          </div>
+          <div class="card span-3">
+            <h3>Active EWS Subscribers</h3>
+            <div class="big">14,467</div>
+            <div class="row"><span class="pill">102 today</span></div>
+          </div>
+          <div class="card span-3">
+            <h3>Active Govt. Subscribers (SI Connection)</h3>
+            <div class="big">31,092</div>
+            <div class="sub">102 today • 30,990 till yesterday</div>
+          </div>
+
+          <div class="card span-4">
+            <h3>New Subscriber — Month Wise <span class="pill" style="margin-left:8px">Sub Type Filter</span></h3>
+            <div class="chart" aria-label="New subscribers chart"></div>
+            <div class="sub">Jun 2024 • Subscriber: 3k</div>
+          </div>
+          <div class="card span-4">
+            <h3>LNP / MSP as LNP</h3>
+            <div class="row" style="gap:14px">
+              <div>
+                <div class="sub">LNP Connection</div>
+                <div class="big">14,467</div>
+                <div class="sub">102 today • 14,437 till yesterday</div>
+              </div>
+              <div style="width:1px; background:var(--line)"></div>
+              <div>
+                <div class="sub">MSP as LNP Connection</div>
+                <div class="big">30,438</div>
+                <div class="sub">102 today • 30,435 till yesterday</div>
+              </div>
+            </div>
+          </div>
+          <div class="card span-4">
+            <h3>Target vs Actual</h3>
+            <div class="chart"></div>
+            <div class="sub">Jun 2024 • Example: $3k</div>
+          </div>
+
+          <div class="card span-6">
+            <h3>Government Subscribers</h3>
+            <div class="table-wrap">
+              <table role="grid">
+                <thead><tr>
+                  <th style="width:70px">Sr No</th>
+                  <th>District</th>
+                  <th>Sub Count</th>
+                  <th>BDE Name</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>TVM</td><td>5000</td><td>Write content</td></tr>
+                  <tr><td>2</td><td>TVM</td><td>5000</td><td>Write content</td></tr>
+                  <tr><td>3</td><td>TVM</td><td>5000</td><td>Write content</td></tr>
+                  <tr><td>4</td><td>TVM</td><td>5000</td><td>Write content</td></tr>
+                  <tr><td>5</td><td>TVM</td><td>5000</td><td>Write content</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="sub">Showing 1 to 05 of 05 entries • 1</div>
+          </div>
+
+          <div class="card span-6">
+            <h3>Top 3 DBS</h3>
+            <div class="table-wrap">
+              <table role="grid">
+                <thead><tr>
+                  <th>District</th>
+                  <th>New Act Today</th>
+                  <th>YTD</th>
+                  <th>AOD</th>
+                  <th>MTD</th>
+                  <th>QTD</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td>D1 / TVM</td><td>TVM</td><td>TVM</td><td>TVM</td><td>5000</td><td>2</td></tr>
+                  <tr><td>D1 / TVM</td><td>TVM</td><td>TVM</td><td>TVM</td><td>5000</td><td>2</td></tr>
+                  <tr><td>D1 / TVM</td><td>TVM</td><td>TVM</td><td>TVM</td><td>5000</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="sub">Showing 1 to 05 of 05 entries • 1</div>
+          </div>
+
+          <div class="card span-6">
+            <h3>New Activation</h3>
+            <div class="table-wrap">
+              <table role="grid">
+                <thead><tr>
+                  <th>District</th>
+                  <th>Today</th>
+                  <th>Yesterday</th>
+                  <th>Last Month</th>
+                  <th>Current Month</th>
+                  <th>Till Now</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td>D1</td><td>1</td><td>10</td><td>60</td><td>15</td><td>1000</td></tr>
+                  <tr><td>D1</td><td>10</td><td>20</td><td>70</td><td>22</td><td>2500</td></tr>
+                  <tr><td>D1</td><td>5</td><td>30</td><td>90</td><td>40</td><td>3000</td></tr>
+                  <tr><td>D1</td><td>0</td><td>100</td><td>90</td><td>40</td><td>2000</td></tr>
+                  <tr><td>D1</td><td>0</td><td>100</td><td>90</td><td>40</td><td>2000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="sub">Showing 1 to 05 of 05 entries • 1</div>
+          </div>
+
+          <div class="card span-6">
+            <h3>Churned Subscriber</h3>
+            <div class="table-wrap">
+              <table role="grid">
+                <thead><tr>
+                  <th>District</th>
+                  <th>Home</th>
+                  <th>Private</th>
+                  <th>EWS</th>
+                  <th>GOVT</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td>D1</td><td>1</td><td>60</td><td>10</td><td>15</td></tr>
+                  <tr><td>D1</td><td>10</td><td>70</td><td>20</td><td>22</td></tr>
+                  <tr><td>D1</td><td>5</td><td>90</td><td>30</td><td>40</td></tr>
+                  <tr><td>D1</td><td>0</td><td>90</td><td>100</td><td>40</td></tr>
+                  <tr><td>D1</td><td>0</td><td>90</td><td>100</td><td>40</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="sub">Showing 1 to 05 of 05 entries • 1</div>
+          </div>
+
+          <div class="card span-6">
+            <h3>Active Subscriber — District wise</h3>
+            <div class="table-wrap">
+              <table role="grid">
+                <thead><tr>
+                  <th>District</th>
+                  <th>Today</th>
+                  <th>Yesterday</th>
+                  <th>Last Month</th>
+                  <th>Current Year</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td>D1</td><td>1</td><td>10</td><td>60</td><td>60</td></tr>
+                  <tr><td>D1</td><td>10</td><td>20</td><td>70</td><td>70</td></tr>
+                  <tr><td>D1</td><td>5</td><td>30</td><td>90</td><td>90</td></tr>
+                  <tr><td>D1</td><td>0</td><td>100</td><td>90</td><td>90</td></tr>
+                  <tr><td>D1</td><td>0</td><td>100</td><td>90</td><td>90</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="sub">Showing 1 to 05 of 05 entries • 1</div>
+          </div>
+
+          <div class="card span-6">
+            <h3>New Subscriber Addition</h3>
+            <div class="chart" aria-label="District bars"></div>
+            <div class="sub">DIS 1 — DIS 14</div>
+          </div>
+
+          <div class="card span-6">
+            <h3>Enquiries Overview</h3>
+            <div class="kpis">
+              <div class="kpi">
+                <div class="label">Total Enquiry</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">1000</div><div class="sub">Home</div></div>
+                  <div><div class="value">5000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="label">Open Enquiry</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">5000</div><div class="sub">Home</div></div>
+                  <div><div class="value">2000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="label">Forwarded to LNP</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">5000</div><div class="sub">Home</div></div>
+                  <div><div class="value">2000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="label">LNP Not Willing</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">5000</div><div class="sub">Home</div></div>
+                  <div><div class="value">2000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="label">Connected Enquiry</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">5000</div><div class="sub">Home</div></div>
+                  <div><div class="value">2000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="label">Forwarded to RDC</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">5000</div><div class="sub">Home</div></div>
+                  <div><div class="value">2000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="label">Not Possible</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">5000</div><div class="sub">Home</div></div>
+                  <div><div class="value">2000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="label">Forwarded to FE</div>
+                <div class="row" style="gap:20px">
+                  <div><div class="value">5000</div><div class="sub">Home</div></div>
+                  <div><div class="value">2000</div><div class="sub">EWS</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
