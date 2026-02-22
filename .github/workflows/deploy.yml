@@ -11,20 +11,20 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
 
       - name: Install dependencies
-        run: |
-          rm -rf node_modules pnpm-lock.yaml package-lock.json
-          pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build React app
         run: pnpm run build
