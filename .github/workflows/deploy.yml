@@ -13,11 +13,10 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # Install pnpm FIRST so setup-node can use it for caching
+      # Uses pnpm version from package.json -> "packageManager"
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.5
           run_install: false
 
       - name: Setup Node.js
