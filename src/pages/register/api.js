@@ -112,6 +112,8 @@ export const fetchReportAppliedJobsDetailsApi = (data) => {
         jobId: data?.jobId,
         orgId: data?.orgId,
         id: data?.id,
+        page: data?.page ?? 0,
+        size: data?.size ?? 10,
       },
     },
   };
@@ -146,7 +148,11 @@ export const fetchUserListApi = (data) => {
         ACTION_TYPES.FETCH_USER_LIST_SUCCESS,
         ACTION_TYPES.FETCH_USER_LIST_FAILURE,
       ],
-      params: data,
+      params: {
+        ...data,
+        page: data?.page ?? 0,
+        size: data?.size ?? 10,
+      },
     },
   };
 };

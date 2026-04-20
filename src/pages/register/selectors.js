@@ -25,6 +25,13 @@ export const getProfileDetails = flow(getCommonData, profileDetails);
 
 const allJobReports = (state) => state.allJobReports;
 export const getAllJobReports = flow(getCommonData, allJobReports);
+export const getAllJobReportsContent = flow(getCommonData, (state) => state.allJobReports?.content || []);
+export const getAllJobReportsPagination = flow(getCommonData, (state) => ({
+  totalElements: state.allJobReports?.totalElements || 0,
+  totalPages: state.allJobReports?.totalPages || 0,
+  number: state.allJobReports?.number || 0,
+  size: state.allJobReports?.size || 10,
+}));
 
 const downloadResumeDetails = (state) => state?.downloadResumeDetails;
 export const getDownloadResumeDetails = flow(
@@ -34,3 +41,10 @@ export const getDownloadResumeDetails = flow(
 
 const userListReports = (state) => state.userListReports;
 export const getUserListReports = flow(getCommonData, userListReports);
+export const getUserListReportsContent = flow(getCommonData, (state) => state.userListReports?.content || []);
+export const getUserListReportsPagination = flow(getCommonData, (state) => ({
+  totalElements: state.userListReports?.totalElements || 0,
+  totalPages: state.userListReports?.totalPages || 0,
+  number: state.userListReports?.number || 0,
+  size: state.userListReports?.size || 10,
+}));

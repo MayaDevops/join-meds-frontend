@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReportTable from 'pages/common/components/ReportTable';
-import { getAllJobReports } from '../selectors';
+import { getAllJobReportsContent, getAllJobReportsPagination } from '../selectors';
 import { fetchReportAppliedJobDetails } from '../actions';
 import { _ } from 'utils/lodash';
 import { getDataFromStorage } from 'utils/encryption';
@@ -11,37 +11,38 @@ import Download from '../../../assets/gifs/download.gif';
 import { actions as commonActions } from 'pages/common/slice';
 import { saveAs } from 'file-saver';
 import JoinMedsLoader from 'pages/common/components/JoinMedsLoader';
-import { useState } from 'react';
 
 const Reports = () => {
     const dispatch = useDispatch();
     const { id = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(0);
+    const pageSize = 10;
+
+    const appliedJobDetails = useSelector(getAllJobReportsContent);
+    const pagination = useSelector(getAllJobReportsPagination);
+
+    const fetchReports = async (page = 0) => {
+        setLoading(true);
+        try {
+            const params = { page, size: pageSize };
+            if (userType !== 'SUPERADMIN') {
+                params.orgId = id;
+            }
+            await dispatch(fetchReportAppliedJobDetails(params));
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchReports = async () => {
-            setLoading(true);
-            try {
-                if (userType === 'SUPERADMIN') {
-                    await dispatch(fetchReportAppliedJobDetails());
-                } else {
-                    await dispatch(fetchReportAppliedJobDetails({ orgId: id }));
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
         if (!_.isEmpty(id)) {
-            fetchReports();
+            fetchReports(currentPage);
         }
-    }, [id, dispatch]);
-
-
-    const appliedJobDetails = useSelector(getAllJobReports);
+    }, [id, currentPage]);
 
     const handleResumeDownload = async (resumeId, fullName = 'resume') => {
-        if (!resumeId) return;
+        if (!resumeId || resumeId === 'null') return;
 
         setLoading(true);
         try {
@@ -71,8 +72,6 @@ const Reports = () => {
         }
     };
 
-
-
     const columns = [
         { key: 'fullname', label: 'Name' },
         { key: 'emailMobile', label: 'Mobile' },
@@ -87,21 +86,22 @@ const Reports = () => {
             key: 'resumeId',
             label: 'Resume',
             width: '180px',
-            render: (resumeId) => {
-                const applicant = appliedJobDetails.find(item => item.resumeId === resumeId);
-                const fullName = applicant?.fullname || 'resume';
+            render: (resumeId, row) => {
+                const fullName = row?.fullname || 'resume';
+                const hasResume = resumeId && resumeId !== 'null';
 
                 return (
                     <div className="flex items-center justify-center cursor-pointer">
                         <button
-                            onClick={() => handleResumeDownload(resumeId, fullName)}
-                            className="text-blue-600 hover:text-blue-800 p-2 rounded-full cursor-pointer"
-                            title="Download Resume"
+                            onClick={() => hasResume && handleResumeDownload(resumeId, fullName)}
+                            className={`p-2 rounded-full ${hasResume ? 'text-blue-600 hover:text-blue-800 cursor-pointer' : 'text-gray-300 cursor-not-allowed'}`}
+                            title={hasResume ? 'Download Resume' : 'No Resume'}
+                            disabled={!hasResume}
                         >
                             <img
                                 src={Download}
                                 alt="Download Icon"
-                                className="h-6 w-6 object-contain"
+                                className={`h-6 w-6 object-contain ${!hasResume ? 'opacity-30 grayscale' : ''}`}
                             />
                         </button>
                     </div>
@@ -110,6 +110,9 @@ const Reports = () => {
         },
     ];
 
+    const totalPages = pagination?.totalPages || 0;
+    const totalElements = pagination?.totalElements || 0;
+
     return (
         <div className="p-4">
             {loading && <JoinMedsLoader />}
@@ -117,8 +120,56 @@ const Reports = () => {
                 title="Applied Jobs"
                 columns={columns}
                 data={appliedJobDetails}
-                rowsPerPage={10}
+                rowsPerPage={pageSize}
             />
+            {totalPages > 1 && (
+                <div className="flex items-center justify-between mt-4 px-2">
+                    <p className="text-sm text-gray-500">
+                        Showing {currentPage * pageSize + 1}–{Math.min((currentPage + 1) * pageSize, totalElements)} of {totalElements} applications
+                    </p>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setCurrentPage(0)}
+                            disabled={currentPage === 0}
+                            className="px-3 py-1 rounded border text-sm cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+                        >
+                            «
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
+                            disabled={currentPage === 0}
+                            className="px-3 py-1 rounded border text-sm cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+                        >
+                            ‹ Prev
+                        </button>
+                        {Array.from({ length: totalPages }, (_, i) => i)
+                            .filter(i => Math.abs(i - currentPage) <= 2)
+                            .map(i => (
+                                <button
+                                    key={i}
+                                    onClick={() => setCurrentPage(i)}
+                                    className={`px-3 py-1 rounded border text-sm cursor-pointer ${currentPage === i ? 'bg-blue-600 text-white border-blue-600' : 'hover:bg-gray-100'}`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                        <button
+                            onClick={() => setCurrentPage(p => Math.min(totalPages - 1, p + 1))}
+                            disabled={currentPage >= totalPages - 1}
+                            className="px-3 py-1 rounded border text-sm cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+                        >
+                            Next ›
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(totalPages - 1)}
+                            disabled={currentPage >= totalPages - 1}
+                            className="px-3 py-1 rounded border text-sm cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+                        >
+                            »
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

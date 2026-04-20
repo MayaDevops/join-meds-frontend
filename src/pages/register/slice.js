@@ -8,9 +8,9 @@ const initialState = {
   organizationRegisterDetails: {},
   jobDetails: {},
   profileDetails: {},
-  allJobReports: {},
+  allJobReports: { content: [], totalElements: 0, totalPages: 0, number: 0, size: 10 },
   downloadResumeDetails: {},
-  userListReports: [],
+  userListReports: { content: [], totalElements: 0, totalPages: 0, number: 0, size: 10 },
 };
 
 const slice = createSlice({
