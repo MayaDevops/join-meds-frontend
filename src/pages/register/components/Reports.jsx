@@ -14,7 +14,7 @@ import JoinMedsLoader from 'pages/common/components/JoinMedsLoader';
 
 const Reports = () => {
     const dispatch = useDispatch();
-    const { id = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+    const { id = '', orgId = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const pageSize = 10;
@@ -27,7 +27,7 @@ const Reports = () => {
         try {
             const params = { page, size: pageSize };
             if (userType !== 'SUPERADMIN') {
-                params.orgId = id;
+                params.orgId = orgId;
             }
             await dispatch(fetchReportAppliedJobDetails(params));
         } finally {
