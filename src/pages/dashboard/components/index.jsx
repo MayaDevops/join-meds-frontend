@@ -54,7 +54,7 @@ function Dashboard() {
     {
       key: 'createdAt',
       label: 'Published On',
-      render: (value) => formatDate(value),
+      render: (value) => value ? formatDate(value) : '-',
     }
   ];
 

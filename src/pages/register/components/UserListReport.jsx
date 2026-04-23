@@ -4,7 +4,6 @@ import ReportTable from 'pages/common/components/ReportTable';
 import { getUserListReportsContent, getUserListReportsPagination } from '../selectors';
 import { fetchUserList } from '../actions';
 import JoinMedsLoader from 'pages/common/components/JoinMedsLoader';
-import { formatDate } from 'utils/date';
 
 const UserListReport = () => {
     const dispatch = useDispatch();
@@ -30,11 +29,7 @@ const UserListReport = () => {
 
     const columns = [
         { key: 'fullname', label: 'Name' },
-        {
-            key: 'dob',
-            label: 'DOB',
-            render: (value) => value ? formatDate(value) : '-'
-        },
+        { key: 'dob', label: 'DOB', render: (value) => value || '-' },
         { key: 'address', label: 'Address' },
         { key: 'profession', label: 'Profession' },
         {

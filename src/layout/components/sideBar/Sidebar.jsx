@@ -14,28 +14,33 @@ import JoinMedsLogo from '../../../assets/images/join_meds_side.png';
 import { Tooltip } from 'antd';
 import { logout } from 'utils/auth';
 import { useDispatch } from 'react-redux';
-
-const menuItems = [
-  { name: 'Home', icon: HomeIcon, path: '/ui/join-meds/user/dashboard', Tooltip: 'Dashboard' },
-  { name: 'Add Job', icon: BriefcaseIcon, path: '/ui/join-meds/register/profile', Tooltip: 'Add Job' },
-  { name: 'Contact', icon: PhoneIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Contact' },
-  { name: 'Profile', icon: UserCircleIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Profile' },
-  {
-    name: 'Report',
-    icon: DocumentChartBarIcon,
-    path: '',
-    Tooltip: 'Reports',
-    subItems: [
-      { name: 'Applied Jobs', path: '/ui/join-meds/user/reports', icon: BriefcaseIcon },
-      { name: 'Registered Users', path: '/ui/join-meds/user/registered-users', icon: UserCircleIcon }
-    ]
-  },
-  { name: 'Logout', icon: ArrowLeftOnRectangleIcon, path: '/', Tooltip: 'Logout' }
-];
+import { getDataFromStorage } from 'utils/encryption';
+import { STORAGE_KEYS } from 'pages/common/constants';
 
 function Sidebar({ isOpen, toggle }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
+
+  const menuItems = [
+    { name: 'Home', icon: HomeIcon, path: '/ui/join-meds/user/dashboard', Tooltip: 'Dashboard' },
+    { name: 'Add Job', icon: BriefcaseIcon, path: '/ui/join-meds/register/profile', Tooltip: 'Add Job' },
+    { name: 'Contact', icon: PhoneIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Contact' },
+    { name: 'Profile', icon: UserCircleIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Profile' },
+    {
+      name: 'Report',
+      icon: DocumentChartBarIcon,
+      path: '',
+      Tooltip: 'Reports',
+      subItems: [
+        { name: 'Applied Jobs', path: '/ui/join-meds/user/reports', icon: BriefcaseIcon },
+        ...(userType === 'SUPERADMIN'
+          ? [{ name: 'Registered Users', path: '/ui/join-meds/user/registered-users', icon: UserCircleIcon }]
+          : [])
+      ]
+    },
+    { name: 'Logout', icon: ArrowLeftOnRectangleIcon, path: '/', Tooltip: 'Logout' }
+  ];
   const sidebarRef = useRef(null);
   const [openSubMenus, setOpenSubMenus] = useState({});
 
