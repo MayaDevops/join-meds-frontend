@@ -218,23 +218,26 @@ function OrganizationProfile() {
             <p className="text-red-500 text-sm">{errors.skills.message}</p>
           )}
         </div>
-        <div>
-          <label className="block font-medium text-gray-800 mb-1">
-            Nature of Job
-          </label>
-          <textarea
-            type="text"
-            {...register("natureJob")}
-            placeholder="eg: Part-time, Full-time"
-            className="w-full border border-gray-400 rounded-md px-4 py-2"
-            autoComplete="off"
-            maxLength={2500}
-          />
-          {errors.natureJob && (
-            <p className="text-red-500 text-sm">{errors.natureJob.message}</p>
-          )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-6">
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">
+              Nature of Job
+            </label>
+            <select
+              {...register("natureJob")}
+              className="w-full border border-gray-400 rounded-md px-4 py-2"
+              defaultValue=""
+            >
+              <option value="" disabled hidden>
+                Select Nature of Job
+              </option>
+              <option value="Part Time">Part Time</option>
+              <option value="Full Time">Full Time</option>
+            </select>
+            {errors.natureJob && (
+              <p className="text-red-500 text-sm">{errors.natureJob.message}</p>
+            )}
+          </div>
           <div>
             <label className="block font-medium text-gray-800 mb-1">
               Pay - From
@@ -245,7 +248,7 @@ function OrganizationProfile() {
               placeholder="eg: 15000"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
               autoComplete="off"
-              maxLength={15}
+              maxLength={10}
             />
             {errors.payFrom && (
               <p className="text-red-500 text-sm">{errors.payFrom.message}</p>
@@ -261,7 +264,7 @@ function OrganizationProfile() {
               placeholder="eg: 25000"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
               autoComplete="off"
-              maxLength={15}
+              maxLength={10}
             />
             {errors.payTo && (
               <p className="text-red-500 text-sm">{errors.payTo.message}</p>
@@ -276,7 +279,7 @@ function OrganizationProfile() {
               id="payRange"
               {...register("payRange")}
               className="w-full border border-gray-400 rounded-md px-4 py-2"
-              defaultValue="" // Ensure empty default for react-hook-form
+              defaultValue=""
             >
               <option value="" disabled hidden>
                 Select Pay Range

@@ -54,17 +54,17 @@ function JobCard({
   return (
     <>
       {loading && <JoinMedsLoader />}
-      <div className="max-w-sm w-full border rounded-lg shadow-md overflow-hidden bg-white">
-        <div className="p-4">
+      <div className="max-w-sm w-full border rounded-lg shadow-md overflow-hidden bg-white flex flex-col">
+        <div className="p-4 flex-1 flex flex-col">
           <h2 className="text-lg font-semibold text-gray-800">{hiringFor}</h2>
           <p className="text-sm text-gray-600 mt-1">{yearExp}</p>
-          <p className="text-xs text-gray-500 mt-1">Posted: {formatDate(createdAt)}</p>
+          <p className="text-xs text-gray-500 mt-1">Posted: {createdAt ? formatDate(createdAt) : '-'}</p>
 
-          <div className="flex gap-2 mt-3">
-            <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full">
+          <div className="flex flex-wrap gap-2 mt-auto pt-4">
+            <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">
               {payFrom} - {payTo} - {payRange}
             </span>
-            <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full">
+            <span className="bg-gray-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">
               {natureJob}
             </span>
           </div>

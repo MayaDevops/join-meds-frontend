@@ -14,6 +14,7 @@ export const API_URL = {
       FETCH_APPLIED_JOBS: "api/job-applied/search?",
       DOWNLOAD_RESUME: "api/resume/:filename",
       FETCH_ALL_USERS: "api/user-details/all",
+      FETCH_ALL_ORGS: "api/org/all",
     },
     USER_LOGIN: {
       LOGIN: "api/user/login",

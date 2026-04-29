@@ -79,10 +79,8 @@ export const OrganizationUpdateDetailsSchema = yup.object().shape({
 
 
     natureJob: yup.string()
-        .transform((value) => value.trim())
         .required(t('isRequired', { type: t('Nature of Job') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('Nature of Job'), count: '200', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Nature of Job') })),
+        .oneOf(['Part Time', 'Full Time'], t('invalidType', { type: t('Nature of Job') })),
 
     // payFrom: yup.string()
     //     .transform((value) => value.trim())

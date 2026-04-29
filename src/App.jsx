@@ -17,6 +17,7 @@ import ProtectedRoute from './layout/components/ProtectedRoute';
 import Navigator from 'pages/common/components/Navigator';
 import Reports from './pages/register/components/Reports';
 import UserListReport from './pages/register/components/UserListReport';
+import RegisterdOrganizationsList from './pages/register/components/RegisterdOrganizationsList';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/ui/join-meds/user/profile" element={<ProfileCard />} />
           <Route path="/ui/join-meds/user/reports" element={<Reports />} />
           <Route path="/ui/join-meds/user/registered-users" element={<UserListReport />} />
+          <Route path="/ui/join-meds/user/registered-organizations" element={<RegisterdOrganizationsList />} />
 
         </Route>
       </Routes>

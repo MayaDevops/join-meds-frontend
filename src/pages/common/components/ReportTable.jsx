@@ -1,16 +1,87 @@
 import React, { useState } from 'react';
 
-const ReportTable = ({ title = 'Report Summary', columns = [], data, rowsPerPage = 10 }) => {
+const ReportTable = ({
+  title = 'Report Summary',
+  columns = [],
+  data,
+  rowsPerPage = 10,
+  searchText = '',
+  onSearchChange,
+}) => {
   const safeData = Array.isArray(data) ? data : [];
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(safeData.length / rowsPerPage);
   const startIdx = (currentPage - 1) * rowsPerPage;
   const currentData = safeData.slice(startIdx, startIdx + rowsPerPage);
 
-
   return (
     <div className="bg-white shadow rounded-md p-4">
-      <h2 className="text-xl font-semibold text-[#09327B] mb-4">{title}</h2>
+      {/* Title row with search input on the right */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-[#09327B]">{title}</h2>
+        {onSearchChange && (
+          <div className="relative">
+            <span
+              style={{
+                position: 'absolute',
+                left: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                pointerEvents: 'none',
+                color: '#9ca3af',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.156a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+              </svg>
+            </span>
+            <input
+              type="text"
+              value={searchText}
+              onChange={(e) => onSearchChange(e.target.value)}
+              placeholder="Search..."
+              style={{
+                paddingLeft: '34px',
+                paddingRight: searchText ? '32px' : '12px',
+                paddingTop: '7px',
+                paddingBottom: '7px',
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                fontSize: '14px',
+                outline: 'none',
+                width: '320px',
+                color: '#09327B',
+                transition: 'border-color 0.2s',
+              }}
+              onFocus={(e) => (e.target.style.borderColor = '#00B2EC')}
+              onBlur={(e) => (e.target.style.borderColor = '#d1d5db')}
+            />
+            {searchText && (
+              <button
+                onClick={() => onSearchChange('')}
+                style={{
+                  position: 'absolute',
+                  right: '8px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#9ca3af',
+                  fontSize: '16px',
+                  lineHeight: 1,
+                  padding: 0,
+                }}
+                title="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* ✅ Table view for md and up */}
       <div className="hidden md:block overflow-x-auto">

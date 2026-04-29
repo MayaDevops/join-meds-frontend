@@ -223,6 +223,17 @@ export function* fetchUserListDetails({ payload = {} }) {
   }
 }
 
+export function* fetchOrgListDetails({ payload = {} }) {
+  yield fork(handleAPIRequest, api.fetchOrgListApi, payload);
+  const { payload: { data: responsePayLoad = {} } = {}, type } = yield take([
+    ACTION_TYPES.FETCH_ORG_LIST_SUCCESS,
+    ACTION_TYPES.FETCH_ORG_LIST_FAILURE,
+  ]);
+  if (type === ACTION_TYPES.FETCH_ORG_LIST_SUCCESS) {
+    yield put(sliceActions.setOrgListReports(responsePayLoad));
+  }
+}
+
 export default function* commonSaga() {
   yield all([
     takeLatest(ACTION_TYPES.FETCH_COUNTRY, fetchCountry),
@@ -237,5 +248,6 @@ export default function* commonSaga() {
     takeLatest(ACTION_TYPES.FETCH_REPORT_APPLIED, fetchReportAllJobsInfo),
     takeLatest(ACTION_TYPES.DOWNLAOD_RESUME, downloadResumeDetails),
     takeLatest(ACTION_TYPES.FETCH_USER_LIST, fetchUserListDetails),
+    takeLatest(ACTION_TYPES.FETCH_ORG_LIST, fetchOrgListDetails),
   ]);
 }

@@ -109,9 +109,11 @@ export const fetchReportAppliedJobsDetailsApi = (data) => {
         ACTION_TYPES.FETCH_REPORT_APPLIED_FAILURE,
       ],
       params: {
+        userId: data?.userId,
         jobId: data?.jobId,
         orgId: data?.orgId,
         id: data?.id,
+        keyword: data?.keyword || undefined,
         page: data?.page ?? 0,
         size: data?.size ?? 10,
       },
@@ -150,9 +152,28 @@ export const fetchUserListApi = (data) => {
       ],
       params: {
         ...data,
+        keyword: data?.keyword || undefined,
         page: data?.page ?? 0,
         size: data?.size ?? 10,
       },
     },
   };
 };
+
+export const fetchOrgListApi = (data) => {
+  return {
+    url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_ALL_ORGS,
+    method: REQUEST_METHOD.GET,
+    payload: {
+      types: [
+        ACTION_TYPES.FETCH_ORG_LIST_REQUEST,
+        ACTION_TYPES.FETCH_ORG_LIST_SUCCESS,
+        ACTION_TYPES.FETCH_ORG_LIST_FAILURE,
+      ],
+      params: {
+        keyword: data?.keyword || undefined,
+      },
+    },
+  };
+};
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReportTable from 'pages/common/components/ReportTable';
 import { getUserListReportsContent, getUserListReportsPagination } from '../selectors';
@@ -9,23 +9,39 @@ const UserListReport = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
+    const [searchText, setSearchText] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
     const pageSize = 10;
 
     const userListDetails = useSelector(getUserListReportsContent);
     const pagination = useSelector(getUserListReportsPagination);
 
-    const fetchUsers = async (page = 0) => {
+    const fetchUsers = useCallback(async (page = 0, keyword = '') => {
         setLoading(true);
         try {
-            await dispatch(fetchUserList({ page, size: pageSize }));
+            const params = { page, size: pageSize };
+            if (keyword?.trim()) {
+                params.keyword = keyword.trim();
+            }
+            await dispatch(fetchUserList(params));
         } finally {
             setLoading(false);
         }
-    };
+    }, [dispatch]);
+
+    // Debounce search input by 500ms
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchText);
+            setCurrentPage(0);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchText]);
 
     useEffect(() => {
-        fetchUsers(currentPage);
-    }, [currentPage]);
+        fetchUsers(currentPage, debouncedSearch);
+    }, [currentPage, debouncedSearch]);
+
 
     const columns = [
         { key: 'fullname', label: 'Name' },
@@ -114,6 +130,8 @@ const UserListReport = () => {
                 columns={columns}
                 data={userListDetails}
                 rowsPerPage={pageSize}
+                searchText={searchText}
+                onSearchChange={(val) => setSearchText(val)}
             />
             {totalPages > 1 && (
                 <div className="flex items-center justify-between mt-4 px-2">

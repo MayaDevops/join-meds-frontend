@@ -11,6 +11,7 @@ const initialState = {
   allJobReports: { content: [], totalElements: 0, totalPages: 0, number: 0, size: 10 },
   downloadResumeDetails: {},
   userListReports: { content: [], totalElements: 0, totalPages: 0, number: 0, size: 10 },
+  orgListReports: [],
 };
 
 const slice = createSlice({
@@ -35,6 +36,9 @@ const slice = createSlice({
     },
     setUserListReports: (state, { payload }) => {
       _.set(state, "userListReports", payload);
+    },
+    setOrgListReports: (state, { payload }) => {
+      _.set(state, "orgListReports", payload);
     },
   },
   extraReducers: (builder) => {

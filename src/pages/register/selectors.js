@@ -48,3 +48,7 @@ export const getUserListReportsPagination = flow(getCommonData, (state) => ({
   number: state.userListReports?.number || 0,
   size: state.userListReports?.size || 10,
 }));
+
+const orgListReports = (state) => state.orgListReports;
+export const getOrgListReports = flow(getCommonData, orgListReports);
+export const getOrgListReportsContent = flow(getCommonData, (state) => state.orgListReports || []);

@@ -34,8 +34,11 @@ function Sidebar({ isOpen, toggle }) {
       Tooltip: 'Reports',
       subItems: [
         { name: 'Applied Jobs', path: '/ui/join-meds/user/reports', icon: BriefcaseIcon },
-        ...(userType === 'SUPERADMIN'
-          ? [{ name: 'Registered Users', path: '/ui/join-meds/user/registered-users', icon: UserCircleIcon }]
+        ...((userType?.toUpperCase() === 'SUPERADMIN' || userType?.toUpperCase() === 'ADMIN')
+          ? [
+              { name: 'Registered Users', path: '/ui/join-meds/user/registered-users', icon: UserCircleIcon },
+              { name: 'Organizations List', path: '/ui/join-meds/user/registered-organizations', icon: BriefcaseIcon }
+            ]
           : [])
       ]
     },

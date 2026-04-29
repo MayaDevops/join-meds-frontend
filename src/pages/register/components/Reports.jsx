@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReportTable from 'pages/common/components/ReportTable';
 import { getAllJobReportsContent, getAllJobReportsPagination } from '../selectors';
@@ -17,29 +17,43 @@ const Reports = () => {
     const { id = '', orgId = '', userType = '' } = getDataFromStorage(STORAGE_KEYS.OFFICE_DETAILS, true) || {};
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
+    const [searchText, setSearchText] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
     const pageSize = 10;
 
     const appliedJobDetails = useSelector(getAllJobReportsContent);
     const pagination = useSelector(getAllJobReportsPagination);
 
-    const fetchReports = async (page = 0) => {
+    const fetchReports = useCallback(async (page = 0, keyword = '') => {
         setLoading(true);
         try {
             const params = { page, size: pageSize };
             if (userType !== 'SUPERADMIN') {
                 params.orgId = orgId;
             }
+            if (keyword?.trim()) {
+                params.keyword = keyword.trim();
+            }
             await dispatch(fetchReportAppliedJobDetails(params));
         } finally {
             setLoading(false);
         }
-    };
+    }, [userType, orgId, dispatch]);
+
+    // Debounce search input by 500ms
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchText);
+            setCurrentPage(0);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchText]);
 
     useEffect(() => {
         if (!_.isEmpty(id)) {
-            fetchReports(currentPage);
+            fetchReports(currentPage, debouncedSearch);
         }
-    }, [id, currentPage]);
+    }, [id, currentPage, debouncedSearch]);
 
     const handleResumeDownload = async (resumeId, fullName = 'resume') => {
         if (!resumeId || resumeId === 'null') return;
@@ -121,6 +135,8 @@ const Reports = () => {
                 columns={columns}
                 data={appliedJobDetails}
                 rowsPerPage={pageSize}
+                searchText={searchText}
+                onSearchChange={(val) => setSearchText(val)}
             />
             {totalPages > 1 && (
                 <div className="flex items-center justify-between mt-4 px-2">

@@ -12,12 +12,15 @@ export const fetchDashBoardInfoApi = (data) => {
         ACTION_TYPES.FETCH_DASHBOARD_INFO_REQUEST,
         ACTION_TYPES.FETCH_DASHBOARD_INFO_SUCCESS,
         ACTION_TYPES.FETCH_DASHBOARD_INFO_FAILURE
-      ]
+      ],
+      params: {
+        keyword: data?.keyword || undefined
+      }
     }
   };
 };
 
-export const fetchAdminDashBoardInfoApi = () => {
+export const fetchAdminDashBoardInfoApi = (data) => {
   return {
     url: API_URL.JOINT_MEDS.ORGANIZATION.FETCH_ALL_JOBS,
     method: REQUEST_METHOD.GET,
@@ -26,7 +29,10 @@ export const fetchAdminDashBoardInfoApi = () => {
         ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_REQUEST,
         ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_SUCCESS,
         ACTION_TYPES.FETCH_ADMIN_DASHBOARD_INFO_FAILURE
-      ]
+      ],
+      params: {
+        keyword: data?.keyword || undefined
+      }
     }
   };
 };
