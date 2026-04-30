@@ -1,86 +1,169 @@
-import { EMAIL, EN_SPECIAL_NUMBERS, NO_LEAD_TRAIL_SPACE, NUM_ONLY } from 'common/regex';
-import { t } from 'pages/common/components';
-import * as yup from 'yup';
+import {
+  EMAIL,
+  EN_SPECIAL_NUMBERS,
+  NO_LEAD_TRAIL_SPACE,
+  NUM_ONLY,
+} from "common/regex";
+import { t } from "pages/common/components";
+import * as yup from "yup";
 
-
-export const OrganizationRegisterDetailsSchema = yup.object().shape({
-
-    orgName: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Business/Organization Name') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('Business/Organization Name'), count: '200', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Business/Organization Name') })),
-
-    officialEmail: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Email Id') }))
-        .when('officeName', {
-            is: (value) => value && value.trim() !== '',
-            then: () => yup.string()
-                .matches(EMAIL, t('invalidType', { type: t('Email Id') }))
-                .matches(NO_LEAD_TRAIL_SPACE, t('notAllowed', { type: t('leadingAndTrailingSpaces') }))
+export const OrganizationRegisterDetailsSchema = yup
+  .object()
+  .shape({
+    orgName: yup
+      .string()
+      .transform((value) => value.trim())
+      .required(t("isRequired", { type: t("Business/Organization Name") }))
+      .max(
+        200,
+        t("shouldNotBeGreaterThan", {
+          type: t("Business/Organization Name"),
+          count: "200",
+          unit: t("character"),
         }),
+      )
+      .matches(
+        EN_SPECIAL_NUMBERS,
+        t("invalidType", { type: t("Business/Organization Name") }),
+      ),
 
-    incorporationNo: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Incorporation No') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('Incorporation No'), count: '200', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('BIncorporation No') })),
+    officialEmail: yup
+      .string()
+      .transform((value) => value.trim())
+      .required(t("isRequired", { type: t("Email Id") }))
+      .when("officeName", {
+        is: (value) => value && value.trim() !== "",
+        then: () =>
+          yup
+            .string()
+            .matches(EMAIL, t("invalidType", { type: t("Email Id") }))
+            .matches(
+              NO_LEAD_TRAIL_SPACE,
+              t("notAllowed", { type: t("leadingAndTrailingSpaces") }),
+            ),
+      }),
 
-    emailMobile: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Mobile Number') }))
-        .max(10, t('shouldNotBeGreaterThan', { type: t('Mobile Number'), count: '10', unit: t('numbers') }))
-        .min(10, t('mustBe', {
-            type: t('Mobile Number'),
-            count: '10',
-            unit: t('numbers')
-        })),
+    incorporationNo: yup
+      .string()
+      .transform((value) => value.trim())
+      .required(t("isRequired", { type: t("Incorporation No") }))
+      .max(
+        200,
+        t("shouldNotBeGreaterThan", {
+          type: t("Incorporation No"),
+          count: "200",
+          unit: t("character"),
+        }),
+      )
+      .matches(
+        EN_SPECIAL_NUMBERS,
+        t("invalidType", { type: t("BIncorporation No") }),
+      ),
+
+    emailMobile: yup
+      .string()
+      .transform((value) => value.trim())
+      .required(t("isRequired", { type: t("Mobile Number") }))
+      .max(
+        10,
+        t("shouldNotBeGreaterThan", {
+          type: t("Mobile Number"),
+          count: "10",
+          unit: t("numbers"),
+        }),
+      )
+      .min(
+        10,
+        t("mustBe", {
+          type: t("Mobile Number"),
+          count: "10",
+          unit: t("numbers"),
+        }),
+      ),
 
     password: yup
-        .string()
-        .required(t('isRequired', { type: t('Password') }))
-        .min(6, t('mustBeAtLeast', { type: t('Password'), count: 7, unit: t('characters') })),
+      .string()
+      .required(t("isRequired", { type: t("Password") }))
+      .min(
+        6,
+        t("mustBeAtLeast", {
+          type: t("Password"),
+          count: 7,
+          unit: t("characters"),
+        }),
+      ),
 
     confirmPassword: yup
-        .string()
-        .required(t('isRequired', { type: t('Confirm Password') }))
-        .min(6, t('mustBeAtLeast', { type: t('Confirm Password'), count: 7, unit: t('characters') }))
-        .oneOf([yup.ref('password')], t('Password Mismatch', { type: t('Confirm Password') }))
+      .string()
+      .required(t("isRequired", { type: t("Confirm Password") }))
+      .min(
+        6,
+        t("mustBeAtLeast", {
+          type: t("Confirm Password"),
+          count: 7,
+          unit: t("characters"),
+        }),
+      )
+      .oneOf(
+        [yup.ref("password")],
+        t("Password Mismatch", { type: t("Confirm Password") }),
+      ),
+  })
+  .required();
 
-}).required();
-
-export const OrganizationUpdateDetailsSchema = yup.object().shape({
-
-
+export const OrganizationUpdateDetailsSchema = yup
+  .object()
+  .shape({
     // aboutCompany: yup.string()
     //     .transform((value) => value.trim())
     //     .required(t('isRequired', { type: t('About Your Company/organisation') }))
     //     .max(200, t('shouldNotBeGreaterThan', { type: t('About Your Company/organisation'), count: '200', unit: t('character') }))
     //     .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('About Your Company/organisation') })),
 
-    hiringFor: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Job Hiring Of') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('Job Hiring Of'), count: '200', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Job Hiring Of') })),
+    hiringFor: yup
+      .string()
+      .transform((value) => value.trim())
+      .required(t("isRequired", { type: t("Job Title") }))
+      .max(
+        100,
+        t("shouldNotBeGreaterThan", {
+          type: t("Job Title"),
+          count: "100",
+          unit: t("character"),
+        }),
+      )
+      .matches(EN_SPECIAL_NUMBERS, t("invalidType", { type: t("Job Title") })),
 
-    yearExp: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Years of Experience') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('Years of Experience'), count: '200', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Years of Experience') })),
+    yearExp: yup
+      .number()
+      .typeError("Years of Experience must be a valid number")
+      .min(0, "Cannot be less than 0")
+      .required(t("isRequired", { type: t("Years of Experience") })),
 
-    skills: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Skills Required') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('Skills Required'), count: '200', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Skills Required') })),
+    skills: yup
+      .string()
+      .transform((value) => value.trim())
+      .required(t("isRequired", { type: t("Skills Required") }))
+      .max(
+        250,
+        t("shouldNotBeGreaterThan", {
+          type: t("Skills Required"),
+          count: "250",
+          unit: t("character"),
+        }),
+      )
+      .matches(
+        EN_SPECIAL_NUMBERS,
+        t("invalidType", { type: t("Skills Required") }),
+      ),
 
-
-    natureJob: yup.string()
-        .required(t('isRequired', { type: t('Nature of Job') }))
-        .oneOf(['Part Time', 'Full Time'], t('invalidType', { type: t('Nature of Job') })),
+    natureJob: yup
+      .string()
+      .required(t("isRequired", { type: t("Nature of Job") }))
+      .oneOf(
+        ["Part Time", "Full Time"],
+        t("invalidType", { type: t("Nature of Job") }),
+      ),
 
     // payFrom: yup.string()
     //     .transform((value) => value.trim())
@@ -101,28 +184,34 @@ export const OrganizationUpdateDetailsSchema = yup.object().shape({
     //     .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Range') })),
 
     payFrom: yup
-        .number()
-        .typeError('Pay From must be a valid number')
-        .positive('Pay From must be positive')
-        .required('Pay From is required'),
+      .number()
+      .typeError("Pay From must be a valid number")
+      .positive("Pay From must be positive")
+      .required("Pay From is required"),
 
     payTo: yup
-        .number()
-        .typeError('Pay To must be a valid number')
-        .positive('Pay To must be positive')
-        .required('Pay To is required')
-        .moreThan(yup.ref('payFrom'), 'Pay To must be greater than Pay From'),
+      .number()
+      .typeError("Pay To must be a valid number")
+      .positive("Pay To must be positive")
+      .required("Pay To is required")
+      .moreThan(yup.ref("payFrom"), "Pay To must be greater than Pay From"),
 
     payRange: yup
-        .string()
-        .required('Salary Range is required')
-        .notOneOf(['Null'], 'Please select a valid range'),
+      .string()
+      .required("Salary Range is required")
+      .notOneOf(["Null"], "Please select a valid range"),
 
-    jobDesc: yup.string()
-        .transform((value) => value.trim())
-        .required(t('isRequired', { type: t('Job Description') }))
-        .max(200, t('shouldNotBeGreaterThan', { type: t('Job Description'), count: '2500', unit: t('character') }))
-        .matches(EN_SPECIAL_NUMBERS, t('invalidType', { type: t('Job Description') }))
-
-
-}).required();
+    jobDesc: yup
+      .string()
+      .transform((value) => value.trim())
+      .required(t("isRequired", { type: t("Job Description") }))
+      .max(
+        2500,
+        t("shouldNotBeGreaterThan", {
+          type: t("Job Description"),
+          count: "2500",
+          unit: t("character"),
+        }),
+      ),
+  })
+  .required();

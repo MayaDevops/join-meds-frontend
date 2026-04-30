@@ -26,6 +26,7 @@ function OrganizationProfile() {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm({
     mode: "all",
     resolver: yupResolver(OrganizationUpdateDetailsSchema),
@@ -168,10 +169,10 @@ function OrganizationProfile() {
                     />
                     {errors.aboutCompany && <p className="text-red-500 text-sm">{errors.aboutCompany.message}</p>}
                 </div> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-6">
           <div>
             <label className="block font-medium text-gray-800 mb-1">
-              Job Hiring Of
+              Job Title
             </label>
             <input
               type="text"
@@ -179,46 +180,65 @@ function OrganizationProfile() {
               placeholder="eg: Nurse, Doctor, Pharmacist"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
               autoComplete="off"
-              maxLength={150}
+              maxLength={100}
             />
-            {errors.hiringFor && (
-              <p className="text-red-500 text-sm">{errors.hiringFor.message}</p>
-            )}
+            <div className="flex justify-between mt-1">
+              <div className="flex-1">
+                {errors.hiringFor && (
+                  <p className="text-red-500 text-sm">{errors.hiringFor.message}</p>
+                )}
+              </div>
+              <p className="text-gray-500 text-xs ml-2 whitespace-nowrap">
+                {100 - String(watch("hiringFor") || "").length} characters left
+              </p>
+            </div>
           </div>
           <div>
             <label className="block font-medium text-gray-800 mb-1">
               Years of Experience
             </label>
             <input
-              type="text"
+              type="number"
+              step="0.1"
+              min="0"
               {...register("yearExp")}
-              placeholder="eg: Fresher, 1 Year etc"
+              placeholder="eg: 0, 1, 1.5"
+              className="w-full border border-gray-400 rounded-md px-4 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              autoComplete="off"
+            />
+            <div className="flex justify-between mt-1">
+              <div className="flex-1">
+                {errors.yearExp && (
+                  <p className="text-red-500 text-sm">{errors.yearExp.message}</p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="block font-medium text-gray-800 mb-1">
+              Skills Required
+            </label>
+            <input
+              type="text"
+              {...register("skills")}
+              placeholder="eg: OT,NICU,Surgeon etc"
               className="w-full border border-gray-400 rounded-md px-4 py-2"
               autoComplete="off"
-              maxLength={100}
+              maxLength={250}
             />
-            {errors.yearExp && (
-              <p className="text-red-500 text-sm">{errors.yearExp.message}</p>
-            )}
+            <div className="flex justify-between mt-1">
+              <div className="flex-1">
+                {errors.skills && (
+                  <p className="text-red-500 text-sm">{errors.skills.message}</p>
+                )}
+              </div>
+              <p className="text-gray-500 text-xs ml-2 whitespace-nowrap">
+                {250 - String(watch("skills") || "").length} characters left
+              </p>
+            </div>
           </div>
         </div>
-        <div>
-          <label className="block font-medium text-gray-800 mb-1">
-            Skills Required
-          </label>
-          <textarea
-            type="text"
-            {...register("skills")}
-            placeholder="eg: OT,NICU,Surgeon etc"
-            className="w-full border border-gray-400 rounded-md px-4 py-2"
-            autoComplete="off"
-            maxLength={2500}
-          />
-          {errors.skills && (
-            <p className="text-red-500 text-sm">{errors.skills.message}</p>
-          )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-6">
           <div>
             <label className="block font-medium text-gray-800 mb-1">
               Nature of Job
@@ -238,37 +258,67 @@ function OrganizationProfile() {
               <p className="text-red-500 text-sm">{errors.natureJob.message}</p>
             )}
           </div>
-          <div>
-            <label className="block font-medium text-gray-800 mb-1">
-              Pay - From
-            </label>
-            <input
-              type="text"
-              {...register("payFrom")}
-              placeholder="eg: 15000"
-              className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete="off"
-              maxLength={10}
-            />
-            {errors.payFrom && (
-              <p className="text-red-500 text-sm">{errors.payFrom.message}</p>
-            )}
-          </div>
-          <div>
-            <label className="block font-medium text-gray-800 mb-1">
-              Pay - To
-            </label>
-            <input
-              type="text"
-              {...register("payTo")}
-              placeholder="eg: 25000"
-              className="w-full border border-gray-400 rounded-md px-4 py-2"
-              autoComplete="off"
-              maxLength={10}
-            />
-            {errors.payTo && (
-              <p className="text-red-500 text-sm">{errors.payTo.message}</p>
-            )}
+          <div className="flex gap-x-4">
+            <div className="flex-1 min-w-0">
+              <label className="block font-medium text-gray-800 mb-1">
+                Pay - From
+              </label>
+              <input
+                type="number"
+                min="1"
+                {...register("payFrom")}
+                placeholder="eg: 15000"
+                className="w-full border border-gray-400 rounded-md px-4 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                autoComplete="off"
+                onKeyDown={(e) => {
+                  if (["e", "E", "+", "-"].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
+                onInput={(e) => {
+                  if (e.target.value.length > 10) {
+                    e.target.value = e.target.value.slice(0, 10);
+                  }
+                }}
+              />
+              <div className="flex justify-between mt-1">
+                <div className="flex-1">
+                  {errors.payFrom && (
+                    <p className="text-red-500 text-sm">{errors.payFrom.message}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 min-w-0">
+              <label className="block font-medium text-gray-800 mb-1">
+                Pay - To
+              </label>
+              <input
+                type="number"
+                min="1"
+                {...register("payTo")}
+                placeholder="eg: 25000"
+                className="w-full border border-gray-400 rounded-md px-4 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                autoComplete="off"
+                onKeyDown={(e) => {
+                  if (["e", "E", "+", "-"].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
+                onInput={(e) => {
+                  if (e.target.value.length > 10) {
+                    e.target.value = e.target.value.slice(0, 10);
+                  }
+                }}
+              />
+              <div className="flex justify-between mt-1">
+                <div className="flex-1">
+                  {errors.payTo && (
+                    <p className="text-red-500 text-sm">{errors.payTo.message}</p>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
           <div>
             <label className="block font-medium text-gray-800 mb-1">
@@ -300,14 +350,22 @@ function OrganizationProfile() {
           <textarea
             type="text"
             {...register("jobDesc")}
-            placeholder="Specify less than 450 words"
+            placeholder="Specify Job Description"
             className="w-full border border-gray-400 rounded-md px-4 py-2"
             autoComplete="off"
             maxLength={2500}
+            rows={4}
           />
-          {errors.jobDesc && (
-            <p className="text-red-500 text-sm">{errors.jobDesc.message}</p>
-          )}
+          <div className="flex justify-between mt-1">
+            <div className="flex-1">
+              {errors.jobDesc && (
+                <p className="text-red-500 text-sm">{errors.jobDesc.message}</p>
+              )}
+            </div>
+            <p className="text-gray-500 text-xs ml-2 whitespace-nowrap">
+              {2500 - String(watch("jobDesc") || "").length} characters left
+            </p>
+          </div>
         </div>
         <div className="flex justify-end gap-4 mt-6">
           <button
