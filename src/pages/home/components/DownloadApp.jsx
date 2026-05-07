@@ -1,4 +1,4 @@
-import { downloadApp } from "assets";
+import { Appstore, downloadApp, Googleplay } from "assets";
 import React from "react";
 function DownloadApp() {
     return (
@@ -28,20 +28,20 @@ function DownloadApp() {
                     </p>
 
                     {/* PHONE INPUT + BUTTON */}
-                    <div className="flex flex-col sm:flex-row items-center gap-3 mt-2 w-full">
+                    {/* <div className="flex flex-col sm:flex-row items-center gap-3 mt-2 w-full"> */}
 
-                        {/* INPUT BOX */}
-                        <div className="flex items-center w-full sm:w-60 border border-gray-300 rounded-xl px-4 h-12 bg-white">
+                    {/* INPUT BOX */}
+                    {/* <div className="flex items-center w-full sm:w-60 border border-gray-300 rounded-xl px-4 h-12 bg-white">
                             <span className="text-gray-600 mr-3">+91</span>
                             <input
                                 type="text"
                                 placeholder="Enter phone number"
                                 className="w-full outline-none text-sm"
                             />
-                        </div>
+                        </div> */}
 
-                        {/* FIXED RESPONSIVE BUTTON */}
-                        <button
+                    {/* FIXED RESPONSIVE BUTTON */}
+                    {/* <button
                             className="
       bg-[#00A4E1] text-white 
       px-6 h-12 
@@ -55,20 +55,32 @@ function DownloadApp() {
                         >
                             Send SMS
                         </button>
-                    </div>
+                    </div> */}
 
                     {/* STORE BUTTONS */}
                     <div className="flex gap-4 mt-4">
                         <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png"
+                            src={Googleplay}
                             alt="Google Play"
                             className="h-12 cursor-pointer"
+                            onClick={() =>
+                                window.open(
+                                    "https://play.google.com/store/apps/details?id=com.joinmeds.app",
+                                    "_blank"
+                                )
+                            }
                         />
 
                         <img
-                            src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                            src={Appstore}
                             alt="App Store"
                             className="h-12 cursor-pointer"
+                            onClick={() =>
+                                window.open(
+                                    "https://apps.apple.com/in/app/joinmeds/id6760744098",
+                                    "_blank"
+                                )
+                            }
                         />
                     </div>
 

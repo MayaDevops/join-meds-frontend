@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Search, Globe } from "lucide-react";
 import { bannerBg, bgHome, RightArrowIcon } from "assets";
 import { playStoreUrl } from "../constants";
 
 function Home() {
+  const [openMenu, setOpenMenu] = useState(false);
+  const dropdownRef = useRef();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div
@@ -45,16 +59,47 @@ function Home() {
             Faster and Smarter <br />
             With <span className="text-[#cde2ff]">JoinMeds</span>
           </h1>
+
           <p className="text-lg text-white/90 mb-6 max-w-md">
             Streamlined hiring designed exclusively for healthcare organisations.
           </p>
-          <button
-            className="bg-[#00A4E1] text-[#FAFAFA] px-6 py-3  rounded-full flex items-center gap-2 font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#008EC4] hover:text-white"
-            onClick={() => window.open(playStoreUrl, "_blank")}
-          >
-            Get Started <RightArrowIcon />
-          </button>
 
+          {/* ================= GET STARTED DROPDOWN ================= */}
+          <div className="relative inline-block" ref={dropdownRef}>
+            <button
+              onClick={() => setOpenMenu(!openMenu)}
+              className="bg-[#00A4E1] text-[#FAFAFA] px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#008EC4]"
+            >
+              Get Started <RightArrowIcon />
+            </button>
+
+            {openMenu && (
+              <div className="absolute mt-3 w-48 bg-[#0f2f5f] text-white rounded-md shadow-lg z-50">
+                <p
+                  className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer"
+                  onClick={() => {
+                    window.open(playStoreUrl, "_blank");
+                    setOpenMenu(false);
+                  }}
+                >
+                  Play Store
+                </p>
+
+                <p
+                  className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer"
+                  onClick={() => {
+                    window.open(
+                      "https://apps.apple.com/in/app/joinmeds/id6760744098",
+                      "_blank"
+                    );
+                    setOpenMenu(false);
+                  }}
+                >
+                  App Store
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* RIGHT IMAGE */}
@@ -69,7 +114,7 @@ function Home() {
         </div>
       </div>
 
-      {/* ================= SEARCH BAR (BOTTOM CENTER) ================= */}
+      {/* ================= SEARCH BAR ================= */}
       <div
         className="
           absolute left-1/2 bottom-0
