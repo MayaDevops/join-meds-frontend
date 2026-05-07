@@ -22,9 +22,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+      - name: Clean and install dependencies
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          pnpm store prune || true
+          pnpm install --no-frozen-lockfile
+
+      - name: Rebuild native dependencies
+        run: pnpm rebuild
 
       - name: Build React app
         run: pnpm run build
@@ -45,7 +53,7 @@ jobs:
           target: "/tmp/join-meds-build"
           strip_components: 1
 
-      - name: Deploy to Nginx folder
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -60,6 +68,7 @@ jobs:
             sudo rsync -av --delete /tmp/join-meds-build/ /var/www/join-meds-frontend/dist/
 
             sudo chown -R www-data:www-data /var/www/join-meds-frontend/dist
+
             sudo find /var/www/join-meds-frontend/dist -type d -exec chmod 755 {} \;
             sudo find /var/www/join-meds-frontend/dist -type f -exec chmod 644 {} \;
 
