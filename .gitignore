@@ -27,4 +27,4 @@ dist-ssr
 
 # Environments
 .env.development.local
-package-lock.json
+

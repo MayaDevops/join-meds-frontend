@@ -1,4 +1,4 @@
-name: Deploy React App to VPS
+name: Deploy JOIN-MEDS FE to VPS
 
 on:
   push:
@@ -10,50 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: Clean and install dependencies
-        run: |
-          rm -rf node_modules
-          rm -f package-lock.json
-          pnpm store prune || true
-          pnpm install --no-frozen-lockfile
-
-      - name: Rebuild native dependencies
-        run: pnpm rebuild
-
-      - name: Build React app
-        run: pnpm run build
-
-      - name: Verify dist folder
-        run: |
-          ls -lah dist
-          test -f dist/index.html
-
-      - name: Upload dist to VPS temp folder
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: 22
-          source: "dist/*"
-          target: "/tmp/join-meds-build"
-          strip_components: 1
-
-      - name: Deploy to VPS
+      - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -63,16 +20,17 @@ jobs:
           script: |
             set -e
 
-            sudo mkdir -p /var/www/join-meds-frontend/dist
+            cd /var/www/join-meds-frontend
 
-            sudo rsync -av --delete /tmp/join-meds-build/ /var/www/join-meds-frontend/dist/
+            git pull origin main
+
+            npm ci
+
+            npm run build
 
             sudo chown -R www-data:www-data /var/www/join-meds-frontend/dist
-
             sudo find /var/www/join-meds-frontend/dist -type d -exec chmod 755 {} \;
             sudo find /var/www/join-meds-frontend/dist -type f -exec chmod 644 {} \;
 
             sudo nginx -t
             sudo systemctl reload nginx
-
-            rm -rf /tmp/join-meds-build
