@@ -4,6 +4,7 @@ import { STORAGE_KEYS } from 'pages/common/constants';
 import { getDataFromStorage } from 'utils/encryption';
 import { logout } from 'utils/auth';
 import { useDispatch } from 'react-redux';
+import NotificationBell from './NotificationBell';
 
 function Header({ toggleSidebar }) {
   const dispatch = useDispatch();
@@ -32,6 +33,8 @@ function Header({ toggleSidebar }) {
         <span className="hidden md:block text-gray-700">
           Welcome, {orgName}
         </span>
+
+        <NotificationBell />
 
         <button
           onClick={handleLogout}
