@@ -20,5 +20,10 @@ export const API_URL = {
       LOGIN: "api/user/login",
       FORGOT_PASSWORD: "api/user/reset-password",
     },
+    NOTIFICATION: {
+      FETCH: "api/notifications/org/:orgId",
+      MARK_READ: "api/notifications/:id/read",
+      MARK_ALL_READ: "api/notifications/org/:orgId/read-all",
+    },
   },
 };
