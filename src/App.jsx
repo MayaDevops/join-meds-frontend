@@ -12,6 +12,7 @@ import ForgotPassword from './pages/login/components/ForgotPassword';
 
 import OrganizationProfile from './pages/register/components/OrganizationProfile';
 import ProfileCard from './pages/register/components/ProfileCard';
+import ContactCard from './pages/register/components/ContactCard';
 import Dashboard from './pages/dashboard/components';
 import ProtectedRoute from './layout/components/ProtectedRoute';
 import Navigator from 'pages/common/components/Navigator';
@@ -37,6 +38,7 @@ function App() {
           <Route path="/ui/join-meds/register/profile" element={<OrganizationProfile />} />
           <Route path="/profile" element={<OrganizationProfile />} />
           <Route path="/ui/join-meds/user/profile" element={<ProfileCard />} />
+          <Route path="/ui/join-meds/user/contact" element={<ContactCard />} />
           <Route path="/ui/join-meds/user/reports" element={<Reports />} />
           <Route path="/ui/join-meds/user/registered-users" element={<UserListReport />} />
           <Route path="/ui/join-meds/user/registered-organizations" element={<RegisterdOrganizationsList />} />
