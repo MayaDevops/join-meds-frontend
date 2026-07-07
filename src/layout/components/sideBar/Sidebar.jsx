@@ -10,7 +10,6 @@ import {
   ChevronUpIcon
 } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
-import JoinMedsLogo from '../../../assets/images/join_meds_side.png';
 import { Tooltip } from 'antd';
 import { logout } from 'utils/auth';
 import { useDispatch } from 'react-redux';
@@ -25,7 +24,7 @@ function Sidebar({ isOpen, toggle }) {
   const menuItems = [
     { name: 'Home', icon: HomeIcon, path: '/ui/join-meds/user/dashboard', Tooltip: 'Dashboard' },
     { name: 'Add Job', icon: BriefcaseIcon, path: '/ui/join-meds/register/profile', Tooltip: 'Add Job' },
-    { name: 'Contact', icon: PhoneIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Contact' },
+    { name: 'Contact', icon: PhoneIcon, path: '/ui/join-meds/user/contact', Tooltip: 'Contact' },
     { name: 'Profile', icon: UserCircleIcon, path: '/ui/join-meds/user/profile', Tooltip: 'Profile' },
     {
       name: 'Report',
@@ -155,17 +154,6 @@ function Sidebar({ isOpen, toggle }) {
             })}
           </nav>
         </div>
-
-        {/* Bottom Logo */}
-        {isOpen && (
-          <div className="w-full flex justify-center p-4">
-            <img
-              src={JoinMedsLogo}
-              alt="JoinMeds Logo"
-              className="w-60 h-60 object-cover rounded-xl shadow-lg border-2 border-white"
-            />
-          </div>
-        )}
       </div>
 
       {/* 🔁 Logging Out Loader */}

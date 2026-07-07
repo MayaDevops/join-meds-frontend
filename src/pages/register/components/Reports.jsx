@@ -88,6 +88,7 @@ const Reports = () => {
 
     const columns = [
         { key: 'fullname', label: 'Name' },
+        { key: 'profession', label: 'Profession' },
         { key: 'emailMobile', label: 'Mobile' },
         { key: 'email', label: 'Email' },
         { key: 'hiringFor', label: 'Hiring For' },
