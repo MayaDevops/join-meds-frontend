@@ -35,7 +35,7 @@ const ContactCard = () => {
           {/* Info */}
           <div className="w-full md:w-2/3">
             <h1 className="text-2xl font-semibold text-gray-800">
-              Contact Join Meds Team
+              Contact JoinMeds
             </h1>
 
             {/* Fields */}
@@ -44,6 +44,11 @@ const ContactCard = () => {
               <LabelValue
                 label="Email:"
                 value="joinmedsofficial@gmail.com"
+              />
+
+              <LabelValue
+                label="Mobile:"
+                value="8086664415"
               />
 
             </div>
