@@ -17,7 +17,7 @@ export const API_URL = {
       FETCH_ALL_ORGS: "api/org/all",
     },
     USER_LOGIN: {
-      LOGIN: "api/user/login",
+      LOGIN: "api/org/login",
       FORGOT_PASSWORD: "api/user/reset-password",
     },
     NOTIFICATION: {
