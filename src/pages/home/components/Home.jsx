@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Search, Globe } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { bannerBg, bgHome, RightArrowIcon } from "assets";
-import { playStoreUrl } from "../constants";
 
 function Home() {
+  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
   const dropdownRef = useRef();
 
@@ -78,24 +79,21 @@ function Home() {
                 <p
                   className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer"
                   onClick={() => {
-                    window.open(playStoreUrl, "_blank");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                     setOpenMenu(false);
                   }}
                 >
-                  Play Store
+                  For Job Seekers
                 </p>
 
                 <p
                   className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer"
                   onClick={() => {
-                    window.open(
-                      "https://apps.apple.com/in/app/joinmeds/id6760744098",
-                      "_blank"
-                    );
+                    navigate("/ui/join-meds/login");
                     setOpenMenu(false);
                   }}
                 >
-                  App Store
+                  For Employer
                 </p>
               </div>
             )}
