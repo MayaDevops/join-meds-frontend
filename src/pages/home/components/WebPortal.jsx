@@ -7,11 +7,13 @@ import Footer from './Footer';
 import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import DownloadApp from './DownloadApp';
+import HowToRegister from './HowToRegister';
 
 const WebPortal = () => {
   const homeRef = useRef(null);
   const whyRef = useRef(null);
   const aboutRef = useRef(null);
+  const howToRegisterRef = useRef(null);
   const downloadRef = useRef(null);
   const contactRef = useRef(null);
 
@@ -33,6 +35,7 @@ const WebPortal = () => {
       home: homeRef,
       why: whyRef,
       about: aboutRef,
+      howToRegister: howToRegisterRef,
       download: downloadRef,
       contact: contactRef
     };
@@ -47,12 +50,12 @@ const WebPortal = () => {
 
   return (
     <div>
-      <Header onNavigate={scrollToSection} refs={{ homeRef, whyRef, aboutRef, downloadRef, contactRef }} />
+      <Header onNavigate={scrollToSection} refs={{ homeRef, whyRef, aboutRef, howToRegisterRef, downloadRef, contactRef }} />
       {/* HOME SECTION */}
       <section ref={homeRef} id="home" className="scroll-mt-24">
         <Home
           onNavigate={scrollToSection}
-          refs={{ homeRef, whyRef, aboutRef, downloadRef, contactRef }}
+          refs={{ homeRef, whyRef, aboutRef, howToRegisterRef, downloadRef, contactRef }}
         />
       </section>
 
@@ -64,6 +67,11 @@ const WebPortal = () => {
       {/* ABOUT US */}
       <section ref={aboutRef} id="about" className="scroll-mt-24">
         <AboutUs />
+      </section>
+
+      {/* HOW TO REGISTER */}
+      <section ref={howToRegisterRef} id="how-to-register" className="scroll-mt-24">
+        <HowToRegister />
       </section>
 
       <section ref={downloadRef} id="download">

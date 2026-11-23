@@ -95,6 +95,13 @@ function Header({ onNavigate, refs }) {
 
         <p
           className="cursor-pointer"
+          onClick={() => onNavigate({ ref: refs.howToRegisterRef, name: "howToRegister" })}
+        >
+          How to Register
+        </p>
+
+        <p
+          className="cursor-pointer"
           onClick={() => onNavigate({ ref: refs.contactRef, name: "contact" })}
         >
           Contact
@@ -193,6 +200,16 @@ function Header({ onNavigate, refs }) {
             className="cursor-pointer"
           >
             About
+          </p>
+
+          <p
+            onClick={() => {
+              onNavigate({ ref: refs.howToRegisterRef, name: "howToRegister" });
+              setOpen(false);
+            }}
+            className="cursor-pointer"
+          >
+            How to Register
           </p>
 
           <p
