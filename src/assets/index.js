@@ -21,6 +21,7 @@ import Youtube from "./images/Youtube.png";
 import JoinMedsLogo from "./images/Logo.png";
 import Googleplay from "./images/Googleplay.png";
 import Appstore from "./images/Appstore.png";
+import howToRegisterThumbnail from "./images/howToRegisterThumbnail.png";
 
 export {
   FacebookIcon,
@@ -45,4 +46,5 @@ export {
   JoinMedsLogo,
   Googleplay,
   Appstore,
+  howToRegisterThumbnail,
 };
