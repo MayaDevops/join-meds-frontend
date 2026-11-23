@@ -82,7 +82,7 @@ function Home() {
                     For Job Seekers
                   </p>
 
-                  <div className="absolute left-full top-0 ml-2 hidden group-hover:block">
+                  <div className="absolute left-full top-0 pl-2 hidden group-hover:block">
                     <div className="w-48 bg-[#0f2f5f] text-white rounded-md shadow-lg">
                       <p
                         className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer"
