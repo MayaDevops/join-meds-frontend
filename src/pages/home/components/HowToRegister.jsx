@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Play } from "lucide-react";
+import { Play, Youtube } from "lucide-react";
 import { howToRegisterThumbnail } from "assets";
 
 const YOUTUBE_VIDEO_ID = "bO1V7_t6uEI";
+const YOUTUBE_WATCH_URL = `https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`;
 
 function HowToRegister() {
   const [playing, setPlaying] = useState(false);
@@ -52,6 +53,16 @@ function HowToRegister() {
             </button>
           )}
         </div>
+
+        <a
+          href={YOUTUBE_WATCH_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full bg-[#00A4E1] hover:bg-[#008EC4] text-white font-semibold px-6 py-3 transition-colors"
+        >
+          <Youtube size={20} />
+          Watch on YouTube
+        </a>
       </div>
     </div>
   );
