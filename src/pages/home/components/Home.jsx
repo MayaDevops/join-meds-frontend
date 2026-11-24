@@ -7,6 +7,7 @@ import { playStoreUrl } from "../constants";
 function Home() {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
+  const [jobSeekerMenuOpen, setJobSeekerMenuOpen] = useState(false);
   const dropdownRef = useRef();
 
   // Close dropdown when clicking outside
@@ -14,6 +15,7 @@ function Home() {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenMenu(false);
+        setJobSeekerMenuOpen(false);
       }
     };
 
@@ -69,7 +71,10 @@ function Home() {
           {/* ================= GET STARTED DROPDOWN ================= */}
           <div className="relative inline-block" ref={dropdownRef}>
             <button
-              onClick={() => setOpenMenu(!openMenu)}
+              onClick={() => {
+                setOpenMenu(!openMenu);
+                setJobSeekerMenuOpen(false);
+              }}
               className="bg-[#00A4E1] text-[#FAFAFA] px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#008EC4]"
             >
               Get Started <RightArrowIcon />
@@ -77,18 +82,29 @@ function Home() {
 
             {openMenu && (
               <div className="absolute mt-3 w-48 bg-[#0f2f5f] text-white rounded-md shadow-lg z-50">
-                <div className="relative group">
-                  <p className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer">
+                <div className="relative lg:group">
+                  <p
+                    className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer flex items-center justify-between"
+                    onClick={() => setJobSeekerMenuOpen(!jobSeekerMenuOpen)}
+                  >
                     For Job Seekers
+                    <span className="text-xs lg:hidden">
+                      {jobSeekerMenuOpen ? "−" : "+"}
+                    </span>
                   </p>
 
-                  <div className="absolute left-full top-0 pl-2 hidden group-hover:block">
+                  <div
+                    className={`${
+                      jobSeekerMenuOpen ? "block" : "hidden"
+                    } lg:hidden lg:group-hover:block mt-1 lg:mt-0 lg:absolute lg:left-full lg:top-0 lg:pl-2`}
+                  >
                     <div className="w-48 bg-[#0f2f5f] text-white rounded-md shadow-lg">
                       <p
                         className="px-4 py-3 hover:bg-[#1c4c8c] cursor-pointer"
                         onClick={() => {
                           window.open(playStoreUrl, "_blank");
                           setOpenMenu(false);
+                          setJobSeekerMenuOpen(false);
                         }}
                       >
                         Play Store
@@ -102,6 +118,7 @@ function Home() {
                             "_blank"
                           );
                           setOpenMenu(false);
+                          setJobSeekerMenuOpen(false);
                         }}
                       >
                         App Store
@@ -115,6 +132,7 @@ function Home() {
                   onClick={() => {
                     navigate("/ui/join-meds/login");
                     setOpenMenu(false);
+                    setJobSeekerMenuOpen(false);
                   }}
                 >
                   For Employer
